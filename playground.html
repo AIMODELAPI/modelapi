@@ -3,23 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Playground — ModelAPI | 调用端点 / API Console</title>
-<meta name="description" content="ModelAPI Playground：一个端点调用 100+ 模型，Harness 智能缓存让同样的预算买到更多价值。">
+<title>Playground — ModelAPI | 导入密钥 · 调用端口 · 接入 Agent</title>
+<meta name="description" content="ModelAPI Playground：订阅后导入你自己的 API 密钥，拿到一个统一调用端口，直接接进你的 Agent。Harness 智能缓存让你的密钥账单最多省 5 倍。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
 <script src="config.js" defer></script>
 <style>
 /* ══ Playground 专属样式 ══ */
-.pg-hero{padding:90px 0 40px;text-align:center}
+.pg-hero{padding:90px 0 30px;text-align:center}
 .pg-hero h1{font-size:clamp(2rem,4.5vw,3rem);font-weight:800;margin:18px 0 12px;background:linear-gradient(90deg,var(--text) 40%,var(--neon));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.pg-hero p{color:var(--muted);max-width:640px;margin:0 auto;font-size:1.05rem}
+.pg-hero p{color:var(--muted);max-width:660px;margin:0 auto;font-size:1.05rem;line-height:1.7}
+
+/* 三步流程条 */
+.step-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:34px auto 0}
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;position:relative;overflow:hidden}
+.step-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--neon),var(--purple))}
+.step-card .num{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.8rem;color:var(--neon);font-weight:700}
+.step-card h4{margin:8px 0 6px;font-size:1rem;color:var(--text)}
+.step-card p{font-size:.84rem;color:var(--muted-2);line-height:1.6}
 
 /* 端点展示条 */
 .endpoint-bar{
   display:flex;align-items:center;gap:14px;flex-wrap:wrap;
   background:rgba(8,9,16,.9);border:1px solid var(--border-2);border-radius:var(--radius-lg);
-  padding:14px 18px;margin:28px auto 8px;max-width:820px;
+  padding:14px 18px;margin:30px auto 8px;max-width:820px;
   font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.9rem;
   box-shadow:inset 0 1px 0 rgba(76,201,255,.08),0 0 24px rgba(76,201,255,.06);
 }
@@ -31,13 +39,27 @@
   font-family:"JetBrains Mono",ui-monospace,monospace;transition:all var(--duration-fast);
 }
 .endpoint-bar .copy-btn:hover{background:rgba(76,201,255,.2);box-shadow:0 0 14px rgba(76,201,255,.2)}
+.muted-note{color:var(--muted-2);font-size:.82rem;margin-top:8px;font-family:"JetBrains Mono",ui-monospace,monospace;text-align:center}
 
 /* 主布局 */
-.pg-layout{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:20px}
+.pg-layout{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px}
 .pg-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:24px;position:relative}
 .pg-panel h3{font-size:1.05rem;margin-bottom:16px;font-family:"JetBrains Mono",ui-monospace,monospace;letter-spacing:.3px;color:var(--text)}
+
+/* BYOK 密钥面板（醒目） */
+.byok-panel{
+  background:linear-gradient(135deg,rgba(76,201,255,.08),rgba(132,75,247,.08));
+  border:1px solid var(--neon-soft);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:18px;
+}
+.byok-panel .byok-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.byok-panel .lock{font-size:1.05rem}
+.byok-panel .byok-title{font-weight:700;color:var(--text);font-size:.95rem}
+.byok-panel .byok-sub{font-size:.74rem;color:var(--muted-2);font-family:"JetBrains Mono",ui-monospace,monospace;margin-top:8px;line-height:1.5}
+.byok-panel input{width:100%;padding:11px 14px;border-radius:var(--radius-md);background:#0d0d18;border:1px solid var(--neon-soft);color:var(--text);font-size:.9rem;font-family:"JetBrains Mono",ui-monospace,monospace;outline:none}
+.byok-panel input:focus{border-color:var(--neon);box-shadow:0 0 0 3px rgba(76,201,255,.12)}
+
 .field{margin-bottom:16px}
-.field label{display:block;font-size:.8rem;text-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;font-family:"JetBrains Mono",ui-monospace,monospace}
+.field label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;font-family:"JetBrains Mono",ui-monospace,monospace}
 .field textarea,.field select,.field input[type=text]{
   width:100%;padding:12px 14px;border-radius:var(--radius-md);
   background:#0d0d18;border:1px solid var(--border);color:var(--text);
@@ -48,7 +70,6 @@
 .field-row{display:flex;gap:14px;align-items:center}
 .field-row .field{flex:1;margin-bottom:0}
 
-/* Harness 开关 */
 .toggle-row{display:flex;align-items:center;justify-content:space-between;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 16px;margin-bottom:16px}
 .toggle-row .t-label{font-size:.92rem;color:var(--text);font-weight:600}
 .toggle-row .t-sub{font-size:.78rem;color:var(--muted-2);font-family:"JetBrains Mono",ui-monospace,monospace}
@@ -100,14 +121,16 @@
 .log-r{color:var(--purple)}
 .log-m{color:var(--neon)}
 
-/* 代码块（如何调用） */
-.how-code{background:rgba(8,9,16,.9);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:20px 22px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.86rem;color:#dbe6f7;overflow-x:auto;line-height:1.8}
+/* 接入 Agent 选项卡 */
+.agent-tabs{display:flex;gap:8px;margin:18px 0 14px;flex-wrap:wrap}
+.agent-tab{background:var(--bg-2);border:1px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:var(--radius-pill);cursor:pointer;font-size:.85rem;font-family:"JetBrains Mono",ui-monospace,monospace;transition:all .2s}
+.agent-tab.active{background:rgba(76,201,255,.12);border-color:var(--neon-soft);color:var(--neon)}
+.how-code{background:rgba(8,9,16,.9);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:20px 22px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.84rem;color:#dbe6f7;overflow-x:auto;line-height:1.85;white-space:pre}
 .how-code .c{color:var(--muted-2)}.how-code .k{color:var(--neon)}.how-code .s{color:var(--green)}
-
-.muted-note{color:var(--muted-2);font-size:.82rem;margin-top:8px;font-family:"JetBrains Mono",ui-monospace,monospace}
 
 @media(max-width:880px){
   .pg-layout{grid-template-columns:1fr}
+  .step-flow{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -132,25 +155,52 @@
 <!-- HERO -->
 <section class="pg-hero">
   <div class="wrap">
-    <span class="badge">API Console · 调用端点</span>
-    <h1>一个端点，调通 100+ 模型</h1>
-    <p>这就是你要的「调用端口」——把下面这段端点接进你的代码，或者直接在这里试。Harness 智能缓存在后台默默帮你把每一美元用出五美元的效果。</p>
+    <span class="badge">BYOK · 调用端点 · Agent 接入</span>
+    <h1>导入你的密钥，一个端口接你的 Agent</h1>
+    <p>ModelAPI 是订阅制 SaaS 平台，<b style="color:var(--text)">不卖模型 token</b>。你订阅套餐后导入自己的 API 密钥，拿到一个统一调用端口，直接接进你自己的 Agent——多模型、智能缓存、用量管理，一站搞定。</p>
+
+    <!-- 三步流程 -->
+    <div class="step-flow">
+      <div class="step-card">
+        <div class="num">STEP 01</div>
+        <h4>① 导入你的 API 密钥</h4>
+        <p>订阅后把 OpenAI / DeepSeek / 通义 等自有密钥导入账号。密钥归你，ModelAPI 不持有、不转售。</p>
+      </div>
+      <div class="step-card">
+        <div class="num">STEP 02</div>
+        <h4>② 拿到统一调用端口</h4>
+        <p>一个 OpenAI 兼容端点 api.modelapi.ai/v1，下面覆盖 100+ 模型，你的代码一行不用改。</p>
+      </div>
+      <div class="step-card">
+        <div class="num">STEP 03</div>
+        <h4>③ 接进你的 Agent</h4>
+        <p>把端口填进你的 Agent / Chain，Harness 缓存透明生效，重复请求直接命中，你的密钥账单最多省 5 倍。</p>
+      </div>
+    </div>
 
     <div class="endpoint-bar">
       <span class="method">POST</span>
       <span class="url" id="endpointUrl">https://api.modelapi.ai/v1/chat/completions</span>
       <button class="copy-btn" id="copyBtn">复制</button>
     </div>
-    <p class="muted-note">SDK base_url：https://api.modelapi.ai/v1　·　兼容 OpenAI SDK</p>
+    <p class="muted-note">SDK base_url：https://api.modelapi.ai/v1　·　兼容 OpenAI SDK　·　你的密钥自己掌控</p>
   </div>
 </section>
 
 <!-- 主控制台 -->
 <section class="wrap">
   <div class="pg-layout">
-    <!-- 左：请求构建 -->
+    <!-- 左：导入密钥 + 构建请求 -->
     <div class="pg-panel">
-      <h3>// 构建请求</h3>
+      <h3>// 导入密钥并构建请求</h3>
+
+      <!-- BYOK 醒目面板 -->
+      <div class="byok-panel">
+        <div class="byok-head"><span class="lock">🔐</span><span class="byok-title">导入你的 API 密钥（BYOK）</span></div>
+        <input type="text" id="apiKey" placeholder="粘贴你的 OpenAI / DeepSeek / 通义 密钥，如 sk-...">
+        <div class="byok-sub">密钥仅用于本次调用转发到你的服务商，ModelAPI 不存储、不转售你的密钥与额度。</div>
+      </div>
+
       <div class="field">
         <label>模型 Model</label>
         <select id="modelSelect"></select>
@@ -168,15 +218,11 @@
           <label>温度 Temperature</label>
           <input type="text" id="temp" value="0.70" readonly style="cursor:default">
         </div>
-        <div class="field" style="flex:2">
-          <label>API Key（可选）</label>
-          <input type="text" id="apiKey" placeholder="留空 → 演示模式">
-        </div>
       </div>
       <div class="toggle-row">
         <div>
           <div class="t-label">Harness 智能缓存</div>
-          <div class="t-sub">开启后重复请求命中缓存，计费打 1 折</div>
+          <div class="t-sub">开启后重复请求命中缓存，你的密钥账单计费打 1 折</div>
         </div>
         <label class="switch"><input type="checkbox" id="harnessToggle" checked><span class="slider"></span></label>
       </div>
@@ -184,7 +230,7 @@
         <button class="btn btn-primary" id="sendBtn">发送请求</button>
         <button class="btn btn-ghost" id="repeatBtn">再发一次（测缓存）</button>
       </div>
-      <p class="muted-note">提示：连点「再发一次」发送相同内容，观察右侧缓存命中与成本归零。</p>
+      <p class="muted-note">提示：连点「再发一次」发送相同内容，观察右侧缓存命中与你的密钥花费归零。</p>
     </div>
 
     <!-- 右：响应 + 统计 -->
@@ -201,10 +247,10 @@
       </div>
       <div id="cacheBadge" class="cache-badge miss">○ 尚未调用</div>
 
-      <!-- Harness 效率条 -->
+      <!-- Harness 效率条（你的密钥账单视角） -->
       <div class="eff-meter">
         <div class="em-head">
-          <span class="em-title">Harness 效率 · 每 1 美元 ≈</span>
+          <span class="em-title">你的密钥账单 · 每 1 美元 ≈</span>
           <span class="em-mult"><span id="multVal">1.00</span><small> 美元价值</small></span>
         </div>
         <div class="ratio-bar"><div class="ratio-fill" id="ratioFill" style="width:0%"></div></div>
@@ -219,28 +265,65 @@
   </div>
 </section>
 
-<!-- 如何调用 -->
+<!-- 如何接入 Agent -->
 <section class="wrap" style="margin-top:48px">
   <div class="sec-head">
-    <span class="eyebrow">两行接入</span>
-    <h2>怎么「调用这个端口」</h2>
-    <p>兼容 OpenAI SDK。把 base_url 换成 ModelAPI，其余代码一行不动。</p>
+    <span class="eyebrow">三步接入</span>
+    <h2>怎么接进你的 Agent</h2>
+    <p>你的 Agent 只需把 base_url 指向 ModelAPI，密钥用你导入的那把。其余代码一行不动，Harness 缓存自动生效。</p>
   </div>
-  <div class="how-code">
-<span class="c"># Python</span><br>
-<span class="k">from</span> openai <span class="k">import</span> OpenAI<br>
-client = OpenAI(<br>
-&nbsp;&nbsp;base_url=<span class="s">"https://api.modelapi.ai/v1"</span>,<br>
-&nbsp;&nbsp;api_key=<span class="s">"YOUR_MODELAPI_KEY"</span><br>
-)<br>
-resp = client.chat.completions.create(<br>
-&nbsp;&nbsp;model=<span class="s">"gpt-4o-mini"</span>,<br>
-&nbsp;&nbsp;messages=[{<span class="s">"role"</span>:<span class="s">"user"</span>,<span class="s">"content"</span>:<span class="s">"你好"</span>}]<br>
-)<br>
-<span class="c"># Harness 缓存自动生效，重复问题直接命中，不计费</span>
+
+  <div class="agent-tabs">
+    <button class="agent-tab active" data-tab="curl">cURL</button>
+    <button class="agent-tab" data-tab="python">Python</button>
+    <button class="agent-tab" data-tab="node">Node.js</button>
+    <button class="agent-tab" data-tab="agent">接 Agent</button>
   </div>
+
+  <div class="how-code" id="code-curl"><span class="c"># cURL：直接打统一端口，密钥用你导入的那把</span>
+curl https://api.modelapi.ai/v1/chat/completions \
+  -H <span class="s">"Authorization: Bearer $YOUR_KEY"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{"model":"gpt-4o-mini","messages":[{"role":"user","content":"你好"}]}'</span>
+<span class="c"># 重复相同问题 → Harness 命中缓存，直接不计费</span></div>
+
+  <div class="how-code" id="code-python" style="display:none"><span class="k">from</span> openai <span class="k">import</span> OpenAI
+
+client = OpenAI(
+    base_url=<span class="s">"https://api.modelapi.ai/v1"</span>,   <span class="c"># 指向 ModelAPI 统一端口</span>
+    api_key=<span class="s">"你的密钥（BYOK）"</span>,
+)
+resp = client.chat.completions.create(
+    model=<span class="s">"gpt-4o-mini"</span>,
+    messages=[{<span class="s">"role"</span>:<span class="s">"user"</span>,<span class="s">"content"</span>:<span class="s">"你好"</span>}],
+)
+<span class="c"># Harness 缓存自动生效，重复问题直接命中</span></div>
+
+  <div class="how-code" id="code-node" style="display:none"><span class="k">import</span> OpenAI <span class="k">from</span> <span class="s">"openai"</span>;
+
+<span class="k">const</span> client = <span class="k">new</span> OpenAI({
+  baseURL: <span class="s">"https://api.modelapi.ai/v1"</span>,   <span class="c">// 指向 ModelAPI 统一端口</span>
+  apiKey: <span class="s">"你的密钥（BYOK）"</span>,
+});
+<span class="k">const</span> resp = <span class="k">await</span> client.chat.completions.create({
+  model: <span class="s">"gpt-4o-mini"</span>,
+  messages: [{ role: <span class="s">"user"</span>, content: <span class="s">"你好"</span> }],
+});</div>
+
+  <div class="how-code" id="code-agent" style="display:none"><span class="c"># LangChain：把 ModelAPI 端口喂给你的 Agent / Chain</span>
+<span class="k">from</span> langchain_openai <span class="k">import</span> ChatOpenAI
+
+llm = ChatOpenAI(
+    model=<span class="s">"gpt-4o-mini"</span>,
+    base_url=<span class="s">"https://api.modelapi.ai/v1"</span>,   <span class="c"># 指向 ModelAPI 统一端口</span>
+    api_key=<span class="s">"你的密钥（BYOK）"</span>,
+    temperature=<span class="s">0.7</span>,
+)
+<span class="c"># 把 llm 接进你的 Agent / Chain 即可，Harness 缓存透明生效</span></div>
+
   <div style="text-align:center;margin-top:28px">
     <a class="btn btn-ghost" href="harness.html">了解 1 美元=5 美元的原理 →</a>
+    <a class="btn btn-primary" href="pricing.html" style="margin-left:10px">查看订阅套餐 →</a>
   </div>
 </section>
 
@@ -256,13 +339,19 @@ resp = client.chat.completions.create(<br>
       <div><h4>公司</h4><a href="why-modelapi.html">关于我们</a></div>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 ModelAPI · 多模型 AI 编排云平台 · 官方授权 AI 网关，智能缓存中间件。</div>
+  <div class="footer-bottom">© 2026 ModelAPI · 订阅制多模型编排 SaaS · 官方授权 AI 网关，智能缓存中间件，不转售模型 token。</div>
 </footer>
 
 <script>
 (function(){
   'use strict';
   var $ = function(s){ return document.querySelector(s); };
+  // 模型 -> 服务商（用于 BYOK 路由）
+  var MODEL_VENDOR = {
+    'gpt-4o-mini':'OpenAI','gpt-4o':'OpenAI',
+    'claude-3.5-sonnet':'Anthropic','deepseek-chat':'DeepSeek',
+    'qwen-max':'Alibaba','llama-3.1-70b':'Meta'
+  };
   var FALLBACK_MODELS = [
     {id:'gpt-4o-mini',label:'GPT-4o mini',vendor:'OpenAI'},
     {id:'gpt-4o',label:'GPT-4o',vendor:'OpenAI'},
@@ -299,10 +388,10 @@ resp = client.chat.completions.create(<br>
     sel.innerHTML = FALLBACK_MODELS.map(function(m){return '<option value="'+m.id+'">'+m.label+'</option>';}).join('');
   }
 
-  function setStatus(online){
+  function setStatus(online, msg){
     var dot=$('#connDot'), txt=$('#connText');
-    if(online){ dot.className='status-dot on'; txt.textContent='已连接 ModelAPI 端点'; }
-    else { dot.className='status-dot off'; txt.textContent='离线 · 演示模拟（未连接后端）'; }
+    if(online){ dot.className='status-dot on'; txt.textContent= msg||'已连接 ModelAPI 端点'; }
+    else { dot.className='status-dot off'; txt.textContent= msg||'离线 · 演示模拟（未连接后端）'; }
   }
 
   function buildPayload(){
@@ -310,10 +399,12 @@ resp = client.chat.completions.create(<br>
     if(!usr){ alert('请先填写用户消息'); return null; }
     if(sys) msgs.push({role:'system',content:sys});
     msgs.push({role:'user',content:usr});
+    var model = sel.value;
     return {
-      model: sel.value, messages: msgs,
+      model: model, messages: msgs,
       temperature: parseFloat($('#temp').value)||0.7,
       useHarness: $('#harnessToggle').checked,
+      provider: MODEL_VENDOR[model] || 'OpenAI',
       apiKey: ($('#apiKey').value.trim()||undefined)
     };
   }
@@ -325,7 +416,7 @@ resp = client.chat.completions.create(<br>
     setSending(true);
     fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
       .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-      .then(function(d){ setStatus(true); renderResult(d,isRepeat); })
+      .then(function(d){ setStatus(true,'已连接 ModelAPI 端点（BYOK 转发到你的服务商）'); renderResult(d,isRepeat); })
       .catch(function(){ setStatus(false); renderResult(simulate(payload),isRepeat); })
       .finally(function(){ setSending(false); });
   }
@@ -343,7 +434,8 @@ resp = client.chat.completions.create(<br>
       hit=true; local.hits++; content=simCache[key];
       pt=estTokens(sys+'\n'+usr); cached=pt; ct=estTokens(content);
     } else {
-      content='[本地演示模拟] 已调度 '+model+'。\n\n你的问题是：「'+usr+'」\n\n这是离线仿真回复，用于展示缓存效果。启动 node server.js 或部署到 Vercel 后，这里会连接真实端点。';
+      var keyHint = payload.apiKey ? '（已携带你的 BYOK 密钥，部署到 Vercel 或配置上游后将真实转发）' : '';
+      content='[本地演示模拟] 已调度 '+model+'。\n\n你的问题是：「'+usr+'」\n\n这是离线仿真回复，用于展示调用与缓存效果。'+keyHint+'\n\n启动 node server.js 或部署到 Vercel 后，这里会连接真实端点。';
       pt=estTokens(JSON.stringify(msgs)); ct=estTokens(content);
       if(payload.useHarness!==false) simCache[key]=content;
     }
@@ -396,6 +488,17 @@ resp = client.chat.completions.create(<br>
     $('#sendBtn').disabled=on;
     $('#sendBtn').textContent = on?'调用中…':'发送请求';
   }
+
+  // Agent 接入代码选项卡
+  document.querySelectorAll('.agent-tab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      document.querySelectorAll('.agent-tab').forEach(function(t){t.classList.remove('active');});
+      tab.classList.add('active');
+      ['curl','python','node','agent'].forEach(function(k){
+        $('#code-'+k).style.display = (tab.dataset.tab===k) ? 'block' : 'none';
+      });
+    });
+  });
 
   $('#sendBtn').addEventListener('click',function(){ doCall(null,false); });
   $('#repeatBtn').addEventListener('click',function(){ doCall(lastPayload||null,true); });

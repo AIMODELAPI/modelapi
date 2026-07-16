@@ -20,6 +20,15 @@ const MODELS = {
 // Prompt 缓存命中部分计费折扣（参考主流厂商 prompt cache：命中部分约 1 折）
 const CACHE_DISCOUNT = 0.1;
 
+// BYOK 服务商兼容端点映射（OpenAI 兼容协议；用户导入自己的密钥后由此路由）
+// 仅做请求转发与缓存，密钥由用户自有，ModelAPI 不持有、不转售。
+const PROVIDERS = {
+  OpenAI: 'https://api.openai.com/v1',
+  DeepSeek: 'https://api.deepseek.com/v1',
+  Alibaba: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
+  Meta: 'https://openrouter.ai/api/v1',
+};
+
 // 进程内存缓存：key -> { content, ts }
 const cache = new Map();
 
@@ -63,9 +72,16 @@ function getStats() {
   return Object.assign({}, stats, { hit_rate: hitRate, effective_multiplier: mult });
 }
 
-// 调用上游（OpenAI 兼容）。无密钥则进入演示仿真模式。
+// 调用上游（OpenAI 兼容）。BYOK：用户导入自己的密钥 + 选择服务商后由此路由。
+// 无密钥 / 无可达端点则进入演示仿真模式。
 async function callUpstream(body, env, model) {
-  const baseUrl = (env && env.UPSTREAM_BASE_URL) || (body.upstream && body.upstream.baseUrl);
+  const vendor = (MODELS[model] && MODELS[model].vendor) || 'OpenAI';
+  const provider = body.provider || vendor;
+  const baseUrl = (env && env.UPSTREAM_BASE_URL)
+    || (body.upstream && body.upstream.baseUrl)
+    || body.baseUrl
+    || (PROVIDERS[provider])
+    || null;
   const apiKey = (env && env.UPSTREAM_API_KEY) || body.apiKey;
   if (baseUrl && apiKey) {
     const res = await fetch(baseUrl.replace(/\/$/, '') + '/chat/completions', {
