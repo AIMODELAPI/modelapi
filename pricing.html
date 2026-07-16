@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>定价 — ModelAPI | 官方价 0 加价</title>
+<meta name="description" content="ModelAPI 定价：Harness 智能编排引擎让每 1 美元发挥更大价值。官方价 0 加价，没有隐藏费用。No hidden fees. No surprise bills. Just tokens, at cost.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="modelapi-demo.css">
+<script src="config.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"ModelAPI",
+  "applicationCategory":"DeveloperApplication",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD","description":"按用量计费，官方价 0 加价"},
+  "publisher":{"@type":"Organization","name":"ModelAPI"}
+}
+</script>
+</head>
+<body>
+
+<header class="nav" id="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="pricing.html">定价</a>
+      <a href="why-modelapi.html">为什么选 ModelAPI</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <a class="btn btn-primary" href="login.html" id="navCta">免费开始</a>
+    <span id="nav-auth"></span>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-glow"><div class="glow-1"></div><div class="glow-2"></div><div class="glow-3"></div></div>
+  <div class="wrap">
+    <span class="badge reveal reveal-delay-1">简单透明的定价</span>
+    <h1 class="reveal reveal-delay-2">你为<span class="accent">实际用的 tokens</span>付费<br><small style="font-size:.45em;font-weight:600;color:var(--muted)">但 Harness 让同样的钱，买到更多价值</small></h1>
+    <p class="lead reveal reveal-delay-3">ModelAPI 是多模型 AI 编排云平台。我们不是简单地"透传"请求——<br>底层的 <strong style="color:var(--neon)">Harness 智能编排引擎</strong> 通过缓存、去重、压缩和智能路由，<br>让你的每一分预算都花在刀刃上。</p>
+    <p class="quote reveal reveal-delay-4">No hidden fees. No surprise bills. Just tokens, at cost.<br><span style="font-size:.7em;color:var(--muted);font-weight:500">— And with Harness, every dollar goes further.</span></p>
+  </div>
+</section>
+
+<!-- ═══ Harness 价值引擎（核心新增区块） ═══ -->
+<section id="harness-section" style="background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 60%,var(--bg) 100%)">
+  <div class="wrap">
+
+    <!-- 区块标题 -->
+    <div class="sec-head reveal">
+      <span class="eyebrow">Harness 智能编排引擎</span>
+      <h2>让 <span class="accent" style="font-size:1.1em">$1</span> 发挥 <span class="accent" style="font-size:1.3em">$5</span> 的价值</h2>
+      <p>大多数 AI 平台只是把你的请求转发出去、按量收费就完事了。<br><strong style="color:var(--text)">我们不这样做。</strong>ModelAPI 底层有一套自研的 Harness 编排引擎——它是一层智能中间件，在你的请求到达模型之前和之后，做了一系列让你省钱的事。</p>
+    </div>
+
+    <!-- 1:5 效果可视化 -->
+    <div class="harness-hero reveal reveal-delay-1">
+      <div class="harness-ratio">
+        <div class="ratio-bar">
+          <div class="ratio-fill" id="ratioFill"></div>
+        </div>
+        <div class="ratio-labels">
+          <span class="ratio-label left">传统方式：<b>$5</b> 实际花费</span>
+          <span class="ratio-label right" style="color:var(--neon)">+ Harness：<b>$1</b> 实际花费<span style="font-weight:400;font-size:.85em;color:var(--muted)">（高缓存命中率场景）</span></span>
+        </div>
+      </div>
+      <p class="harness-note">↑ 这不是一个比喻。当你的业务场景与平台缓存池匹配度高时，Prompt 缓存 + 请求去重 + 上下文压缩叠加的效果，可以让实际有效成本降至原来的 1/5 甚至更低。</p>
+    </div>
+
+    <!-- 四大能力卡片 -->
+    <div class="grid grid-4" style="margin-top:48px">
+      <!-- Prompt 缓存 -->
+      <div class="card harness-card reveal reveal-delay-1">
+        <div class="ico">🧠</div>
+        <h3>Prompt 缓存</h3>
+        <div class="harness-tag">省得最多</div>
+        <p>系统级提示词和常见指令会被自动缓存。同样的问题问第二次？直接从缓存取结果，<strong style="color:var(--neon)">不再重复计算、不再重复扣费</strong>。</p>
+        <div class="harness-metric">
+          <span class="metric-val">~70%</span>
+          <span class="metric-label">典型场景缓存命中率</span>
+        </div>
+      </div>
+
+      <!-- 请求去重 -->
+      <div class="card harness-card reveal reveal-delay-2">
+        <div class="ico">🔄</div>
+        <h3>请求去重</h3>
+        <div class="harness-tag secondary">团队福音</div>
+        <p>团队成员发出了相同的请求？系统识别后只向模型提交一次，结果共享给所有人。<strong>一个人付费，全队受益</strong>。</p>
+        <div class="harness-metric">
+          <span class="metric-val">1:N</span>
+          <span class="metric-label">一次计算，多次复用</span>
+        </div>
+      </div>
+
+      <!-- 上下文压缩 -->
+      <div class="card harness-card reveal reveal-delay-3">
+        <div class="ico">🗜️</div>
+        <h3>上下文压缩</h3>
+        <div class="harness-tag secondary">长对话必备</div>
+        <p>长对话自动精简历史信息，只保留关键上下文发送给模型。<strong>Token 用量大幅下降</strong>，回答质量不受影响。</p>
+        <div class="harness-metric">
+          <span class="metric-val">-60%</span>
+          <span class="metric-label">长对话 Token 节省</span>
+        </div>
+      </div>
+
+      <!-- 智能路由 -->
+      <div class="card harness-card reveal reveal-delay-4">
+        <div class="ico">🧭</div>
+        <h3>智能路由</h3>
+        <div class="harness-tag secondary">又快又稳</div>
+        <p>Nexus 自动选择最快、最稳定、成本最优的通道。高峰期自动切换备用线路，<strong>减少超时重试带来的额外花费</strong>。</p>
+        <div class="harness-metric">
+          <span class="metric-val">&lt;40%</span>
+          <span class="metric-label">P99 延迟改善</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 工作原理示意 -->
+    <div class="harness-flow reveal" style="margin-top:52px">
+      <h4 style="text-align:center;color:var(--neon);margin-bottom:28px;font-size:1.15rem">一次请求的完整旅程</h4>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">①</div>
+          <div class="step-title">你的请求进来</div>
+          <div class="step-desc">代码调用，跟用 OpenAI SDK 一模一样</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-num highlight">②</div>
+          <div class="step-title">Harness 接管</div>
+          <div class="step-desc">查缓存 → 去重判断 → 上下文压缩 → 选通道</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-num">③</div>
+          <div class="step-title">命中的话直接返回</div>
+          <div class="step-desc">从缓存取结果，<strong style="color:var(--neon)">零额外费用</strong></div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">
+          <div class="step-num">④</div>
+          <div class="step-title">没命中才调模型</div>
+          <div class="step-desc">结果写入缓存，下次别人也能受益</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 与传统方式的对比表 -->
+    <div class="harness-compare reveal" style="margin-top:48px">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="bad-col">直接用官方 API</th>
+            <th class="good-col">+ ModelAPI Harness</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-label">同样的问题问第 2 次</td>
+            <td class="bad-cell">重新算一遍，再收一次费</td>
+            <td class="good-cell"><strong style="color:var(--neon)">缓存命中，零费用</strong></td>
+          </tr>
+          <tr>
+            <td class="row-label">团队 10 人问同一个问题</td>
+            <td class="bad-cell">收 10 次费</td>
+            <td class="good-cell"><strong style="color:var(--neon)">去重合并，可能只收 1 次</strong></td>
+          </tr>
+          <tr>
+            <td class="row-label">100 轮长对话</td>
+            <td class="bad-cell">每次发完整历史，Token 爆炸</td>
+            <td class="good-cell"><strong style="color:var(--neon)">自动压缩，节省 ~60% Token</strong></td>
+          </tr>
+          <tr>
+            <td class="row-label">某条通道挂了</td>
+            <td class="bad-cell">报错，你自己处理重试</td>
+            <td class="good-cell"><strong style="color:var(--neon)">自动切备用线，无感恢复</strong></td>
+          </tr>
+          <tr>
+            <td class="row-label"><strong>最终效果</strong></td>
+            <td class="bad-cell"><strong>$1 = $1</strong></td>
+            <td class="good-cell" style="background:rgba(76,201,255,.08)"><strong style="color:var(--neon);font-size:1.05em">$1 ≈ $5</strong><span style="font-size:.85em;color:var(--muted);font-weight:400">（高命中场景）</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ 定价方案 ═══ -->
+<section id="pricing-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">定价方案</span>
+      <h2>按用量付费，从免费开始</h2>
+      <p>所有方案都享受 Harness 编排引擎的全部能力——<strong style="color:var(--text)">不需要额外购买，不需要额外配置</strong>。</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="tier reveal reveal-delay-1">
+        <div class="name">开发者</div>
+        <div class="price">$0<small> / 起</small></div>
+        <ul>
+          <li>免费体验额度</li>
+          <li>Harness 全部能力可用</li>
+          <li>接入 100+ 模型</li>
+          <li>兼容 OpenAI SDK</li>
+          <li>社区支持</li>
+        </ul>
+        <a class="btn btn-ghost" href="index.html">免费开始</a>
+      </div>
+      <div class="tier featured reveal reveal-delay-2">
+        <div class="name">团队 / Pro <span class="popular-badge">最受欢迎</span></div>
+        <div class="price">按量<small> 计费</small></div>
+        <ul>
+          <li>官方价 0 加价（at cost）</li>
+          <li>Harness 缓存 + 去重 + 压缩</li>
+          <li>优先调度通道</li>
+          <li>统一账单与用量看板</li>
+          <li>邮件支持</li>
+        </ul>
+        <a class="btn btn-primary" href="index.html">开始使用</a>
+      </div>
+      <div class="tier reveal reveal-delay-3">
+        <div class="name">企业 / Enterprise</div>
+        <div class="price">定制</div>
+        <ul>
+          <li>专属调度通道</li>
+          <li>Harness 企业级定制策略</li>
+          <li>企业级 SLA 与合规账单</li>
+          <li>VAT 发票 / 企业账单</li>
+          <li>专属技术支持</li>
+        </ul>
+        <a class="btn btn-ghost" href="why-modelapi.html">联系我们</a>
+      </div>
+    </div>
+    <p class="note reveal">* 平台按用量计费，价格与官方一致（at cost），无加价、无隐藏费。Harness 编排引擎能力包含在所有方案中，无需额外付费。"1≈5" 效果取决于业务场景的缓存匹配度，具体以实际使用数据为准。</p>
+  </div>
+</section>
+
+<!-- ═══ 对比 ═══ -->
+<section style="background:var(--bg-2)" id="compare-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">为什么选 ModelAPI</span>
+      <h2>而不是自己一家家去接？</h2>
+    </div>
+    <div class="compare">
+      <div class="col bad reveal reveal-delay-1">
+        <h4>自己接多家模型</h4>
+        <ul>
+          <li>多账号、多合同、多套账单</li>
+          <li>合规与发票各自处理</li>
+          <li>切换模型要改代码</li>
+          <li>稳定性自己兜底</li>
+          <li>没有缓存层，每次都是全价</li>
+        </ul>
+      </div>
+      <div class="col good reveal reveal-delay-2">
+        <h4>用 ModelAPI 一个平台</h4>
+        <ul>
+          <li>统一端点 + 统一账单</li>
+          <li>合规与发票一站式托管</li>
+          <li>两行代码，模型随便换</li>
+          <li>企业级调度，99.9% 可用率</li>
+          <li><strong style="color:var(--neon)">Harness 引擎帮你省更多</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 支付渠道 ═══ -->
+<section id="pay-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">支付方式</span>
+      <h2>合规、常见的支付渠道</h2>
+      <p>我们支持以下主流支付方式，并提供企业账单与发票。</p>
+    </div>
+    <div class="pay-chips reveal">
+      <span class="chip"><b>微信支付</b> WeChat Pay</span>
+      <span class="chip"><b>支付宝</b> Alipay</span>
+      <span class="chip"><b>Stripe</b> 信用卡 Visa / Mastercard</span>
+      <span class="chip"><b>企业账单</b> VAT 发票</span>
+    </div>
+    <p class="note reveal" style="text-align:center;margin-top:18px">说明：平台仅支持上述合规支付渠道，不接收任何加密货币或 USDT。</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="brand"><span class="brand-mark">◆</span> ModelAPI</div>
+      <p class="footer-tag">Intelligence, Orchestrated.</p>
+    </div>
+    <div class="footer-cols">
+      <div><h4>产品</h4><a href="index.html">首页</a><a href="pricing.html">定价</a><a href="why-modelapi.html">为什么选 ModelAPI</a></div>
+      <div><h4>资源</h4><a href="faq.html">FAQ</a><a href="faq.html">文档</a></div>
+      <div><h4>公司</h4><a href="why-modelapi.html">关于我们</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 ModelAPI · 多模型 AI 编排云平台 · 让模型公司为你工作的基础设施。</div>
+</footer>
+
+<!-- 动效引擎 -->
+<script>
+(function(){
+  'use strict';
+  var nav = document.getElementById('navbar');
+  window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, {passive:true});
+  (function showHeroReveals(){
+    var items = document.querySelectorAll('.hero .reveal');
+    setTimeout(function(){ for(var i=0;i<items.length;i++) items[i].classList.add('visible'); }, 120);
+  })();
+  (function initScrollReveal(){
+    var els = document.querySelectorAll('.reveal:not(.hero .reveal)');
+    if(!els.length) return;
+    var ob = new IntersectionObserver(function(en){ en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); ob.unobserve(e.target); }}); }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+    for(var i=0;i<els.length;i++) ob.observe(els[i]);
+  })();
+
+  /* ── Harness 比例条动画 ── */
+  (function animateRatioBar(){
+    var fill = document.getElementById('ratioFill');
+    if(!fill) return;
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          setTimeout(function(){ fill.style.width = '95%'; }, 200);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.4});
+    observer.observe(fill.parentElement);
+  })();
+})();
+</script>
+<script src="auth.js" defer></script>
+</body>
+</html>

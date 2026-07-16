@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>为什么选 ModelAPI — AI 基础设施</title>
+<meta name="description" content="ModelAPI 是多模型 AI 编排云平台（AI 基础设施 SaaS）。我们不是模型公司，我们是让模型公司为你工作的基础设施。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="modelapi-demo.css">
+<script src="config.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"ModelAPI",
+  "url":"https://www.aimodelapi.ai",
+  "description":"运营 ModelAPI 多模型 AI 编排云平台，提供企业级 AI 基础设施。"
+}
+</script>
+</head>
+<body>
+
+<header class="nav" id="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="pricing.html">定价</a>
+      <a href="why-modelapi.html">为什么选 ModelAPI</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <a class="btn btn-primary" href="login.html" id="navCta">免费开始</a>
+    <span id="nav-auth"></span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-glow"><div class="glow-1"></div><div class="glow-2"></div><div class="glow-3"></div></div>
+  <div class="wrap">
+    <span class="badge reveal reveal-delay-1">Intelligence, Orchestrated.</span>
+    <h1 class="reveal reveal-delay-2">我们不是模型公司，<br>我们是让<span class="accent">模型公司为你工作</span>的基础设施。</h1>
+    <p class="lead reveal reveal-delay-3">ModelAPI 是多模型 AI 编排云平台（AI 基础设施 SaaS）。你只管做业务，模型调度、账单、合规都交给我们。</p>
+
+  </div>
+</section>
+
+<!-- 基础设施定位 -->
+<section id="infra-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">我们是什么</span>
+      <h2>把"用 AI"变成"用水电"</h2>
+      <p>基础设施的意思很简单：你不用关心水在哪儿、电怎么发，拧开水龙头就有水，按开关就有光。ModelAPI 让"用模型"也一样——你只管调用，底层的事我们搞定。</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card reveal reveal-delay-1"><div class="ico">🔌</div><h3>统一端点</h3><p>一个兼容 OpenAI SDK 的端点，接入 100+ 模型，不用每家都接一遍。</p></div>
+      <div class="card reveal reveal-delay-2"><div class="ico">🧭</div><h3>智能调度</h3><p>自研编排引擎负责把请求安排到合适的模型，你不用管路由细节。</p></div>
+      <div class="card reveal reveal-delay-3"><div class="ico">🧾</div><h3>统一账单</h3><p>所有用量合并成一份透明账单，合规与发票一站式托管。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 企业级能力 -->
+<section style="background:var(--bg-2)" id="enterprise-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">企业级 AI 基础设施能力</span>
+      <h2>为大规模企业级工作负载而生</h2>
+      <p>ModelAPI 具备承载大规模企业客户调用的实力——高并发、稳调度、可合规、有承诺。</p>
+    </div>
+    <div class="grid grid-4">
+      <div class="card reveal reveal-delay-1"><div class="ico">🚀</div><h3>高吞吐编排</h3><p>企业级高并发模型编排，应对大规模调用。</p></div>
+      <div class="card reveal reveal-delay-2"><div class="ico">🛤️</div><h3>专属调度通道</h3><p>为大客户预留专属通道，保障关键业务时效。</p></div>
+      <div class="card reveal reveal-delay-3"><div class="ico">✅</div><h3>合规账单</h3><p>透明计费、企业账单与 VAT 发票，合规可持续。</p></div>
+      <div class="card reveal reveal-delay-4"><div class="ico">📜</div><h3>SLA 保障</h3><p>服务等级协议，稳定性与响应有承诺。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 自研技术信任状 -->
+<section id="tech-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">自研技术</span>
+      <h2>平台背后的硬实力</h2>
+    </div>
+    <div class="grid grid-3">
+      <div class="card reveal reveal-delay-1"><h3>Harness 编排引擎</h3><p>把你的每次请求安排得明明白白，调度到合适的模型。</p></div>
+      <div class="card reveal reveal-delay-2"><h3>Nexus 智能路由</h3><p>自动选最快最稳的路线，体验顺滑不卡顿。</p></div>
+      <div class="card reveal reveal-delay-3"><h3>会话预算</h3><p>花多少钱你说了算，超了就停，绝不偷偷扣费。</p></div>
+      <div class="card reveal reveal-delay-1"><h3>上下文压缩</h3><p>长对话也不占地方，又快又省。</p></div>
+      <div class="card reveal reveal-delay-2"><h3>Prompt 缓存</h3><p>常用指令秒回，不重复计算。</p></div>
+      <div class="card reveal reveal-delay-3"><h3>统一账单管理</h3><p>所有模型用量合并成一份透明账单。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 平台数据 -->
+<section style="background:var(--bg-2)" id="stats-section">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat reveal reveal-delay-1"><div class="n" data-target="100" data-suffix="+">0</div><div class="l">可调度模型</div></div>
+      <div class="stat reveal reveal-delay-2"><div class="n" data-target="60" data-suffix="+">0</div><div class="l">模型厂商</div></div>
+      <div class="stat reveal reveal-delay-3"><div class="n" data-target="2" data-suffix=" 行">0</div><div class="l">代码迁移</div></div>
+      <div class="stat reveal reveal-delay-4"><div class="n" data-target="99.9" data-suffix="%" data-decimal="true">0</div><div class="l">平台可用率</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 公司与团队信任状 -->
+<section id="team-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">公司与团队</span>
+      <h2>十年海外运营，技术扎实</h2>
+    </div>
+    <div class="trust-grid">
+      <div class="trust reveal reveal-delay-1">
+        <h4>十年海外运营</h4>
+        <p>2012 年起深耕海外市场，拥有 10 年以上的成熟运营经验，为平台提供长期、稳定的企业级背书。</p>
+      </div>
+      <div class="trust reveal reveal-delay-2">
+        <h4>技术负责人：谢腾远 博士</h4>
+        <p>香港岭南大学 AI 博士，研究方向含注意力机制、上下文压缩与模型路由；曾任职华为、润泽云译，深耕大模型工程化。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta-section">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>把基础设施交给我们</h2>
+      <p>你只管做业务，模型调度、账单、合规都交给 ModelAPI。</p>
+      <a class="btn btn-primary" href="pricing.html">免费开始</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="brand"><span class="brand-mark">◆</span> ModelAPI</div>
+      <p class="footer-tag">Intelligence, Orchestrated.</p>
+    </div>
+    <div class="footer-cols">
+      <div><h4>产品</h4><a href="index.html">首页</a><a href="pricing.html">定价</a><a href="why-modelapi.html">为什么选 ModelAPI</a></div>
+      <div><h4>资源</h4><a href="faq.html">FAQ</a><a href="faq.html">文档</a></div>
+      <div><h4>公司</h4><a href="why-modelapi.html">关于我们</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 ModelAPI · 多模型 AI 编排云平台 · 让模型公司为你工作的基础设施。</div>
+</footer>
+
+<!-- 动效引擎 -->
+<script>
+(function(){
+  'use strict';
+  var nav = document.getElementById('navbar');
+  window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, {passive:true});
+  (function showHeroReveals(){
+    var items = document.querySelectorAll('.hero .reveal');
+    setTimeout(function(){ for(var i=0;i<items.length;i++) items[i].classList.add('visible'); }, 120);
+  })();
+  (function initScrollReveal(){
+    var els = document.querySelectorAll('.reveal:not(.hero .reveal)');
+    if(!els.length) return;
+    var ob = new IntersectionObserver(function(en){ en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); ob.unobserve(e.target); }}); }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+    for(var i=0;i<els.length;i++) ob.observe(els[i]);
+  })();
+  (function initCounters(){
+    var nums = document.querySelectorAll('.stat .n[data-target]');
+    if(!nums.length) return;
+    var ob = new IntersectionObserver(function(en){
+      en.forEach(function(e){ if(e.isIntersecting){ animateCount(e.target); ob.unobserve(e.target); }});
+    }, {threshold:.5});
+    for(var i=0;i<nums.length;i++) ob.observe(nums[i]);
+    function animateCount(el){
+      var target = parseFloat(el.getAttribute('data-target'));
+      var suffix = el.getAttribute('data-suffix')||'';
+      var isDecimal = el.getAttribute('data-decimal')==='true';
+      var dur = 1400, start = performance.now();
+      el.classList.add('counting');
+      function tick(now){
+        var p = Math.min((now-start)/dur,1);
+        var ease = p===1 ? 1 : 1-Math.pow(2,-10*p);
+        el.textContent = (isDecimal?(target*ease).toFixed(1):Math.round(target*ease)) + suffix;
+        if(p<1) requestAnimationFrame(tick);
+        else{ el.textContent=(isDecimal?target.toFixed(1):target)+suffix; setTimeout(function(){el.classList.remove('counting');},400);}
+      }
+      requestAnimationFrame(tick);
+    }
+  })();
+})();
+</script>
+<script src="auth.js" defer></script>
+</body>
+</html>
