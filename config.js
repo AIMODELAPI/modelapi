@@ -1,10 +1,9 @@
 // ============================================================
 // ModelAPI 配置文件
-// 把下面这串换成你在 Clerk 后台拿到的 Publishable Key
-// 格式类似：pk_test_xxxxxxxxxxxxxxxx 或 pk_live_xxxxxxxxxxxxxxxx
-// 获取位置：Clerk 后台 → API Keys → Publishable key
-// （这个 Key 是公开可见的，可以放心放在前端；真正保密的是 Secret Key，不要放进来）
+// 当前使用纯前端演示登录，无需外部服务密钥
+// 如果将来要切换回 Clerk/Auth0 真实登录，在这里配置即可
 // ============================================================
 window.APP_CONFIG = {
-  CLERK_PUBLISHABLE_KEY: 'REPLACE_WITH_YOUR_CLERK_PUBLISHABLE_KEY'
+  // 登录方式: 'demo' (纯前端演示) | 'clerk' | 'auth0'
+  AUTH_MODE: 'demo'
 };
