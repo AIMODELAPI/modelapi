@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harness 智能缓存 — ModelAPI | 让 1 美元 ≈ 5 美元</title>
+<meta name="description" content="ModelAPI Harness 智能缓存引擎：通过提高缓存命中率，让同样的预算买到更多 AI 能力，高命中场景下 1 美元≈5 美元。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="modelapi-demo.css">
+<script src="config.js" defer></script>
+<style>
+/* ══ Harness 页专属样式 ══ */
+.hr-hero{padding:90px 0 40px;text-align:center}
+.hr-hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;margin:18px 0 14px;background:linear-gradient(90deg,var(--text) 35%,var(--neon));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hr-hero p{color:var(--muted);max-width:660px;margin:0 auto;font-size:1.08rem}
+
+/* 大数字展示 */
+.big-ratio{margin:30px auto;max-width:560px;text-align:center}
+.big-ratio .br-num{font-size:clamp(3rem,9vw,5.5rem);font-weight:800;line-height:1;background:linear-gradient(90deg,var(--neon),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 40px rgba(76,201,255,.25)}
+.big-ratio .br-sub{color:var(--muted);margin-top:8px;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.95rem}
+
+/* 交互模拟器 */
+.sim{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:32px;margin-top:24px}
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.sim-controls .ctrl{margin-bottom:24px}
+.sim-controls label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:10px;font-family:"JetBrains Mono",ui-monospace,monospace;letter-spacing:.3px}
+.sim-controls label b{color:var(--neon);font-size:1.05rem}
+.sim-controls input[type=range]{width:100%;accent-color:var(--neon);height:6px}
+.sim-controls input[type=number]{width:100%;padding:10px 14px;border-radius:var(--radius-md);background:#0d0d18;border:1px solid var(--border);color:var(--text);font-size:1rem;font-family:"JetBrains Mono",ui-monospace,monospace;outline:none}
+.sim-controls input[type=number]:focus{border-color:var(--neon);box-shadow:0 0 0 3px rgba(76,201,255,.12)}
+
+.sim-result{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:28px}
+.sim-result .sr-row{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--border)}
+.sim-result .sr-row:last-child{border-bottom:none}
+.sim-result .sr-l{color:var(--muted);font-size:.92rem}
+.sim-result .sr-v{font-size:1.5rem;font-weight:800;color:var(--text);font-family:"JetBrains Mono",ui-monospace,monospace}
+.sim-result .sr-v.neon{color:var(--neon);text-shadow:0 0 16px rgba(76,201,255,.3)}
+.sim-result .sr-v.green{color:var(--green)}
+.sim-result .ratio-bar{margin-top:18px}
+
+/* 对比表 */
+.cmp-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:.95rem}
+.cmp-table th{padding:14px 16px;text-align:left;background:var(--bg-2);border-bottom:2px solid var(--border-2);color:var(--neon);font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.85rem}
+.cmp-table td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--muted)}
+.cmp-table td:first-child{color:var(--text);font-weight:600}
+.cmp-table .good{color:var(--neon);font-weight:700}
+
+.note-inline{color:var(--muted-2);font-size:.82rem;margin-top:14px;font-family:"JetBrains Mono",ui-monospace,monospace;line-height:1.6}
+
+@media(max-width:880px){ .sim-grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<header class="nav" id="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="pricing.html">定价</a>
+      <a href="playground.html">Playground</a>
+      <a href="harness.html">Harness</a>
+      <a href="why-modelapi.html">为什么选 ModelAPI</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+    <a class="btn btn-primary" href="login.html" id="navCta">免费开始</a>
+    <span id="nav-auth"></span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hr-hero">
+  <div class="wrap">
+    <span class="badge">Harness · 智能缓存引擎</span>
+    <h1>让 1 美元，<br>用出 5 美元的效果</h1>
+    <p>同样的预算，为什么有人能多买好几倍 AI 能力？秘密就在 Harness —— 在请求到达模型之前，自动完成缓存匹配与上下文复用。命中率越高，省得越多。</p>
+    <div class="big-ratio">
+      <div class="br-num" id="heroRatio">1.00×</div>
+      <div class="br-sub">高命中场景下，每 1 美元 ≈ <span id="heroDollar">5.00</span> 美元实际价值</div>
+    </div>
+  </div>
+</section>
+
+<!-- 原理流程 -->
+<section class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow">工作原理</span>
+    <h2>Harness 在你看不见的地方做了什么</h2>
+    <p>每一次调用，都会先过 Harness 这一关。</p>
+  </div>
+  <div class="harness-flow">
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-title">请求进入</div>
+        <div class="step-desc">你的调用先到达 Harness 智能网关</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-title">缓存匹配</div>
+        <div class="step-desc">对系统提示与上下文做哈希匹配</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-num highlight">3</div>
+        <div class="step-title">命中即取</div>
+        <div class="step-desc">相同/相似请求直接取缓存结果</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-title">折扣计费</div>
+        <div class="step-desc">命中部分按 1 折计费，completion 零费用</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 交互模拟器 -->
+<section class="wrap" style="margin-top:40px">
+  <div class="sec-head">
+    <span class="eyebrow">算给你看</span>
+    <h2>拖动滑块，看 1 美元能变成几美元</h2>
+    <p>模型假设：命中时 prompt 按 1 折计费、completion 直接复用（零费用）。命中率越高，等效倍率越高。</p>
+  </div>
+  <div class="sim">
+    <div class="sim-grid">
+      <div class="sim-controls">
+        <div class="ctrl">
+          <label>每月 API 支出（美元）：<b id="spendLabel">$1,000</b></label>
+          <input type="number" id="spend" value="1000" min="0" step="100">
+        </div>
+        <div class="ctrl">
+          <label>缓存命中率：<b id="hitLabel">80%</b></label>
+          <input type="range" id="hit" min="0" max="100" value="80">
+        </div>
+        <p class="note-inline">提示：聊天机器人、客服、批量相似问答等场景，命中率普遍可达 70%–95%。</p>
+      </div>
+      <div class="sim-result">
+        <div class="sr-row"><span class="sr-l">等效获得价值</span><span class="sr-v neon" id="effVal">$0</span></div>
+        <div class="sr-row"><span class="sr-l">每月省下</span><span class="sr-v green" id="saveVal">$0</span></div>
+        <div class="sr-row"><span class="sr-l">效率倍率</span><span class="sr-v" id="multVal">1.00×</span></div>
+        <div class="ratio-bar"><div class="ratio-fill" id="ratioFill" style="width:0%"></div></div>
+        <div class="eff-sub" style="display:flex;justify-content:space-between;margin-top:8px;font-size:.8rem;color:var(--muted);font-family:'JetBrains Mono',monospace"><span>1×</span><span>5×</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 对比表 -->
+  <table class="cmp-table">
+    <thead><tr><th>缓存命中率</th><th>效率倍率</th><th>每 $1,000 支出等效价值</th><th>每月省下</th></tr></thead>
+    <tbody>
+      <tr><td>0%（关闭 Harness）</td><td>1.00×</td><td>$1,000</td><td class="good">$0</td></tr>
+      <tr><td>50%</td><td>2.00×</td><td>$2,000</td><td class="good">$1,000</td></tr>
+      <tr><td>80%</td><td>3.33×</td><td>$3,333</td><td class="good">$2,333</td></tr>
+      <tr><td>100%（满命中）</td><td class="good">5.00×</td><td class="good">$5,000</td><td class="good">$4,000</td></tr>
+    </tbody>
+  </table>
+  <p class="note-inline">* 以上为示意性测算，用于直观说明缓存复用的费效比；实际倍率取决于你的流量结构、模型与上下文长度。配置真实上游后可在 Playground 实时观察。</p>
+</section>
+
+<!-- CTA -->
+<section class="wrap" style="margin-top:40px">
+  <div class="cta-band">
+    <h2>不想听原理？直接试</h2>
+    <p>打开 Playground，连点几次「再发一次」，亲眼看着成本归零、倍率往上跳。</p>
+    <a class="btn btn-primary" href="playground.html">进入 Playground →</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="brand"><span class="brand-mark">◆</span> ModelAPI</div>
+      <p class="footer-tag">Intelligence, Orchestrated.</p>
+    </div>
+    <div class="footer-cols">
+      <div><h4>产品</h4><a href="index.html">首页</a><a href="pricing.html">定价</a><a href="playground.html">Playground</a><a href="harness.html">Harness</a></div>
+      <div><h4>资源</h4><a href="faq.html">FAQ</a><a href="faq.html">文档</a></div>
+      <div><h4>公司</h4><a href="why-modelapi.html">关于我们</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 ModelAPI · 多模型 AI 编排云平台 · 官方授权 AI 网关，智能缓存中间件。</div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var spend=$('#spend'), hit=$('#hit');
+  function fmt(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+  function recalc(){
+    var S=parseFloat(spend.value)||0;
+    var r=parseInt(hit.value,10)/100;
+    // 模型：满命中时等效 5x → M = 1/(1-0.8r)
+    var M = 1/(1-0.8*r);
+    if(M>5) M=5; if(M<1) M=1;
+    var effVal=S*M;
+    var save=S*(M-1);
+    $('#spendLabel').textContent=fmt(S);
+    $('#hitLabel').textContent=Math.round(r*100)+'%';
+    $('#effVal').textContent=fmt(effVal);
+    $('#saveVal').textContent=fmt(save);
+    $('#multVal').textContent=M.toFixed(2)+'×';
+    $('#heroRatio').textContent=M.toFixed(2)+'×';
+    $('#heroDollar').textContent=M.toFixed(2);
+    var pct=Math.max(0,Math.min(100,(M-1)/4*100));
+    $('#ratioFill').style.width=pct+'%';
+  }
+  spend.addEventListener('input',recalc);
+  hit.addEventListener('input',recalc);
+  recalc();
+})();
+</script>
+<script src="auth.js" defer></script>
+</body>
+</html>
