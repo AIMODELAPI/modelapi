@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ModelAPI — 多模型 AI 编排云平台 | Intelligence, Orchestrated.</title>
-<meta name="description" content="ModelAPI 是多模型 AI 编排云平台。两行代码，接入 100+ 模型——稳定、便宜、好用，像用水电一样用 AI。Intelligence, Orchestrated.">
+<title>AIModelAPI — 多模型 AI 编排云平台 | Intelligence, Orchestrated.</title>
+<meta name="description" content="AIModelAPI 是订阅制多模型 AI 编排云平台（BYOK）。两行代码，接入 100+ 模型——稳定、透明、好用，像用水电一样用 AI。Intelligence, Orchestrated.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
@@ -14,12 +14,12 @@
 {
   "@context":"https://schema.org",
   "@type":"SoftwareApplication",
-  "name":"ModelAPI",
+  "name":"AIModelAPI",
   "applicationCategory":"DeveloperApplication",
   "operatingSystem":"Web, API",
   "description":"多模型 AI 编排云平台（AI 基础设施 SaaS），统一端点接入 100+ 模型，兼容 OpenAI SDK。",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
-  "publisher":{"@type":"Organization","name":"ModelAPI"}
+  "publisher":{"@type":"Organization","name":"AIModelAPI"}
 }
 </script>
 </head>
@@ -27,13 +27,13 @@
 
 <header class="nav" id="navbar">
   <div class="nav-inner">
-    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
+    <a class="brand" href="index.html"><span class="brand-mark">◆</span> AIModelAPI</a>
     <nav class="nav-links">
       <a href="index.html">首页</a>
       <a href="pricing.html">定价</a>
       <a href="playground.html">Playground</a>
       <a href="harness.html">Harness</a>
-      <a href="why-modelapi.html">为什么选 ModelAPI</a>
+      <a href="why-modelapi.html">为什么选 AIModelAPI</a>
       <a href="faq.html">FAQ</a>
     </nav>
     <a class="btn btn-primary" href="login.html" id="navCta">免费开始</a>
@@ -55,7 +55,7 @@
 
     <h1 class="reveal reveal-delay-2">让每一次模型调用，<br>都像<span class="accent">打开一盏灯</span>那么简单。</h1>
 
-    <p class="lead reveal reveal-delay-3">ModelAPI 是多模型 AI 编排云平台。两行代码，接入 100+ 模型——<strong style="color:var(--neon)">Harness 智能引擎</strong>让同样的预算买到更多价值，像用水电一样用 AI。</p>
+    <p class="lead reveal reveal-delay-3">AIModelAPI 是多模型 AI 编排云平台。两行代码，接入 100+ 模型——<strong style="color:var(--neon)">Harness 智能引擎</strong>让同样的预算买到更多价值，像用水电一样用 AI。</p>
 
     <div class="hero-cta reveal reveal-delay-4">
       <a class="btn btn-primary" href="pricing.html">免费开始</a>
@@ -66,7 +66,7 @@
 <span class="code-line"><span class="c"># 就这么两行，就能开始用</span></span><br>
 <span class="code-line"><span class="k">from</span> openai <span class="k">import</span> OpenAI</span><br>
 <span class="code-line">client = OpenAI(</span><br>
-<span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;base_url=<span class="s">"https://api.modelapi.ai/v1"</span>,</span><br>
+<span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;base_url=<span class="s">"https://api.aimodelapi.top/v1"</span>,</span><br>
 <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;api_key=<span class="s">"YOUR_KEY"</span></span><br>
 <span class="code-line">)</span><br>
 <span class="code-line"><span class="c"># 然后像平时一样，调用任意模型</span></span><span class="cursor"></span>
@@ -78,14 +78,14 @@
 <section id="value-section">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">为什么大家用 ModelAPI</span>
-      <h2>你说的"简单快捷便宜好用稳定"，我们全包了</h2>
+      <span class="eyebrow">为什么大家用 AIModelAPI</span>
+      <h2>你说的"简单快捷好用稳定"，我们全包了</h2>
       <p>不跟你讲黑话。这五个词，就是我们对你的承诺。</p>
     </div>
     <div class="grid grid-4">
       <div class="card reveal reveal-delay-1"><div class="ico">💡</div><h3>简单</h3><p>不用学一堆接口。一个兼容 OpenAI SDK 的端点，两行代码，模型随便换。</p></div>
       <div class="card reveal reveal-delay-2"><div class="ico">⚡</div><h3>快捷</h3><p>智能路由自动挑最快最稳的通道，响应不卡顿，体验顺滑。</p></div>
-      <div class="card reveal reveal-delay-3"><div class="ico">💰</div><h3>便宜</h3><p>官方价 0 加价 + <strong style="color:var(--neon)">Harness 智能缓存引擎</strong>：Prompt 缓存命中就不重复计费，高命中场景下 <strong>$1 ≈ $5</strong> 的实际效果。</p></div>
+      <div class="card reveal reveal-delay-3"><div class="ico">💰</div><h3>省钱</h3><p>订阅即用 + <strong style="color:var(--neon)">Harness 智能缓存引擎</strong>：Prompt 缓存命中就不重复消耗你的密钥额度，高命中场景下你的密钥账单最高省 <strong>5 倍</strong>。</p></div>
       <div class="card reveal reveal-delay-4"><div class="ico">🛡️</div><h3>稳定</h3><p>99.9% 可用率，企业级调度，关键时刻不掉链子。</p></div>
     </div>
   </div>
@@ -101,7 +101,7 @@
     </div>
     <div class="grid grid-4">
       <div class="card reveal reveal-delay-1"><div class="big">100+</div><p>可调度模型，覆盖主流与大模型厂商</p></div>
-      <div class="card reveal reveal-delay-2"><div class="big">0</div><p>官方价加价——你付的就是官方价</p></div>
+      <div class="card reveal reveal-delay-2"><div class="big">1</div><p>个统一端点——api.aimodelapi.top/v1 接入 100+ 模型</p></div>
       <div class="card reveal reveal-delay-3"><div class="big">2 行</div><p>代码即可迁移，兼容 OpenAI SDK</p></div>
       <div class="card reveal reveal-delay-4"><div class="big">99.9%</div><p>平台可用率，企业级稳定性</p></div>
     </div>
@@ -155,17 +155,17 @@
 <footer class="footer">
   <div class="footer-inner">
     <div>
-      <div class="brand"><span class="brand-mark">◆</span> ModelAPI</div>
+      <div class="brand"><span class="brand-mark">◆</span> AIModelAPI</div>
       <p class="footer-tag">Intelligence, Orchestrated.</p>
     </div>
     <div class="footer-cols">
-      <div><h4>产品</h4><a href="index.html">首页</a><a href="pricing.html">定价</a><a href="why-modelapi.html">为什么选 ModelAPI</a></div>
+      <div><h4>产品</h4><a href="index.html">首页</a><a href="pricing.html">定价</a><a href="why-modelapi.html">为什么选 AIModelAPI</a></div>
       <div><h4>资源</h4><a href="faq.html">FAQ</a><a href="faq.html">文档</a></div>
       <div><h4>公司</h4><a href="why-modelapi.html">关于我们</a></div>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 ModelAPI · 多模型 AI 编排云平台 · 让模型公司为你工作的基础设施。</div>
-</footer>
+  <div class="footer-bottom">© 2026 AIModelAPI · 多模型 AI 编排云平台 · 让模型公司为你工作的基础设施。</div>
+<div class="legal-bar"><a href="privacy.html">隐私政策 Privacy</a> · <a href="terms.html">服务条款 Terms</a> · <a href="about.html">关于我们 About</a> · <a href="contact.html">联系我们 Contact</a></div></footer>
 
 <!-- ═════ 动效引擎 ═════ -->
 <script>
