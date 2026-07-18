@@ -1,0 +1,9 @@
+{
+  "name": "modelapi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ModelAPI · BYOK SaaS 官网与 API 网关 Demo（赛博朋克版）",
+  "engines": {
+    "node": "22.x"
+  }
+}
