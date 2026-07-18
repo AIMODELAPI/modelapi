@@ -1,5 +1,5 @@
 // ============================================================
-// AIModelAPI · Harness 智能缓存 + 计费引擎（零依赖，Node 22 全局 fetch）
+// ModelAPI · Harness 智能缓存 + 计费引擎（零依赖，Node 22 全局 fetch）
 // 被本地 server.js 与 Vercel serverless api/chat.js 共用
 //
 // 合规说明：本引擎是「官方授权 AI 网关」的缓存中间件样本实现。
@@ -21,7 +21,7 @@ const MODELS = {
 const CACHE_DISCOUNT = 0.1;
 
 // BYOK 服务商兼容端点映射（OpenAI 兼容协议；用户导入自己的密钥后由此路由）
-// 仅做请求转发与缓存，密钥由用户自有，AIModelAPI 不持有、不转售。
+// 仅做请求转发与缓存，密钥由用户自有，ModelAPI 不持有、不转售。
 const PROVIDERS = {
   OpenAI: 'https://api.openai.com/v1',
   DeepSeek: 'https://api.deepseek.com/v1',
@@ -111,7 +111,7 @@ async function callUpstream(body, env, model) {
 function demoResponse(body, model) {
   const userMsg = ((body.messages || []).filter(m => m.role === 'user').pop() || {}).content || '你好';
   const content =
-    '[Harness 演示模式] 已通过 AIModelAPI 统一端点调度 ' + priceOf(model).label + '。\n\n' +
+    '[Harness 演示模式] 已通过 ModelAPI 统一端点调度 ' + priceOf(model).label + '。\n\n' +
     '你的问题是：「' + userMsg + '」\n\n' +
     '这是一段仿真回复，用于展示 API 调用与 Harness 缓存效果。' +
     '配置真实上游密钥（UPSTREAM_API_KEY）后，这里会返回模型真实输出。';

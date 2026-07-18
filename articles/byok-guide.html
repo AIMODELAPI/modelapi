@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What Is BYOK (Bring Your Own Key) for AI Infrastructure? — AIModelAPI</title>
-<meta name="description" content="BYOK lets you keep your own provider API keys while using a single orchestration endpoint. Learn what BYOK means, why teams choose it, and how AIModelAPI implements it without reselling tokens.">
+<title>What Is BYOK (Bring Your Own Key) for AI Infrastructure? — ModelAPI</title>
+<meta name="description" content="BYOK lets you keep your own provider API keys while using a single orchestration endpoint. Learn what BYOK means, why teams choose it, and how ModelAPI implements it without reselling tokens.">
 <link rel="canonical" href="https://aimodelapi.top/articles/byok-guide.html">
 <link rel="stylesheet" href="../modelapi-demo.css">
 <script type="application/ld+json">
@@ -12,11 +12,11 @@
   "@context":"https://schema.org",
   "@type":"Article",
   "headline":"What Is BYOK (Bring Your Own Key) for AI Infrastructure?",
-  "description":"BYOK lets you keep your own provider API keys while using a single orchestration endpoint. Learn what BYOK means, why teams choose it, and how AIModelAPI implements it without reselling tokens.",
+  "description":"BYOK lets you keep your own provider API keys while using a single orchestration endpoint. Learn what BYOK means, why teams choose it, and how ModelAPI implements it without reselling tokens.",
   "datePublished":"2026-07-15",
   "dateModified":"2026-07-15",
-  "author":{"@type":"Organization","name":"AIModelAPI"},
-  "publisher":{"@type":"Organization","name":"AIModelAPI"},
+  "author":{"@type":"Organization","name":"ModelAPI"},
+  "publisher":{"@type":"Organization","name":"ModelAPI"},
   "mainEntityOfPage":{"@type":"WebPage","@id":"https://aimodelapi.top/articles/byok-guide.html"}
 }
 </script>
@@ -25,9 +25,9 @@
   "@context":"https://schema.org",
   "@type":"FAQPage",
   "mainEntity":[
-    {"@type":"Question","name":"Which AI providers does AIModelAPI support with BYOK?","acceptedAnswer":{"@type":"Answer","text":"You bring your own API keys for providers whose SDKs are OpenAI-compatible — including OpenAI, DeepSeek, Qwen, and similar. AIModelAPI routes your requests through one unified endpoint at api.aimodelapi.top/v1."}},
-    {"@type":"Question","name":"Is my API key safe with a BYOK setup?","acceptedAnswer":{"@type":"Answer","text":"Yes. Your key is used only to authorize requests to your chosen provider on your behalf. AIModelAPI does not resell your key and never bills you for tokens — your provider bills you directly under your own account."}},
-    {"@type":"Question","name":"Do you resell model tokens?","acceptedAnswer":{"@type":"Answer","text":"No. AIModelAPI is a subscription-based orchestration platform (SaaS). We are not a model provider and we do not resell model tokens. You pay us a transparent subscription; your provider bills you for actual model usage."}},
+    {"@type":"Question","name":"Which AI providers does ModelAPI support with BYOK?","acceptedAnswer":{"@type":"Answer","text":"You bring your own API keys for providers whose SDKs are OpenAI-compatible — including OpenAI, DeepSeek, Qwen, and similar. ModelAPI routes your requests through one unified endpoint at api.aimodelapi.top/v1."}},
+    {"@type":"Question","name":"Is my API key safe with a BYOK setup?","acceptedAnswer":{"@type":"Answer","text":"Yes. Your key is used only to authorize requests to your chosen provider on your behalf. ModelAPI does not resell your key and never bills you for tokens — your provider bills you directly under your own account."}},
+    {"@type":"Question","name":"Do you resell model tokens?","acceptedAnswer":{"@type":"Answer","text":"No. ModelAPI is a subscription-based orchestration platform (SaaS). We are not a model provider and we do not resell model tokens. You pay us a transparent subscription; your provider bills you for actual model usage."}},
     {"@type":"Question","name":"How is this different from an AI API reseller?","acceptedAnswer":{"@type":"Answer","text":"A reseller buys tokens wholesale and resells them to you at a markup. We do the opposite: you keep your own provider account and key, and we provide the orchestration layer (unified endpoint, smart caching, usage management) on top. Your billing stays with your provider."}}
   ]
 }
@@ -35,7 +35,7 @@
 </head>
 <body>
 <header class="nav" id="navbar"><div class="nav-inner">
-  <a class="brand" href="../index.html"><span class="brand-mark">◆</span> AIModelAPI</a>
+  <a class="brand" href="../index.html"><span class="brand-mark">◆</span> ModelAPI</a>
   <nav class="nav-links">
     <a href="../index.html">Home</a>
     <a href="../pricing.html">Pricing</a>
@@ -50,23 +50,23 @@
   <div class="article-head">
     <span class="tag">Concepts</span>
     <h1>What Is BYOK (Bring Your Own Key) for AI Infrastructure?</h1>
-    <div class="article-meta"><span>Published 2026-07-15</span><span>8 min read</span><span>By AIModelAPI Team</span></div>
+    <div class="article-meta"><span>Published 2026-07-15</span><span>8 min read</span><span>By ModelAPI Team</span></div>
   </div>
 
-  <p class="lead">If you build on large language models, you have probably felt the pain of wiring up multiple providers, managing keys, and watching costs climb. BYOK — Bring Your Own Key — is a deployment model that fixes the ownership problem first. This guide explains what it is, why teams adopt it, and how AIModelAPI implements it as a subscription orchestration layer (not a token reseller).</p>
+  <p class="lead">If you build on large language models, you have probably felt the pain of wiring up multiple providers, managing keys, and watching costs climb. BYOK — Bring Your Own Key — is a deployment model that fixes the ownership problem first. This guide explains what it is, why teams adopt it, and how ModelAPI implements it as a subscription orchestration layer (not a token reseller).</p>
 
   <div class="toc">
     <h4>On this page</h4>
     <a href="#what">1. What BYOK actually means</a>
     <a href="#why">2. Why teams choose BYOK</a>
-    <a href="#how">3. How AIModelAPI implements BYOK</a>
+    <a href="#how">3. How ModelAPI implements BYOK</a>
     <a href="#vs">4. BYOK vs. an AI API reseller</a>
     <a href="#faq">5. Frequently asked questions</a>
   </div>
 
   <h2 id="what">What BYOK actually means</h2>
   <p>BYOK stands for <strong>Bring Your Own Key</strong>. In the AI context, it means <em>you</em> supply the API key for the model provider (OpenAI, DeepSeek, Qwen, and others), and the platform you use routes requests through your account. You own the relationship with the provider; the platform provides the plumbing.</p>
-  <p>Think of it like using your own electricity account with a smart power strip. The strip does not sell you electricity — your utility does. The strip just makes the power safer, smarter, and easier to manage. In AI terms, AIModelAPI is the smart strip: a unified, OpenAI-compatible endpoint (<a class="inline" href="https://api.aimodelapi.top/v1">api.aimodelapi.top/v1</a>) with smart caching and usage management sitting on top of <em>your</em> provider accounts.</p>
+  <p>Think of it like using your own electricity account with a smart power strip. The strip does not sell you electricity — your utility does. The strip just makes the power safer, smarter, and easier to manage. In AI terms, ModelAPI is the smart strip: a unified, OpenAI-compatible endpoint (<a class="inline" href="https://api.aimodelapi.top/v1">api.aimodelapi.top/v1</a>) with smart caching and usage management sitting on top of <em>your</em> provider accounts.</p>
 
   <h2 id="why">Why teams choose BYOK</h2>
   <ul>
@@ -76,12 +76,12 @@
     <li><strong>Portability.</strong> Because you are not locked into a reseller's token pool, you can switch orchestration layers without migrating your provider accounts.</li>
   </ul>
 
-  <h2 id="how">How AIModelAPI implements BYOK</h2>
-  <p>AIModelAPI is a <strong>subscription-based, bring-your-own-key orchestration platform</strong>. Here is the flow:</p>
+  <h2 id="how">How ModelAPI implements BYOK</h2>
+  <p>ModelAPI is a <strong>subscription-based, bring-your-own-key orchestration platform</strong>. Here is the flow:</p>
   <ol>
     <li>You subscribe to a plan and import your own provider API keys in the dashboard.</li>
     <li>You point your application at one endpoint — <code>https://api.aimodelapi.top/v1</code> — using the standard OpenAI SDK.</li>
-    <li>AIModelAPI routes each request to your chosen provider using <em>your</em> key, and applies <strong>Harness</strong> smart caching so repeated context is not billed twice.</li>
+    <li>ModelAPI routes each request to your chosen provider using <em>your</em> key, and applies <strong>Harness</strong> smart caching so repeated context is not billed twice.</li>
     <li>You get unified usage analytics across providers, while your provider bills you for the underlying tokens.</li>
   </ol>
   <blockquote>We are not a model provider and we do not resell model tokens. You bring the keys; we bring the orchestration.</blockquote>
@@ -97,20 +97,20 @@
 
   <h2 id="faq">Frequently asked questions</h2>
   <div class="faq-embed">
-    <div class="q"><h4>Which AI providers does AIModelAPI support with BYOK?</h4><p>You bring your own API keys for providers whose SDKs are OpenAI-compatible — including OpenAI, DeepSeek, Qwen, and similar. AIModelAPI routes your requests through one unified endpoint at api.aimodelapi.top/v1.</p></div>
-    <div class="q"><h4>Is my API key safe with a BYOK setup?</h4><p>Yes. Your key is used only to authorize requests to your chosen provider on your behalf. AIModelAPI does not resell your key and never bills you for tokens — your provider bills you directly under your own account.</p></div>
-    <div class="q"><h4>Do you resell model tokens?</h4><p>No. AIModelAPI is a subscription-based orchestration platform (SaaS). We are not a model provider and we do not resell model tokens. You pay us a transparent subscription; your provider bills you for actual model usage.</p></div>
+    <div class="q"><h4>Which AI providers does ModelAPI support with BYOK?</h4><p>You bring your own API keys for providers whose SDKs are OpenAI-compatible — including OpenAI, DeepSeek, Qwen, and similar. ModelAPI routes your requests through one unified endpoint at api.aimodelapi.top/v1.</p></div>
+    <div class="q"><h4>Is my API key safe with a BYOK setup?</h4><p>Yes. Your key is used only to authorize requests to your chosen provider on your behalf. ModelAPI does not resell your key and never bills you for tokens — your provider bills you directly under your own account.</p></div>
+    <div class="q"><h4>Do you resell model tokens?</h4><p>No. ModelAPI is a subscription-based orchestration platform (SaaS). We are not a model provider and we do not resell model tokens. You pay us a transparent subscription; your provider bills you for actual model usage.</p></div>
     <div class="q"><h4>How is this different from an AI API reseller?</h4><p>A reseller buys tokens wholesale and resells them to you at a markup. We do the opposite: you keep your own provider account and key, and we provide the orchestration layer (unified endpoint, smart caching, usage management) on top. Your billing stays with your provider.</p></div>
   </div>
 
   <div class="article-foot">
-    <span>© 2026 AIModelAPI · BYOK orchestration SaaS</span>
+    <span>© 2026 ModelAPI · BYOK orchestration SaaS</span>
     <a href="../blog.html">← Back to all articles</a>
   </div>
 </article>
 
 <footer class="footer"><div class="footer-inner">
-  <div><div class="brand"><span class="brand-mark">◆</span> AIModelAPI</div><div class="footer-tag">Intelligence, Orchestrated.</div></div>
+  <div><div class="brand"><span class="brand-mark">◆</span> ModelAPI</div><div class="footer-tag">Intelligence, Orchestrated.</div></div>
   <div class="footer-cols">
     <div><h4>Product</h4><a href="../index.html">Home</a><a href="../pricing.html">Pricing</a><a href="../harness.html">Harness</a></div>
     <div><h4>Resources</h4><a href="../blog.html">Blog</a><a href="../faq.html">FAQ</a><a href="../playground.html">Playground</a></div>

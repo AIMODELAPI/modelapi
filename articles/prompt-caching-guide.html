@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How Prompt Caching Cuts Your AI API Spend (Without Changing Your Code) — AIModelAPI</title>
+<title>How Prompt Caching Cuts Your AI API Spend (Without Changing Your Code) — ModelAPI</title>
 <meta name="description" content="Prompt caching is the biggest lever for lowering AI costs. Learn how Harness reuses context across requests so your own key is billed only for what is new — up to 5× savings.">
 <link rel="canonical" href="https://aimodelapi.top/articles/prompt-caching-guide.html">
 <link rel="stylesheet" href="../modelapi-demo.css">
@@ -15,8 +15,8 @@
   "description":"Prompt caching is the biggest lever for lowering AI costs. Learn how Harness reuses context across requests so your own key is billed only for what is new — up to 5× savings.",
   "datePublished":"2026-07-17",
   "dateModified":"2026-07-17",
-  "author":{"@type":"Organization","name":"AIModelAPI"},
-  "publisher":{"@type":"Organization","name":"AIModelAPI"},
+  "author":{"@type":"Organization","name":"ModelAPI"},
+  "publisher":{"@type":"Organization","name":"ModelAPI"},
   "mainEntityOfPage":{"@type":"WebPage","@id":"https://aimodelapi.top/articles/prompt-caching-guide.html"}
 }
 </script>
@@ -28,14 +28,14 @@
     {"@type":"Question","name":"Does prompt caching change the model's output?","acceptedAnswer":{"@type":"Answer","text":"No. Caching only reuses the input context across requests; the model still reasons over the full prompt each time. Output quality is identical to sending the full prompt on every call."}},
     {"@type":"Question","name":"Does caching work with my own provider key (BYOK)?","acceptedAnswer":{"@type":"Answer","text":"Yes. Harness operates as an orchestration layer in front of your own key. Cache hits reduce how many tokens your provider bills you for, because only the new, unique tokens are sent to the model."}},
     {"@type":"Question","name":"What kinds of workloads benefit most from caching?","acceptedAnswer":{"@type":"Answer","text":"Workloads with long, stable context repeated across calls — system prompts, few-shot examples, retrieved documents, and agent loops. The more overlap between requests, the higher the cache hit rate."}},
-    {"@type":"Question","name":"Is there a catch?","acceptedAnswer":{"@type":"Answer","text":"No lock-in and no markup. You keep your own provider account and key; Harness is part of your AIModelAPI subscription. Savings depend on your cache hit rate, which varies by workload."}}
+    {"@type":"Question","name":"Is there a catch?","acceptedAnswer":{"@type":"Answer","text":"No lock-in and no markup. You keep your own provider account and key; Harness is part of your ModelAPI subscription. Savings depend on your cache hit rate, which varies by workload."}}
   ]
 }
 </script>
 </head>
 <body>
 <header class="nav" id="navbar"><div class="nav-inner">
-  <a class="brand" href="../index.html"><span class="brand-mark">◆</span> AIModelAPI</a>
+  <a class="brand" href="../index.html"><span class="brand-mark">◆</span> ModelAPI</a>
   <nav class="nav-links">
     <a href="../index.html">Home</a>
     <a href="../pricing.html">Pricing</a>
@@ -50,10 +50,10 @@
   <div class="article-head">
     <span class="tag">Cost Optimization</span>
     <h1>How Prompt Caching Cuts Your AI API Spend (Without Changing Your Code)</h1>
-    <div class="article-meta"><span>Published 2026-07-17</span><span>7 min read</span><span>By AIModelAPI Team</span></div>
+    <div class="article-meta"><span>Published 2026-07-17</span><span>7 min read</span><span>By ModelAPI Team</span></div>
   </div>
 
-  <p class="lead">Most AI cost is paid on the <em>input</em> side — the prompt you send on every single call. If your prompt is long and barely changes between calls, you are paying to resend the same text thousands of times. Prompt caching fixes exactly that. Here is how it works, and how AIModelAPI's Harness engine applies it to your own provider key.</p>
+  <p class="lead">Most AI cost is paid on the <em>input</em> side — the prompt you send on every single call. If your prompt is long and barely changes between calls, you are paying to resend the same text thousands of times. Prompt caching fixes exactly that. Here is how it works, and how ModelAPI's Harness engine applies it to your own provider key.</p>
 
   <div class="toc">
     <h4>On this page</h4>
@@ -69,14 +69,14 @@
   <p>With a BYOK setup, this means your own provider bills you less — because fewer tokens cross the wire. The orchestration layer (Harness) is what recognizes the overlap and serves the cached prefix.</p>
 
   <h2 id="how">How Harness applies caching</h2>
-  <p>Harness is the smart-caching engine inside AIModelAPI. When you route traffic through <code>https://api.aimodelapi.top/v1</code> with your own key, Harness:</p>
+  <p>Harness is the smart-caching engine inside ModelAPI. When you route traffic through <code>https://api.aimodelapi.top/v1</code> with your own key, Harness:</p>
   <ol>
     <li>Fingerprints the stable prefix of each request (system prompt, instructions, retrieved docs).</li>
     <li>Serves matching prefixes from cache instead of re-sending them to the provider.</li>
     <li>Reports cache hit rate in your usage dashboard so you can see the savings.</li>
   </ol>
   <blockquote>High cache-hit workloads can cut your effective token bill by up to 5× — same model, same output, far less spend on your provider invoice.</blockquote>
-  <p>None of this requires changing your application code. If you already call an OpenAI-compatible endpoint, you just point it at AIModelAPI and Harness goes to work.</p>
+  <p>None of this requires changing your application code. If you already call an OpenAI-compatible endpoint, you just point it at ModelAPI and Harness goes to work.</p>
 
   <h2 id="when">When caching helps most</h2>
   <ul>
@@ -91,7 +91,7 @@
   <p>Don't take the "up to 5×" claim on faith — measure it. After routing traffic through Harness for a week, compare:</p>
   <ul>
     <li>Your provider's token invoice <em>before</em> vs. <em>after</em> enabling caching.</li>
-    <li>The cache hit rate shown in the AIModelAPI dashboard.</li>
+    <li>The cache hit rate shown in the ModelAPI dashboard.</li>
     <li>Output quality, which should be identical (caching does not alter model behavior).</li>
   </ul>
   <p>If your hit rate is low, the usual cause is a prompt prefix that changes every call (e.g., a timestamp or random ID at the top). Move volatile content to the end of the prompt and watch the hit rate climb.</p>
@@ -101,17 +101,17 @@
     <div class="q"><h4>Does prompt caching change the model's output?</h4><p>No. Caching only reuses the input context across requests; the model still reasons over the full prompt each time. Output quality is identical to sending the full prompt on every call.</p></div>
     <div class="q"><h4>Does caching work with my own provider key (BYOK)?</h4><p>Yes. Harness operates as an orchestration layer in front of your own key. Cache hits reduce how many tokens your provider bills you for, because only the new, unique tokens are sent to the model.</p></div>
     <div class="q"><h4>What kinds of workloads benefit most from caching?</h4><p>Workloads with long, stable context repeated across calls — system prompts, few-shot examples, retrieved documents, and agent loops. The more overlap between requests, the higher the cache hit rate.</p></div>
-    <div class="q"><h4>Is there a catch?</h4><p>No lock-in and no markup. You keep your own provider account and key; Harness is part of your AIModelAPI subscription. Savings depend on your cache hit rate, which varies by workload.</p></div>
+    <div class="q"><h4>Is there a catch?</h4><p>No lock-in and no markup. You keep your own provider account and key; Harness is part of your ModelAPI subscription. Savings depend on your cache hit rate, which varies by workload.</p></div>
   </div>
 
   <div class="article-foot">
-    <span>© 2026 AIModelAPI · BYOK orchestration SaaS</span>
+    <span>© 2026 ModelAPI · BYOK orchestration SaaS</span>
     <a href="../blog.html">← Back to all articles</a>
   </div>
 </article>
 
 <footer class="footer"><div class="footer-inner">
-  <div><div class="brand"><span class="brand-mark">◆</span> AIModelAPI</div><div class="footer-tag">Intelligence, Orchestrated.</div></div>
+  <div><div class="brand"><span class="brand-mark">◆</span> ModelAPI</div><div class="footer-tag">Intelligence, Orchestrated.</div></div>
   <div class="footer-cols">
     <div><h4>Product</h4><a href="../index.html">Home</a><a href="../pricing.html">Pricing</a><a href="../harness.html">Harness</a></div>
     <div><h4>Resources</h4><a href="../blog.html">Blog</a><a href="../faq.html">FAQ</a><a href="../playground.html">Playground</a></div>

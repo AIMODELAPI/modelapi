@@ -1,6 +1,6 @@
-# AIModelAPI 赛博朋克版 Demo · 部署与上线说明
+# ModelAPI 赛博朋克版 Demo · 部署与上线说明
 
-这是一个**可直接上网访问**的 AIModelAPI 官网 Demo（赛博朋克风格），包含：
+这是一个**可直接上网访问**的 ModelAPI 官网 Demo（赛博朋克风格），包含：
 - 官网静态页面（首页 / 定价 / 为什么选 / FAQ / 登录）
 - **真实可调用的后端原型**：一个统一端点，调用 100+ 模型，并内置 **Harness 智能缓存引擎**
 - **Playground 调用控制台** 与 **Harness 1美元=5美元 说明页**
@@ -11,7 +11,7 @@
 deploy-cyberpunk/
 ├── index.html          首页（含 Playground 入口）
 ├── pricing.html        定价（已去除 USDT，仅保留"不接收加密货币"声明）
-├── why-modelapi.html   为什么选 AIModelAPI（无公司法定名）
+├── why-modelapi.html   为什么选 ModelAPI（无公司法定名）
 ├── faq.html            FAQ（中/英/日/韩 四语切换）
 ├── login.html          登录页（纯前端演示登录）
 ├── playground.html     ★ API 调用控制台（你要的"调用端口"）

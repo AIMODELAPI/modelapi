@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Playground — AIModelAPI | 导入密钥 · 调用端口 · 接入 Agent</title>
-<meta name="description" content="AIModelAPI Playground：订阅后导入你自己的 API 密钥，拿到一个统一调用端口，直接接进你的 Agent。Harness 智能缓存让你的密钥账单最多省 5 倍。">
+<title>Playground — ModelAPI | 导入密钥 · 调用端口 · 接入 Agent</title>
+<meta name="description" content="ModelAPI Playground：订阅后导入你自己的 API 密钥，拿到一个统一调用端口，直接接进你的 Agent。Harness 智能缓存让你的密钥账单最多省 5 倍。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
@@ -138,13 +138,13 @@
 
 <header class="nav" id="navbar">
   <div class="nav-inner">
-    <a class="brand" href="index.html"><span class="brand-mark">◆</span> AIModelAPI</a>
+    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
     <nav class="nav-links">
       <a href="index.html">首页</a>
       <a href="pricing.html">定价</a>
       <a href="playground.html">Playground</a>
       <a href="harness.html">Harness</a>
-      <a href="why-modelapi.html">为什么选 AIModelAPI</a>
+      <a href="why-modelapi.html">为什么选 ModelAPI</a>
       <a href="faq.html">FAQ</a><a href="blog.html">博客</a>
     </nav>
     <a class="btn btn-primary" href="login.html" id="navCta">免费开始</a>
@@ -157,14 +157,14 @@
   <div class="wrap">
     <span class="badge">BYOK · 调用端点 · Agent 接入</span>
     <h1>导入你的密钥，一个端口接你的 Agent</h1>
-    <p>AIModelAPI 是订阅制 SaaS 平台，<b style="color:var(--text)">不卖模型 token</b>。你订阅套餐后导入自己的 API 密钥，拿到一个统一调用端口，直接接进你自己的 Agent——多模型、智能缓存、用量管理，一站搞定。</p>
+    <p>ModelAPI 是订阅制 SaaS 平台，<b style="color:var(--text)">不卖模型 token</b>。你订阅套餐后导入自己的 API 密钥，拿到一个统一调用端口，直接接进你自己的 Agent——多模型、智能缓存、用量管理，一站搞定。</p>
 
     <!-- 三步流程 -->
     <div class="step-flow">
       <div class="step-card">
         <div class="num">STEP 01</div>
         <h4>① 导入你的 API 密钥</h4>
-        <p>订阅后把 OpenAI / DeepSeek / 通义 等自有密钥导入账号。密钥归你，AIModelAPI 不持有、不转售。</p>
+        <p>订阅后把 OpenAI / DeepSeek / 通义 等自有密钥导入账号。密钥归你，ModelAPI 不持有、不转售。</p>
       </div>
       <div class="step-card">
         <div class="num">STEP 02</div>
@@ -198,7 +198,7 @@
       <div class="byok-panel">
         <div class="byok-head"><span class="lock">🔐</span><span class="byok-title">导入你的 API 密钥（BYOK）</span></div>
         <input type="text" id="apiKey" placeholder="粘贴你的 OpenAI / DeepSeek / 通义 密钥，如 sk-...">
-        <div class="byok-sub">密钥仅用于本次调用转发到你的服务商，AIModelAPI 不存储、不转售你的密钥与额度。</div>
+        <div class="byok-sub">密钥仅用于本次调用转发到你的服务商，ModelAPI 不存储、不转售你的密钥与额度。</div>
       </div>
 
       <div class="field">
@@ -211,7 +211,7 @@
       </div>
       <div class="field">
         <label>用户消息 Message</label>
-        <textarea id="userMsg" rows="4" placeholder="在这里输入你想问模型的话……">帮我用一句话介绍 AIModelAPI 的 Harness 引擎</textarea>
+        <textarea id="userMsg" rows="4" placeholder="在这里输入你想问模型的话……">帮我用一句话介绍 ModelAPI 的 Harness 引擎</textarea>
       </div>
       <div class="field-row">
         <div class="field">
@@ -270,7 +270,7 @@
   <div class="sec-head">
     <span class="eyebrow">三步接入</span>
     <h2>怎么接进你的 Agent</h2>
-    <p>你的 Agent 只需把 base_url 指向 AIModelAPI，密钥用你导入的那把。其余代码一行不动，Harness 缓存自动生效。</p>
+    <p>你的 Agent 只需把 base_url 指向 ModelAPI，密钥用你导入的那把。其余代码一行不动，Harness 缓存自动生效。</p>
   </div>
 
   <div class="agent-tabs">
@@ -290,7 +290,7 @@ curl https://api.aimodelapi.top/v1/chat/completions \
   <div class="how-code" id="code-python" style="display:none"><span class="k">from</span> openai <span class="k">import</span> OpenAI
 
 client = OpenAI(
-    base_url=<span class="s">"https://api.aimodelapi.top/v1"</span>,   <span class="c"># 指向 AIModelAPI 统一端口</span>
+    base_url=<span class="s">"https://api.aimodelapi.top/v1"</span>,   <span class="c"># 指向 ModelAPI 统一端口</span>
     api_key=<span class="s">"你的密钥（BYOK）"</span>,
 )
 resp = client.chat.completions.create(
@@ -302,7 +302,7 @@ resp = client.chat.completions.create(
   <div class="how-code" id="code-node" style="display:none"><span class="k">import</span> OpenAI <span class="k">from</span> <span class="s">"openai"</span>;
 
 <span class="k">const</span> client = <span class="k">new</span> OpenAI({
-  baseURL: <span class="s">"https://api.aimodelapi.top/v1"</span>,   <span class="c">// 指向 AIModelAPI 统一端口</span>
+  baseURL: <span class="s">"https://api.aimodelapi.top/v1"</span>,   <span class="c">// 指向 ModelAPI 统一端口</span>
   apiKey: <span class="s">"你的密钥（BYOK）"</span>,
 });
 <span class="k">const</span> resp = <span class="k">await</span> client.chat.completions.create({
@@ -310,12 +310,12 @@ resp = client.chat.completions.create(
   messages: [{ role: <span class="s">"user"</span>, content: <span class="s">"你好"</span> }],
 });</div>
 
-  <div class="how-code" id="code-agent" style="display:none"><span class="c"># LangChain：把 AIModelAPI 端口喂给你的 Agent / Chain</span>
+  <div class="how-code" id="code-agent" style="display:none"><span class="c"># LangChain：把 ModelAPI 端口喂给你的 Agent / Chain</span>
 <span class="k">from</span> langchain_openai <span class="k">import</span> ChatOpenAI
 
 llm = ChatOpenAI(
     model=<span class="s">"gpt-4o-mini"</span>,
-    base_url=<span class="s">"https://api.aimodelapi.top/v1"</span>,   <span class="c"># 指向 AIModelAPI 统一端口</span>
+    base_url=<span class="s">"https://api.aimodelapi.top/v1"</span>,   <span class="c"># 指向 ModelAPI 统一端口</span>
     api_key=<span class="s">"你的密钥（BYOK）"</span>,
     temperature=<span class="s">0.7</span>,
 )
@@ -330,7 +330,7 @@ llm = ChatOpenAI(
 <footer class="footer">
   <div class="footer-inner">
     <div>
-      <div class="brand"><span class="brand-mark">◆</span> AIModelAPI</div>
+      <div class="brand"><span class="brand-mark">◆</span> ModelAPI</div>
       <p class="footer-tag">Intelligence, Orchestrated.</p>
     </div>
     <div class="footer-cols">
@@ -339,7 +339,7 @@ llm = ChatOpenAI(
       <div><h4>公司</h4><a href="why-modelapi.html">关于我们</a></div>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 AIModelAPI · 订阅制多模型编排 SaaS · 官方授权 AI 网关，智能缓存中间件，不转售模型 token。</div>
+  <div class="footer-bottom">© 2026 ModelAPI · 订阅制多模型编排 SaaS · 官方授权 AI 网关，智能缓存中间件，不转售模型 token。</div>
 <div class="legal-bar"><a href="privacy.html">隐私政策 Privacy</a> · <a href="terms.html">服务条款 Terms</a> · <a href="about.html">关于我们 About</a> · <a href="contact.html">联系我们 Contact</a></div></footer>
 
 <script>
@@ -390,7 +390,7 @@ llm = ChatOpenAI(
 
   function setStatus(online, msg){
     var dot=$('#connDot'), txt=$('#connText');
-    if(online){ dot.className='status-dot on'; txt.textContent= msg||'已连接 AIModelAPI 端点'; }
+    if(online){ dot.className='status-dot on'; txt.textContent= msg||'已连接 ModelAPI 端点'; }
     else { dot.className='status-dot off'; txt.textContent= msg||'离线 · 演示模拟（未连接后端）'; }
   }
 
@@ -416,7 +416,7 @@ llm = ChatOpenAI(
     setSending(true);
     fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
       .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-      .then(function(d){ setStatus(true,'已连接 AIModelAPI 端点（BYOK 转发到你的服务商）'); renderResult(d,isRepeat); })
+      .then(function(d){ setStatus(true,'已连接 ModelAPI 端点（BYOK 转发到你的服务商）'); renderResult(d,isRepeat); })
       .catch(function(){ setStatus(false); renderResult(simulate(payload),isRepeat); })
       .finally(function(){ setSending(false); });
   }

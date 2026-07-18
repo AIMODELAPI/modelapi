@@ -1,5 +1,5 @@
 // ============================================================
-// AIModelAPI · 本地开发服务器（零依赖）
+// ModelAPI · 本地开发服务器（零依赖）
 // 同时托管静态站点与 /api/* 接口
 // 运行：node server.js  →  http://localhost:3000
 // ============================================================
@@ -93,6 +93,6 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   const mode = process.env.UPSTREAM_API_KEY ? '真实上游（已配置密钥）' : '演示仿真（未配置密钥）';
-  console.log('AIModelAPI playground → http://localhost:' + PORT);
+  console.log('ModelAPI playground → http://localhost:' + PORT);
   console.log('Harness 模式：' + mode);
 });
