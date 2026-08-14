@@ -97,6 +97,30 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
       }
     }
+    if (req.method === 'POST' && req.url === '/api/video') {
+      const raw = await readBody(req);
+      let parsed; try { parsed = JSON.parse(raw || '{}'); } catch { return sendJson(res, 400, { error: 'Invalid JSON' }); }
+      const prompt = (parsed.prompt || '').trim();
+      if (!prompt) return sendJson(res, 400, { error: 'prompt 不能为空' });
+      const baseUrl = (process.env.VIDEO_BASE_URL || 'https://api.aimodelapi.ai/v1').replace(/\/$/, '');
+      const apiKey = process.env.VIDEO_API_KEY;
+      const model = parsed.model || 'WAN-t2v-2.7';
+      const duration = Number(parsed.duration) || 5;
+      const resolution = parsed.resolution || '720p';
+      if (!apiKey) return sendJson(res, 200, { pending: true, message: '视频生成功能对接中，敬请期待。', prompt, duration, resolution });
+      try {
+        const up = await fetch(baseUrl + '/video/generations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+          body: JSON.stringify({ model, prompt, duration, resolution }),
+        });
+        if (!up.ok) return sendJson(res, 502, { error: '视频生成上游返回 ' + up.status });
+        const data = await up.json();
+        return sendJson(res, 200, data);
+      } catch (e) {
+        return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
+      }
+    }
     if (req.method === 'GET' && req.url === '/api/models') {
       return sendJson(res, 200, { models: core.getModels() });
     }
