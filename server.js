@@ -76,6 +76,27 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
       }
     }
+    if (req.method === 'POST' && req.url === '/api/image') {
+      const raw = await readBody(req);
+      let parsed; try { parsed = JSON.parse(raw || '{}'); } catch { return sendJson(res, 400, { error: 'Invalid JSON' }); }
+      const prompt = (parsed.prompt || '').trim();
+      if (!prompt) return sendJson(res, 400, { error: 'prompt 不能为空' });
+      const baseUrl = (process.env.IMAGE_BASE_URL || 'https://api.aimodelapi.ai/v1').replace(/\/$/, '');
+      const apiKey = process.env.IMAGE_API_KEY;
+      if (!apiKey) return sendJson(res, 200, { demo: true, message: '未配置 IMAGE_API_KEY，当前为演示模式。请在环境变量中配置 IMAGE_API_KEY 后即可真实生图。', prompt });
+      try {
+        const up = await fetch(baseUrl + '/images/generations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+          body: JSON.stringify({ model: parsed.model || 'IMG-bl-wan2.7-image', prompt, n: parsed.n || 1, size: parsed.size || '1024x1024' }),
+        });
+        if (!up.ok) return sendJson(res, 502, { error: '生图上游返回 ' + up.status });
+        const data = await up.json();
+        return sendJson(res, 200, data);
+      } catch (e) {
+        return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
+      }
+    }
     if (req.method === 'GET' && req.url === '/api/models') {
       return sendJson(res, 200, { models: core.getModels() });
     }
