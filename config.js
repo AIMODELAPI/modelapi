@@ -1,9 +1,11 @@
 // ============================================================
 // ModelAPI 配置文件
-// 当前使用纯前端演示登录，无需外部服务密钥
-// 如果将来要切换回 Clerk/Auth0 真实登录，在这里配置即可
+// 会员体系：登录 + 用量记录用 Supabase（publishable key 公开安全）
 // ============================================================
 window.APP_CONFIG = {
-  // 登录方式: 'demo' (纯前端演示) | 'clerk' | 'auth0'
-  AUTH_MODE: 'demo'
+  // 登录方式: 'demo' (纯前端演示) | 'supabase' (真实)
+  AUTH_MODE: 'supabase',
+  // Supabase 公开配置（publishable key 设计上就是给前端用的，不算机密）
+  SUPABASE_URL: 'https://leoubjkvyqyqsfxvmlbk.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_vpkUnETUNsl3UCJ_PFkbKA_GSIgogDQ'
 };

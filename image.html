@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js" defer></script>
 <style>
   .gen-wrap{max-width:880px;margin:60px auto 80px;padding:0 20px}
   .gen-head{text-align:center;margin-bottom:36px}
@@ -154,6 +156,17 @@
     resultEl.classList.remove('show');
   }
 
+  // 记录用量到 Supabase（未登录或失败不影响主流程）
+  async function logGenUsage(prompt, url) {
+    try {
+      if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) return;
+      if (!window.supabase) return;
+      var c = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
+      var s = await c.auth.getSession();
+      if (!s || !s.data || !s.data.session) return; // 未登录，跳过
+      await c.from('gen_logs').insert({ prompt: prompt });
+    } catch (_) { /* 静默失败，不影响生图 */ }
+
   genBtn.addEventListener('click', function () {
     var prompt = promptEl.value.trim();
     if (!prompt) { showError('请先输入你想生成的画面描述'); return; }
@@ -186,6 +199,8 @@
       if (url) {
         resultImg.src = url;
         resultEl.classList.add('show');
+        // 成功后：尝试记录用量（未登录则跳过）
+        logGenUsage(prompt, url).catch(function () {});
       } else {
         showError('未获取到图片结果，请稍后重试');
       }

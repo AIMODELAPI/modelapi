@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js" defer></script>
 <style>
   .login-wrap{max-width:440px;margin:100px auto 80px;padding:0 20px}
   .login-card{
@@ -20,17 +22,21 @@
     background:linear-gradient(90deg,var(--neon),var(--purple),var(--green));
   }
   .login-card h1{font-size:1.75rem;font-weight:800;margin-bottom:4px;color:var(--text)}
-  .login-sub{color:var(--muted);margin-bottom:32px;font-size:.95rem;line-height:1.6}
-  
+  .login-sub{color:var(--muted);margin-bottom:24px;font-size:.95rem;line-height:1.6}
+
+  /* 登录/注册 切换 */
+  .auth-tabs{display:flex;gap:0;background:#0d0d18;border-radius:var(--radius-md);padding:4px;margin-bottom:24px}
+  .auth-tab{flex:1;padding:10px;text-align:center;border-radius:8px;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--muted);transition:all .2s}
+  .auth-tab.active{background:linear-gradient(135deg,var(--neon),#3aa0e0);color:#fff}
+
   /* 表单 */
   .form-group{margin-bottom:20px}
   .form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase}
   .form-group input{
     width:100%;padding:12px 16px;border-radius:var(--radius-md);
-    background:#0d0d18;border:1px solid var(--border);
-    color:var(--text);font-size:1rem;font-family:'Inter',sans-serif;
-    outline:none;transition:border-color .2s,box-shadow .2s;
-    box-sizing:border-box;
+    background:#0d0d18;border:1px solid var(--border);color:var(--text);
+    font-size:1rem;font-family:'Inter',sans-serif;outline:none;
+    transition:border-color .2s,box-shadow .2s;box-sizing:border-box;
   }
   .form-group input:focus{border-color:var(--neon);box-shadow:0 0 0 3px rgba(76,201,255,.15)}
   .form-group input::placeholder{color:#555}
@@ -39,34 +45,21 @@
     width:100%;padding:14px;border-radius:var(--radius-lg);
     background:linear-gradient(135deg,var(--neon),#3aa0e0);color:#fff;
     font-size:1.05rem;font-weight:700;border:none;cursor:pointer;
-    transition:transform .15s,box-shadow .2s;letter-spacing:.5px;
-    margin-top:4px;
+    transition:transform .15s,box-shadow .2s;letter-spacing:.5px;margin-top:4px;
   }
   .btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(76,201,255,.35)}
   .btn-login:active{transform:scale(.98)}
-
-  .login-divider{text-align:center;margin:22px 0;position:relative;color:#555;font-size:.85rem}
-  .login-divider::before,.login-divider::after{content:'';position:absolute;top:50%;width:30%;height:1px;background:var(--border)}
-  .login-divider::before{left:0}.login-divider::after{right:0}
-
-  .social-btns{display:flex;gap:12px;margin-top:18px}
-  .social-btns button{
-    flex:1;padding:10px;border-radius:var(--radius-md);
-    background:#161625;border:1px solid var(--border);color:#ccc;
-    font-size:.88rem;font-weight:600;cursor:pointer;
-    transition:all .2s;font-family:'Inter',sans-serif;
-  }
-  .social-btns button:hover{background:#1e1e36;color:#fff;border-color:var(--neon)}
+  .btn-login:disabled{opacity:.6;cursor:not-allowed;transform:none}
 
   .login-error{background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.25);
     color:#ff8888;padding:10px 14px;border-radius:var(--radius-md);
     font-size:.87rem;margin-bottom:16px;display:none}
+  .login-success{background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.3);
+    color:#5ed99c;padding:10px 14px;border-radius:var(--radius-md);
+    font-size:.87rem;margin-bottom:16px;display:none}
 
   .login-foot{text-align:center;margin-top:26px;color:var(--muted-2);font-size:.85rem}
-  .login-foot a{color:var(--neon);text-decoration:none;font-weight:600}
-  .login-foot a:hover{text-decoration:underline}
 
-  /* 登录成功动画 */
   @keyframes loginPulse{
     0%{box-shadow:0 0 0 0 rgba(76,201,255,.4)}
     70%{box-shadow:0 0 0 12px rgba(76,201,255,0)}
@@ -79,11 +72,11 @@
 
 <header class="nav" id="navbar">
   <div class="nav-inner">
-    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
+    <a class="brand" href="index.html"><span class="brand-mark">◆</span>> ModelAPI</a>
     <nav class="nav-links">
-      <a href="index.html">首页</a><a href="pricing.html">定价</a>
-      <a href="playground.html">Playground</a><a href="harness.html">Harness</a>
-      <a href="why-modelapi.html">为什么选 ModelAPI</a><a href="faq.html">FAQ</a>
+      <a href="index.html">首页</a>
+      <a href="image.html">AI 生图</a>
+      <a href="video.html">AI 视频</a>
     </nav>
     <a class="btn btn-primary" href="index.html">返回首页</a>
   </div>
@@ -91,108 +84,130 @@
 
 <div class="login-wrap">
   <div class="login-card">
-    <h1>登录 ModelAPI</h1>
+    <h1 id="authTitle">登录 ModelAPI</h1>
     <p class="login-sub">Intelligence, Orchestrated.<br>登录后体验你的多模型 AI 编排控制台。</p>
 
     <div class="login-error" id="loginError"></div>
+    <div class="login-success" id="loginSuccess"></div>
 
-    <form id="loginForm" autocomplete="off">
+    <div class="auth-tabs">
+      <div class="auth-tab active" data-mode="signin">登录</div>
+      <div class="auth-tab" data-mode="signup">注册</div>
+    </div>
+
+    <form id="authForm" autocomplete="off">
       <div class="form-group">
         <label for="email">邮箱地址</label>
         <input type="email" id="email" placeholder="your@email.com" required autofocus>
       </div>
       <div class="form-group">
-        <label for="password">密码</label>
-        <input type="password" id="password" placeholder="输入任意密码即可演示" required minlength="1">
+        <label for="password">密码（至少 6 位）</label>
+        <input type="password" id="password" placeholder="••••••••" required minlength="6">
       </div>
       <button type="submit" class="btn-login" id="submitBtn">登 录</button>
     </form>
 
-    <div class="login-divider">或使用以下方式</div>
-
-    <div class="social-btns">
-      <button type="button" onclick="socialLogin('GitHub')">GitHub</button>
-      <button type="button" onclick="socialLogin('Google')">Google</button>
-      <button type="button" onclick="socialLogin('WeChat')">微信</button>
-    </div>
-
-    <p class="login-foot">还没有账号？<a href="#" onclick="showSignupHint(event)">立即注册</a></p>
+    <p class="login-foot">用 Supabase 真实账号体系 · 数据安全加密</p>
   </div>
 </div>
 
-<script>
-// ── 纯前端演示登录（无需后端/无需外部 CDN）──
-// 输入任意邮箱+任意密码即可登录，登录态存 localStorage
-
-function showLoginError(msg) {
-  var el = document.getElementById('loginError');
-  el.textContent = msg;
-  el.style.display = 'block';
-  setTimeout(function () { el.style.display = 'none'; }, 3500);
-}
-
-document.getElementById('loginForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-  var email = document.getElementById('email').value.trim();
-  var password = document.getElementById('password').value;
-
-  if (!email || !password) {
-    showLoginError('请输入邮箱和密码');
-    return;
-  }
-
-  var btn = document.getElementById('submitBtn');
-  btn.textContent = '登录中…';
-  btn.classList.add('logging-in');
-
-  // 模拟网络延迟（让登录感觉真实）
-  setTimeout(function () {
-    // 存入 localStorage 作为登录态
-    var user = {
-      email: email,
-      name: email.split('@')[0] || '用户',
-      loginTime: new Date().toISOString()
-    };
-    localStorage.setItem('modelapi_user', JSON.stringify(user));
-
-    btn.textContent = '✓ 登录成功';
-    btn.style.background = 'linear-gradient(135deg, #29e67b, #1bc56a)';
-
-    setTimeout(function () {
-      window.location.href = 'index.html';
-    }, 500);
-  }, 900);
-});
-
-function socialLogin(provider) {
-  var emailMap = {
-    'GitHub': 'user@github.com',
-    'Google': 'user@gmail.com',
-    'WeChat': 'user@wechat.com'
-  };
-  document.getElementById('email').value = emailMap[provider] || 'demo@aimodelapi.top';
-  document.getElementById('password').value = '12345678';
-  showLoginError('已自动填充「' + provider + '」演示账号，点击登录继续');
-}
-
-function showSignupHint(e) {
-  if (e) e.preventDefault();
-  showLoginError('注册功能即将开放 — 演示版输入任意邮箱密码即可登录');
-}
-
-// ── 如果已经登录，跳回首页 ──
-(function checkLoggedIn() {
-  try {
-    var u = JSON.parse(localStorage.getItem('modelapi_user') || 'null');
-    if (u && u.email) {
-      window.location.href = 'index.html';
-    }
-  } catch (_) {}
-})();
-</script>
 <footer class="footer">
   <div class="footer-bottom">© 2026 ModelAPI · 订阅制多模型编排 SaaS · 官方授权 AI 网关，智能缓存中间件，不转售模型 token。</div>
-<div class="legal-bar"><a href="privacy.html">隐私政策 Privacy</a> · <a href="terms.html">服务条款 Terms</a> · <a href="about.html">关于我们 About</a> · <a href="contact.html">联系我们 Contact</a></div></footer>
+  <div class="legal-bar"><a href="privacy.html">隐私政策 Privacy</a> · <a href="terms.html">服务条款 Terms</a> · <a href="about.html">关于我们 About</a> · <a href="contact.html">联系我们 Contact</a></div>
+</footer>
+
+<script>
+(function () {
+  var sb = null;
+  var mode = 'signin';
+
+  function showErr(msg) {
+    var el = document.getElementById('loginError');
+    el.textContent = msg; el.style.display = 'block';
+    var s = document.getElementById('loginSuccess'); if (s) s.style.display = 'none';
+  }
+  function showOk(msg) {
+    var el = document.getElementById('loginSuccess');
+    el.textContent = msg; el.style.display = 'block';
+    var e = document.getElementById('loginError'); if (e) e.style.display = 'none';
+  }
+  function clearMsg() {
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('loginSuccess').style.display = 'none';
+  }
+
+  function getClient() {
+    if (sb) return sb;
+    if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) return null;
+    sb = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
+    return sb;
+  }
+
+  // 切换登录/注册
+  document.querySelectorAll('.auth-tab').forEach(function (t) {
+    t.addEventListener('click', function () {
+      document.querySelectorAll('.auth-tab').forEach(function (x) { x.classList.remove('active'); });
+      t.classList.add('active');
+      mode = t.getAttribute('data-mode');
+      document.getElementById('submitBtn').textContent = mode === 'signup' ? '注 册' : '登 录';
+      document.getElementById('authTitle').textContent = mode === 'signup' ? '注册 ModelAPI 账号' : '登录 ModelAPI';
+      clearMsg();
+    });
+  });
+
+  // 提交
+  document.getElementById('authForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    clearMsg();
+    var email_v = document.getElementById('email').value.trim();
+    var password = document.getElementById('password').value;
+    if (!email_v || password.length < 6) { showErr('请输入邮箱和至少 6 位密码'); return; }
+
+    var client = getClient();
+    if (!client) { showErr('会员系统未配置，请刷新页面或稍后再试'); return; }
+
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = '处理中…'; btn.classList.add('logging-in');
+
+    try {
+      if (mode === 'signup') {
+        var r = await client.auth.signUp({ email: email_v, password: password });
+        if (r.error) throw r.error;
+        if (r.data.session) {
+          showOk('注册成功，正在进入...');
+          setTimeout(function () { window.location.href = 'dashboard.html'; }, 500);
+        } else {
+          showOk('注册成功！请去邮箱点击确认链接后再登录（开发模式可能不需要确认）');
+          btn.textContent = '注 册'; btn.disabled = false; btn.classList.remove('logging-in');
+        }
+      } else {
+        var r2 = await client.auth.signInWithPassword({ email: email_v, password: password });
+        if (r2.error) throw r2.error;
+        showOk('登录成功，正在进入...');
+        setTimeout(function () { window.location.href = 'dashboard.html'; }, 500);
+      }
+    } catch (err) {
+      btn.disabled = false; btn.textContent = mode === 'signup' ? '注 册' : '登 录'; btn.classList.remove('logging-in');
+      var msg = (err && err.message) || String(err);
+      if (/already registered|already been registered/i.test(msg)) msg = '这个邮箱已注册，请直接登录';
+      else if (/invalid login|invalid credentials/i.test(msg)) msg = '邮箱或密码不对';
+      else if (/password/i.test(msg) && /short|6/i.test(msg)) msg = '密码至少 6 位';
+      else if (/email/i.test(msg) && /invalid/i.test(msg)) msg = '邮箱格式不对';
+      showErr(msg);
+    }
+  });
+
+  // 已登录则跳转 dashboard
+  (async function () {
+    var client = getClient();
+    if (!client) return;
+    var s = await client.auth.getSession();
+    if (s && s.data && s.data.session) {
+      window.location.href = 'dashboard.html';
+    }
+  })();
+})();
+</script>
 
 </body>
 </html>

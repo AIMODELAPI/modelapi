@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的用量 — ModelAPI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="modelapi-demo.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js" defer></script>
+<style>
+  .dash-wrap{max-width:960px;margin:60px auto 80px;padding:0 20px}
+  .dash-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+  .dash-head h1{font-size:1.8rem;font-weight:800;color:var(--text)}
+  .dash-head .email{color:var(--muted);font-size:.92rem;margin-top:6px}
+  .btn-logout{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 18px;border-radius:var(--radius-md);font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;font-size:.88rem;transition:all .2s}
+  .btn-logout:hover{border-color:#ff8888;color:#ff8888}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:32px}
+  .stat-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:22px 20px}
+  .stat-card .label{color:var(--muted);font-size:.82rem;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+  .stat-card .value{font-size:1.9rem;font-weight:800;color:var(--text)}
+  .stat-card .sub{color:var(--muted-2);font-size:.8rem;margin-top:4px}
+
+  .list{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);overflow:hidden}
+  .list-head{padding:16px 20px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text);font-size:1.02rem}
+  .list-body{max-height:520px;overflow:auto}
+  .list-item{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border)}
+  .list-item:last-child{border-bottom:none}
+  .list-item .prompt{color:var(--text);font-size:.95rem;line-height:1.55;flex:1;word-break:break-word}
+  .list-item .meta{color:var(--muted-2);font-size:.78rem;margin-top:4px;font-family:'JetBrains Mono',monospace}
+  .list-item .time{color:var(--muted);font-size:.82rem;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+
+  .empty{padding:48px 20px;text-align:center;color:var(--muted-2)}
+  .empty .big{font-size:1.1rem;margin-bottom:8px;color:var(--muted)}
+
+  .loading{text-align:center;color:var(--muted);padding:40px;font-size:.95rem}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(76,201,255,.25);border-top-color:var(--neon);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-3px;margin-right:8px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><span class="brand-mark">◆</span>> ModelAPI</a>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="image.html">AI 生图</a>
+      <a href="video.html">AI 视频</a>
+    </nav>
+    <a class="btn btn-primary" href="image.html">去生图</a>
+  </div>
+</header>
+
+<div class="dash-wrap">
+  <div class="dash-head">
+    <div>
+      <h1>我的用量</h1>
+      <p class="email" id="userEmail">登录中…</p>
+    </div>
+    <button class="btn-logout" id="logoutBtn">退出登录</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="label">累计生成</div>
+      <div class="value" id="statTotal">—</div>
+      <div class="sub">次</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">最近一次</div>
+      <div class="value" id="statLast">—</div>
+      <div class="sub" id="statLastTime">—</div>
+    </div>
+  </div>
+
+  <div class="list">
+    <div class="list-head">历史记录</div>
+    <div class="list-body" id="listBody">
+      <div class="loading"><span class="spinner"></span>加载中…</div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom">© 2026 ModelAPI · 订阅制多模型编排 SaaS · 官方授权 AI 网关，智能缓存中间件，不转售模型 token。</div>
+  <div class="legal-bar"><a href="privacy.html">隐私政策 Privacy</a> · <a href="terms.html">服务条款 Terms</a> · <a href="about.html">关于我们 About</a> · <a href="contact.html">联系我们 Contact</a></div>
+</footer>
+
+<script>
+(async function () {
+  function getClient() {
+    if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) return null;
+    return window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
+  }
+  var client = getClient();
+  if (!client) {
+    document.getElementById('userEmail').textContent = '会员系统未配置';
+    return;
+  }
+
+  // 1. 检查登录态
+  var sess = await client.auth.getSession();
+  var session = sess && sess.data && sess.data.session;
+  if (!session) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // 2. 显示邮箱
+  document.getElementById('userEmail').textContent = '已登录：' + (session.user.email || '—');
+
+  // 3. 退出登录
+  document.getElementById('logoutBtn').addEventListener('click', async function () {
+    await client.auth.signOut();
+    window.location.href = 'index.html';
+  });
+
+  // 4. 拉取用量
+  var body = document.getElementById('listBody');
+  try {
+    var r = await client.from('gen_logs').select('prompt, created_at').order('created_at', { ascending: false }).limit(50);
+    if (r.error) throw r.error;
+    var rows = r.data || [];
+    document.getElementById('statTotal').textContent = rows.length;
+
+    if (rows.length === 0) {
+      body.innerHTML = '<div class="empty"><div class="big">还没有记录</div>去「AI 生图」页面生成一张图，就会自动记录在这里。</div>';
+      return;
+    }
+
+    document.getElementById('statLast').textContent = rows[0].prompt ? rows[0].prompt.slice(0, 18) + (rows[0].prompt.length > 18 ? '…' : '') : '—';
+    document.getElementById('statLastTime').textContent = formatTime(rows[0].created_at);
+
+    var html = '';
+    rows.forEach(function (row) {
+      var p = (row.prompt || '').replace(/[<>&]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]; });
+      html += '<div class="list-item"><div><div class="prompt">' + p + '</div></div><div class="time">' + formatTime(row.created_at) + '</div></div>';
+    });
+    body.innerHTML = html;
+  } catch (e) {
+    body.innerHTML = '<div class="empty">加载失败：' + (e.message || String(e)) + '</div>';
+  }
+
+  function formatTime(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+})();
+</script>
+
+</body>
+</html>
