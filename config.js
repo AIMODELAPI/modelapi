@@ -6,6 +6,6 @@ window.APP_CONFIG = {
   // 登录方式: 'demo' (纯前端演示) | 'supabase' (真实)
   AUTH_MODE: 'supabase',
   // Supabase 公开配置（publishable key 设计上就是给前端用的，不算机密）
-  SUPABASE_URL: 'https://leoubjkvyqyqsfxvmlbk.supabase.co',
-  SUPABASE_ANON_KEY: 'sb_publishable_vpkUnETUNsl3UCJ_PFkbKA_GSIgogDQ'
+  SUPABASE_URL: 'https://czbyljudpcjzvyqgomoh.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_J_8Ftj7AwCYdTMW_6vloyQ_nk1dKIGP'
 };
