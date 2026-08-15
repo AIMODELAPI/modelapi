@@ -1,12 +1,11 @@
 // ============================================================
 // ModelAPI · 本地开发服务器（零依赖）
-// 同时托管静态站点与 /api/* 接口
+// 同时托管静态站点与 /api/image、/api/video 接口
 // 运行：node server.js  →  http://localhost:3000
 // ============================================================
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const core = require('./harness-core');
 
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
@@ -20,6 +19,7 @@ const MIME = {
   '.ico': 'image/x-icon',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
+  '.mp4': 'video/mp4',
   '.woff2': 'font/woff2',
 };
 
@@ -66,16 +66,7 @@ function serveStatic(req, res) {
 
 const server = http.createServer(async (req, res) => {
   try {
-    if (req.method === 'POST' && req.url === '/api/chat') {
-      const raw = await readBody(req);
-      let parsed; try { parsed = JSON.parse(raw || '{}'); } catch { return sendJson(res, 400, { error: 'Invalid JSON' }); }
-      try {
-        const out = await core.handleChat(parsed, process.env);
-        return sendJson(res, 200, out);
-      } catch (e) {
-        return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
-      }
-    }
+    // AI 生图
     if (req.method === 'POST' && req.url === '/api/image') {
       const raw = await readBody(req);
       let parsed; try { parsed = JSON.parse(raw || '{}'); } catch { return sendJson(res, 400, { error: 'Invalid JSON' }); }
@@ -97,6 +88,7 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
       }
     }
+    // AI 视频
     if (req.method === 'POST' && req.url === '/api/video') {
       const raw = await readBody(req);
       let parsed; try { parsed = JSON.parse(raw || '{}'); } catch { return sendJson(res, 400, { error: 'Invalid JSON' }); }
@@ -121,14 +113,13 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
       }
     }
-    if (req.method === 'GET' && req.url === '/api/models') {
-      return sendJson(res, 200, { models: core.getModels() });
-    }
-    if (req.method === 'GET' && req.url === '/api/harness/stats') {
-      return sendJson(res, 200, core.getStats());
-    }
+    // 健康检查
     if (req.method === 'GET' && req.url === '/api/health') {
-      return sendJson(res, 200, { ok: true, cache_mode: process.env.UPSTREAM_API_KEY ? 'live' : 'demo' });
+      return sendJson(res, 200, {
+        ok: true,
+        image: process.env.IMAGE_API_KEY ? 'live' : 'demo',
+        video: process.env.VIDEO_API_KEY ? 'live' : 'pending',
+      });
     }
     serveStatic(req, res);
   } catch (e) {
@@ -137,7 +128,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  const mode = process.env.UPSTREAM_API_KEY ? '真实上游（已配置密钥）' : '演示仿真（未配置密钥）';
-  console.log('ModelAPI playground → http://localhost:' + PORT);
-  console.log('Harness 模式：' + mode);
+  console.log('ModelAPI 生图/视频站 → http://localhost:' + PORT);
+  console.log('生图模式：' + (process.env.IMAGE_API_KEY ? '真实（已配置密钥）' : '演示（未配置密钥）'));
+  console.log('视频模式：' + (process.env.VIDEO_API_KEY ? '真实（已配置密钥）' : '对接中（未配置密钥）'));
 });

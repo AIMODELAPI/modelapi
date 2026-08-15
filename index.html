@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ModelAPI — 多模型 AI 编排云平台 | Intelligence, Orchestrated.</title>
-<meta name="description" content="ModelAPI 是订阅制多模型 AI 编排云平台（BYOK）。两行代码，接入 100+ 模型——稳定、透明、好用，像用水电一样用 AI。Intelligence, Orchestrated.">
+<title>ModelAPI — AI 生图与视频生成平台</title>
+<meta name="description" content="ModelAPI 专注 AI 图像与视频生成：输入一句文字描述，即可生成高质量图片与视频。由 aimodelapi.ai 提供底层 AI 能力。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
@@ -15,9 +15,9 @@
   "@context":"https://schema.org",
   "@type":"SoftwareApplication",
   "name":"ModelAPI",
-  "applicationCategory":"DeveloperApplication",
-  "operatingSystem":"Web, API",
-  "description":"多模型 AI 编排云平台（AI 基础设施 SaaS），统一端点接入 100+ 模型，兼容 OpenAI SDK。",
+  "applicationCategory":"MultimediaApplication",
+  "operatingSystem":"Web",
+  "description":"ModelAPI 是专注 AI 图像与视频生成的专业平台：输入文字描述即可生成高质量图片与视频，由 aimodelapi.ai 提供底层 AI 能力。",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
   "publisher":{"@type":"Organization","name":"ModelAPI"}
 }
@@ -33,14 +33,13 @@
       <a href="image.html">AI 生图</a>
       <a href="video.html">AI 视频</a>
     </nav>
-    <a class="btn btn-primary" href="login.html" id="navCta">免费开始</a>
+    <a class="btn btn-primary" href="image.html" id="navCta">免费开始</a>
     <span id="nav-auth"></span>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <!-- 动态光晕 -->
   <div class="hero-glow">
     <div class="glow-1"></div>
     <div class="glow-2"></div>
@@ -48,92 +47,67 @@
   </div>
 
   <div class="wrap">
-    <span class="badge reveal reveal-delay-1">Intelligence, Orchestrated.</span>
+    <span class="badge reveal reveal-delay-1">AI Image &amp; Video Generation</span>
 
-    <h1 class="reveal reveal-delay-2">让每一次模型调用，<br>都像<span class="accent">打开一盏灯</span>那么简单。</h1>
+    <h1 class="reveal reveal-delay-2">用一句话，<br>生成<span class="accent">图片和视频</span>。</h1>
 
-    <p class="lead reveal reveal-delay-3">ModelAPI 是多模型 AI 编排云平台。两行代码，接入 100+ 模型——<strong style="color:var(--neon)">Harness 智能引擎</strong>让同样的预算买到更多价值，像用水电一样用 AI。</p>
+    <p class="lead reveal reveal-delay-3">ModelAPI 是专注 <strong style="color:var(--neon)">AI 生图与 AI 视频</strong>的专业平台。把脑海里的画面写下来，通义万相 Wan 2.7 帮你把它变成图片和视频——高质量、稳定、合规。</p>
 
     <div class="hero-cta reveal reveal-delay-4">
-      <a class="btn btn-primary" href="pricing.html">免费开始</a>
-      <a class="btn btn-ghost" href="playground.html">试用 Playground</a>
-    </div>
-
-    <div class="hero-code reveal reveal-delay-5">
-<span class="code-line"><span class="c"># 就这么两行，就能开始用</span></span><br>
-<span class="code-line"><span class="k">from</span> openai <span class="k">import</span> OpenAI</span><br>
-<span class="code-line">client = OpenAI(</span><br>
-<span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;base_url=<span class="s">"https://api.aimodelapi.top/v1"</span>,</span><br>
-<span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;api_key=<span class="s">"YOUR_KEY"</span></span><br>
-<span class="code-line">)</span><br>
-<span class="code-line"><span class="c"># 然后像平时一样，调用任意模型</span></span><span class="cursor"></span>
+      <a class="btn btn-primary" href="image.html">开始生图</a>
+      <a class="btn btn-ghost" href="video.html">开始做视频</a>
     </div>
   </div>
 </section>
 
-<!-- 平台价值 -->
-<section id="value-section">
+<!-- 两大功能 -->
+<section id="features-section">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">为什么大家用 ModelAPI</span>
-      <h2>你说的"简单快捷好用稳定"，我们全包了</h2>
-      <p>不跟你讲黑话。这五个词，就是我们对你的承诺。</p>
+      <span class="eyebrow">我们能做什么</span>
+      <h2>两个功能，覆盖你的视觉创作</h2>
+      <p>不用学任何技术，输入文字，剩下的交给 AI。</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card reveal reveal-delay-1">
+        <div class="ico">🖼️</div>
+        <h3>AI 生图</h3>
+        <p>输入一句画面描述，生成高质量图片。支持 1:1 方形、16:9 横版、9:16 竖版，海报、头像、配图都能做。</p>
+        <a class="btn btn-primary" href="image.html" style="margin-top:14px">开始生图 →</a>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <div class="ico">🎬</div>
+        <h3>AI 视频</h3>
+        <p>输入一句画面描述，生成动态视频。支持 3 / 5 / 10 秒时长、480P / 720P 清晰度，短片素材一键生成。</p>
+        <a class="btn btn-ghost" href="video.html" style="margin-top:14px">开始做视频 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 平台特点 -->
+<section style="background:var(--bg-2)" id="value-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">为什么选 ModelAPI</span>
+      <h2>简单、好看、稳定、安心</h2>
+      <p>这四个词，是我们对每个创作者的承诺。</p>
     </div>
     <div class="grid grid-4">
-      <div class="card reveal reveal-delay-1"><div class="ico">💡</div><h3>简单</h3><p>不用学一堆接口。一个兼容 OpenAI SDK 的端点，两行代码，模型随便换。</p></div>
-      <div class="card reveal reveal-delay-2"><div class="ico">⚡</div><h3>快捷</h3><p>智能路由自动挑最快最稳的通道，响应不卡顿，体验顺滑。</p></div>
-      <div class="card reveal reveal-delay-3"><div class="ico">💰</div><h3>省钱</h3><p>订阅即用 + <strong style="color:var(--neon)">Harness 智能缓存引擎</strong>：Prompt 缓存命中就不重复消耗你的密钥额度，高命中场景下你的密钥账单最高省 <strong>5 倍</strong>。</p></div>
-      <div class="card reveal reveal-delay-4"><div class="ico">🛡️</div><h3>稳定</h3><p>99.9% 可用率，企业级调度，关键时刻不掉链子。</p></div>
+      <div class="card reveal reveal-delay-1"><div class="ico">💡</div><h3>简单</h3><p>不用学接口、不用配参数。输入一句话，点一下，就出图出片。</p></div>
+      <div class="card reveal reveal-delay-2"><div class="ico">🎨</div><h3>高质量</h3><p>底层使用通义万相 <strong style="color:var(--neon)">Wan 2.7</strong> 模型，画质出众、细节自然。</p></div>
+      <div class="card reveal reveal-delay-3"><div class="ico">⚡</div><h3>快速稳定</h3><p>企业级生成服务，出图快、出片稳，关键时刻不掉链子。</p></div>
+      <div class="card reveal reveal-delay-4"><div class="ico">🛡️</div><h3>合规安全</h3><p>官方授权 AI 生成平台，数据加密存储，用得安心。</p></div>
     </div>
   </div>
 </section>
 
-<!-- 模型能力 -->
-<section style="background:var(--bg-2)" id="models-section">
+<!-- 技术底座 -->
+<section id="backend-section">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">平台能力</span>
-      <h2>100+ 模型，一个端点</h2>
-      <p>模型多样性是平台的"底气"，但它不该是一面让人眼花缭乱的货架——你只要享用结果。</p>
-    </div>
-    <div class="grid grid-4">
-      <div class="card reveal reveal-delay-1"><div class="big">100+</div><p>可调度模型，覆盖主流与大模型厂商</p></div>
-      <div class="card reveal reveal-delay-2"><div class="big">1</div><p>个统一端点——api.aimodelapi.top/v1 接入 100+ 模型</p></div>
-      <div class="card reveal reveal-delay-3"><div class="big">2 行</div><p>代码即可迁移，兼容 OpenAI SDK</p></div>
-      <div class="card reveal reveal-delay-4"><div class="big">99.9%</div><p>平台可用率，企业级稳定性</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 黑话降级解释 -->
-<section id="glossary-section">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">看不懂的词，这样说</span>
-      <h2>那些技术名词，翻译成人话</h2>
-      <p>工程师爱用的词，我们帮你翻译了。</p>
-    </div>
-    <div class="grid grid-3">
-      <div class="card reveal reveal-delay-1"><h3>Harness 编排引擎</h3><p>我们的核心秘密武器。一层智能中间件，在请求到达模型之前自动完成缓存匹配、去重判断、上下文压缩和通道选择——<strong style="color:var(--neon)">让同样的钱买到更多 AI 能力</strong>。高命中场景下可实现 1:5 的费效比。</p></div>
-      <div class="card reveal reveal-delay-2"><h3>Nexus 智能路由</h3><p>像导航软件，自动选最快、最稳、成本最优的路线，高峰期自动切备用线，不用你操心。</p></div>
-      <div class="card reveal reveal-delay-3"><h3>会话预算</h3><p>像流量包，花多少钱你说了算，超了就停，绝不偷偷扣费。</p></div>
-      <div class="card reveal reveal-delay-1"><h3>上下文压缩</h3><p>像精简笔记，长对话自动只保留关键上下文发送给模型，<strong style="color:var(--neon)">Token 用量降 ~60%</strong>，回答质量不受影响。</p></div>
-      <div class="card reveal reveal-delay-2"><h3>Prompt 缓存</h3><p><strong style="color:var(--neon)">Harness 的省钱主力</strong>。常用指令和系统提示词会被缓存，同样的问题问第二次直接取结果——零延迟、零费用。命中率越高省得越多。</p></div>
-      <div class="card reveal reveal-delay-3"><h3>统一账单</h3><p>像一张总水单，所有模型用量合并成一份账单，清清楚楚。</p></div>
-    </div>
-
-  </div>
-</section>
-
-<!-- 信任数据 -->
-<section style="background:var(--bg-2)" id="stats-section">
-  <div class="wrap">
-    <div class="stats">
-      <div class="stat reveal reveal-delay-1"><div class="n" data-target="100" data-suffix="+">0</div><div class="l">可调度模型</div></div>
-      <div class="stat reveal reveal-delay-2"><div class="n" data-target="60" data-suffix="+">0</div><div class="l">模型厂商</div></div>
-      <div class="stat reveal reveal-delay-3"><div class="n" data-target="2" data-suffix=" 行">0</div><div class="l">代码迁移</div></div>
-      <div class="stat reveal reveal-delay-4"><div class="n" data-target="99.9" data-suffix="%" data-decimal="true">0</div><div class="l">平台可用率</div></div>
-      <div class="stat reveal reveal-delay-5"><div class="n" data-target="10" data-suffix=" 年+">0</div><div class="l">海外运营经验</div></div>
+    <div class="cta-band reveal">
+      <h2>简单背后的技术底座</h2>
+      <p>ModelAPI 的 AI 能力由 <strong>aimodelapi.ai</strong> 底层平台驱动——你专注创作，技术交给我们。</p>
     </div>
   </div>
 </section>
@@ -142,9 +116,9 @@
 <section id="cta-section">
   <div class="wrap">
     <div class="cta-band reveal">
-      <h2>像开灯一样，开始用 AI</h2>
-      <p>两行代码，接入 100+ 模型。今天就开始，不用懂底层。</p>
-      <a class="btn btn-primary" href="pricing.html">免费开始</a>
+      <h2>现在就开始创作</h2>
+      <p>输入一句话，生成你的第一张图、第一段视频。</p>
+      <a class="btn btn-primary" href="image.html">免费开始</a>
     </div>
   </div>
 </section>
@@ -153,15 +127,14 @@
   <div class="footer-inner">
     <div>
       <div class="brand"><span class="brand-mark">◆</span> ModelAPI</div>
-      <p class="footer-tag">Intelligence, Orchestrated.</p>
+      <p class="footer-tag">让想法，变成画面 · From Words to Visuals</p>
     </div>
     <div class="footer-cols">
-      <div><h4>产品</h4><a href="index.html">首页</a><a href="pricing.html">定价</a><a href="why-modelapi.html">为什么选 ModelAPI</a></div>
-      <div><h4>资源</h4><a href="faq.html">FAQ</a><a href="faq.html">文档</a></div>
-      <div><h4>公司</h4><a href="why-modelapi.html">关于我们</a></div>
+      <div><h4>功能</h4><a href="image.html">AI 生图</a><a href="video.html">AI 视频</a><a href="login.html">登录 / 注册</a></div>
+      <div><h4>公司</h4><a href="about.html">关于我们</a><a href="contact.html">联系我们</a></div>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 ModelAPI · 多模型 AI 编排云平台 · 让模型公司为你工作的基础设施。</div>
+  <div class="footer-bottom">© 2026 ModelAPI · AI 生图与视频生成平台 · 由 aimodelapi.ai 提供底层 AI 能力</div>
 <div class="legal-bar"><a href="privacy.html">隐私政策 Privacy</a> · <a href="terms.html">服务条款 Terms</a> · <a href="about.html">关于我们 About</a> · <a href="contact.html">联系我们 Contact</a></div></footer>
 
 <!-- ═════ 动效引擎 ═════ -->
@@ -185,24 +158,10 @@
     }, 120);
   })();
 
-  /* ── 3. 代码块逐行打字效果 ── */
-  (function typeCodeLines(){
-    var lines = document.querySelectorAll('.hero-code .code-line');
-    if(!lines.length) return;
-    var baseDelay = 600; // 首行等待 hero 显示后多久
-    var gap = 110;       // 每行间隔 ms
-    for(var i = 0; i < lines.length; i++){
-      (function(line, idx){
-        setTimeout(function(){ line.classList.add('show'); }, baseDelay + idx * gap);
-      })(lines[i], i);
-    }
-  })();
-
-  /* ── 4. 滚动触发 reveal（IntersectionObserver） ── */
+  /* ── 3. 滚动触发 reveal（IntersectionObserver） ── */
   (function initScrollReveal(){
     var reveals = document.querySelectorAll('.reveal:not(.hero .reveal)');
     if(!reveals.length) return;
-    // 用 stagger 分组：同 section 内按 delay 依次出现
     var observer = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
@@ -219,48 +178,7 @@
     }
   })();
 
-  /* ── 5. 统计数字跳动计数器 ── */
-  (function initCounters(){
-    var nums = document.querySelectorAll('.stat .n[data-target]');
-    if(!nums.length) return;
-    var observer = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          animateCount(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {threshold: 0.5});
-    for(var i = 0; i < nums.length; i++){
-      observer.observe(nums[i]);
-    }
-
-    function animateCount(el){
-      var target = parseFloat(el.getAttribute('data-target'));
-      var suffix = el.getAttribute('data-suffix') || '';
-      var isDecimal = el.getAttribute('data-decimal') === 'true';
-      var duration = 1400;
-      var start = performance.now();
-      el.classList.add('counting');
-
-      function tick(now){
-        var elapsed = now - start;
-        var progress = Math.min(elapsed / duration, 1);
-        // easeOutExpo
-        var eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-        var current = target * eased;
-        el.textContent = (isDecimal ? current.toFixed(1) : Math.round(current)) + suffix;
-        if(progress < 1) requestAnimationFrame(tick);
-        else {
-          el.textContent = (isDecimal ? target.toFixed(1) : target) + suffix;
-          setTimeout(function(){ el.classList.remove('counting'); }, 400);
-        }
-      }
-      requestAnimationFrame(tick);
-    }
-  })();
-
-  /* ── 6. 平滑滚动到锚点（CTA 等） ── */
+  /* ── 4. 平滑滚动到锚点 ── */
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
       var tgt = document.querySelector(this.getAttribute('href'));
@@ -271,6 +189,5 @@
 })();
 </script>
 
-<script src="auth.js" defer></script>
 </body>
 </html>
