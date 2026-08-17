@@ -109,8 +109,8 @@
     <div class="field">
       <label>清晰度</label>
       <div class="opts" id="resOpts">
-        <button type="button" class="opt-btn" data-res="480p">480P</button>
-        <button type="button" class="opt-btn active" data-res="720p">720P</button>
+        <button type="button" class="opt-btn active" data-res="720P">720P</button>
+        <button type="button" class="opt-btn" data-res="1080P">1080P</button>
       </div>
     </div>
 
@@ -142,7 +142,7 @@
   var resultEl = document.getElementById('result');
   var resultVideo = document.getElementById('resultVideo');
   var currentDuration = 5;
-  var currentRes = '720p';
+  var currentRes = '720P';
 
   document.getElementById('durationOpts').addEventListener('click', function (e) {
     var btn = e.target.closest('.opt-btn'); if (!btn) return;
@@ -162,8 +162,10 @@
     var prompt = promptEl.value.trim();
     if (!prompt) { showError('请先输入你想生成的画面描述'); return; }
     hideAll();
-    genBtn.disabled = true; genBtn.textContent = '生成中…'; loadingEl.style.display = 'block';
+    genBtn.disabled = true; genBtn.textContent = '提交中…'; loadingEl.style.display = 'block';
+    loadingEl.innerHTML = '<span class="spinner"></span>正在提交任务…';
 
+    // 1. 提交生成任务，拿到 task_id
     fetch('/api/video', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -171,16 +173,48 @@
     })
     .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, data: j }; }); })
     .then(function (res) {
-      loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
-      if (res.data && res.data.pending) { demoEl.textContent = res.data.message; demoEl.style.display = 'block'; return; }
-      if (res.data && res.data.error) { showError('生成失败：' + res.data.error + (res.data.detail ? '（' + res.data.detail + '）' : '')); return; }
-      var url = res.data && res.data.data && res.data.data[0] && (res.data.data[0].url || res.data.data[0].video_url);
-      if (url) { resultVideo.src = url; resultEl.classList.add('show'); } else { showError('未获取到视频结果，请稍后重试'); }
+      if (res.data && res.data.pending) { loadingEl.style.display = 'none'; demoEl.textContent = res.data.message; demoEl.style.display = 'block'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频'; return; }
+      if (res.data && res.data.error) { loadingEl.style.display = 'none'; showError('提交失败：' + res.data.error + (res.data.detail ? '（' + res.data.detail + '）' : '')); genBtn.disabled = false; genBtn.textContent = '生 成 视 频'; return; }
+      if (!res.data || !res.data.task_id) { loadingEl.style.display = 'none'; showError('未获取到任务 ID，请稍后重试'); genBtn.disabled = false; genBtn.textContent = '生 成 视 频'; return; }
+      loadingEl.innerHTML = '<span class="spinner"></span>任务已提交，正在生成视频，通常需要 1~3 分钟…';
+      pollTask(res.data.task_id, 0);
     })
     .catch(function (err) {
       loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
       showError('网络错误：' + err.message);
     });
+
+    // 2. 轮询查询任务结果（每 5 秒一次，最多 5 分钟）
+    function pollTask(taskId, attempts) {
+      fetch('/api/video?task_id=' + encodeURIComponent(taskId))
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, data: j }; }); })
+      .then(function (res) {
+        var d = res.data || {};
+        if (d.status === 'succeeded' && d.video_url) {
+          loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
+          resultVideo.src = d.video_url; resultEl.classList.add('show'); return;
+        }
+        if (d.status === 'failed') {
+          loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
+          showError('生成失败：' + (d.error || '未知错误')); return;
+        }
+        if (d.error) {
+          loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
+          showError('查询失败：' + d.error); return;
+        }
+        if (attempts >= 60) {
+          loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
+          showError('生成超时，请稍后重试'); return;
+        }
+        var secs = (attempts + 1) * 5;
+        loadingEl.innerHTML = '<span class="spinner"></span>正在生成视频，已等待约 ' + secs + ' 秒…';
+        setTimeout(function () { pollTask(taskId, attempts + 1); }, 5000);
+      })
+      .catch(function (err) {
+        loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
+        showError('网络错误：' + err.message);
+      });
+    }
   });
 })();
 </script>

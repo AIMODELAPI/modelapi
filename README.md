@@ -57,20 +57,21 @@ node server.js
 | `IMAGE_API_KEY` | 生图平台密钥（来自 aimodelapi.ai，已配置，生图已上线） |
 | `IMAGE_BASE_URL` | 默认 `https://api.aimodelapi.ai/v1` |
 | `VIDEO_API_KEY` | 视频平台密钥（接口确认后配置） |
-| `VIDEO_BASE_URL` | 默认 `https://api.aimodelapi.ai/v1` |
+| `VIDEO_BASE_URL` | 默认 `https://sg.api.aimodelapi.ai/v1`（亚太节点） |
 
 > Supabase 的 URL + publishable key 直接硬编码在 `config.js`（publishable key 设计上就是公开的），无需在 Vercel 配环境变量。
 
 ## 三、API 接口
 
 ```
-POST /api/image   生图：{ prompt, size, n } → 返回图片 URL
-POST /api/video   视频：{ prompt, duration, resolution } → 返回视频 URL（接口对接中）
-GET  /api/health  健康检查
+POST /api/image           生图：{ prompt, size, n } → 返回图片 URL
+POST /api/video           提交视频任务：{ prompt, duration, resolution } → 返回 { task_id }
+GET  /api/video?task_id=  查询视频任务 → 返回 { status, video_url }（前端每 5 秒轮询）
+GET  /api/health          健康检查
 ```
 
 ## 备注
 
 - 登录 / 用量记录走 Supabase（表 `gen_logs`），生图成功后自动写入，未登录则跳过。
-- 视频生成接口仍在与 aimodelapi.ai 确认中，`api/video.js` 保留了对接 TODO，接口确认后替换即可。
+- 视频生成走 aimodelapi.ai 的异步任务接口：提交 `POST /v1/contents/generations/tasks` 拿 `task_id`，再 `GET /v1/contents/generations/tasks/{id}` 轮询结果。模型 `WAN-t2v-2.7`，分辨率 `720P`/`1080P`。
 - 主体信息（公司名 / 注册地 / 注册号 / 地址 / 邮箱）在 `about.html`、`contact.html` 等页面以 `[占位符]` 形式保留，KYB 审核前需填入真实信息。

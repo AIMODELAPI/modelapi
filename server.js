@@ -88,27 +88,64 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
       }
     }
-    // AI 视频
+    // AI 视频：提交任务（POST）
     if (req.method === 'POST' && req.url === '/api/video') {
       const raw = await readBody(req);
       let parsed; try { parsed = JSON.parse(raw || '{}'); } catch { return sendJson(res, 400, { error: 'Invalid JSON' }); }
       const prompt = (parsed.prompt || '').trim();
       if (!prompt) return sendJson(res, 400, { error: 'prompt 不能为空' });
-      const baseUrl = (process.env.VIDEO_BASE_URL || 'https://api.aimodelapi.ai/v1').replace(/\/$/, '');
+      const baseUrl = (process.env.VIDEO_BASE_URL || 'https://sg.api.aimodelapi.ai/v1').replace(/\/$/, '');
       const apiKey = process.env.VIDEO_API_KEY;
-      const model = parsed.model || 'WAN-t2v-2.7';
-      const duration = Number(parsed.duration) || 5;
-      const resolution = parsed.resolution || '720p';
-      if (!apiKey) return sendJson(res, 200, { pending: true, message: '视频生成功能对接中，敬请期待。', prompt, duration, resolution });
+      if (!apiKey) return sendJson(res, 200, { pending: true, message: '视频生成功能对接中，敬请期待。', prompt });
+      const payload = {
+        model: parsed.model || 'WAN-t2v-2.7',
+        prompt,
+        duration: Number(parsed.duration) || 5,
+        resolution: parsed.resolution || '720P',
+      };
+      if (parsed.negative_prompt) payload.negative_prompt = parsed.negative_prompt;
+      if (typeof parsed.prompt_optimization === 'boolean') payload.prompt_optimization = parsed.prompt_optimization;
+      if (parsed.first_frame_image || parsed.image) payload.first_frame_image = parsed.first_frame_image || parsed.image;
+      if (parsed.reference_video || parsed.video) payload.reference_video = parsed.reference_video || parsed.video;
       try {
-        const up = await fetch(baseUrl + '/video/generations', {
+        const up = await fetch(baseUrl + '/contents/generations/tasks', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-          body: JSON.stringify({ model, prompt, duration, resolution }),
+          body: JSON.stringify(payload),
         });
-        if (!up.ok) return sendJson(res, 502, { error: '视频生成上游返回 ' + up.status });
-        const data = await up.json();
-        return sendJson(res, 200, data);
+        const data = await up.json().catch(() => ({}));
+        if (!up.ok) return sendJson(res, 502, { error: '提交任务失败 ' + up.status, detail: JSON.stringify(data).slice(0, 300) });
+        const taskId = data.task_id || data.id || data.request_id || (data.data && (data.data.task_id || data.data.id));
+        if (!taskId) return sendJson(res, 200, { error: '未获取到 task_id', raw: data });
+        return sendJson(res, 200, { task_id: String(taskId) });
+      } catch (e) {
+        return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
+      }
+    }
+    // AI 视频：查询任务（GET /api/video?task_id=）
+    if (req.method === 'GET' && req.url.startsWith('/api/video')) {
+      let taskId = '';
+      try { taskId = new URL(req.url, 'http://localhost').searchParams.get('task_id') || ''; } catch (_) {}
+      if (!taskId) return sendJson(res, 400, { error: '缺少 task_id' });
+      const baseUrl = (process.env.VIDEO_BASE_URL || 'https://sg.api.aimodelapi.ai/v1').replace(/\/$/, '');
+      const apiKey = process.env.VIDEO_API_KEY;
+      if (!apiKey) return sendJson(res, 200, { pending: true, message: '视频生成功能对接中，敬请期待。' });
+      try {
+        const up = await fetch(baseUrl + '/contents/generations/tasks/' + encodeURIComponent(taskId), {
+          method: 'GET',
+          headers: { 'Authorization': 'Bearer ' + apiKey },
+        });
+        const data = await up.json().catch(() => ({}));
+        if (!up.ok) return sendJson(res, 502, { error: '查询任务失败 ' + up.status });
+        const status = String(data.status || (data.data && data.data.status) || '').toLowerCase();
+        const videoUrl = data.video_url || data.url || (data.data && (data.data.video_url || data.data.url)) || (data.output && (data.output.video_url || data.output.url));
+        if (['succeeded', 'success', 'completed', 'done', 'finished'].indexOf(status) >= 0 && videoUrl) {
+          return sendJson(res, 200, { status: 'succeeded', video_url: videoUrl });
+        }
+        if (['failed', 'fail', 'error', 'cancelled', 'canceled'].indexOf(status) >= 0) {
+          return sendJson(res, 200, { status: 'failed', error: String(data.error || data.message || '生成失败') });
+        }
+        return sendJson(res, 200, { status: 'processing', raw_status: status || 'pending' });
       } catch (e) {
         return sendJson(res, 502, { error: String(e && e.message ? e.message : e) });
       }
