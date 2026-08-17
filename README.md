@@ -57,7 +57,7 @@ node server.js
 | `IMAGE_API_KEY` | 生图平台密钥（来自 aimodelapi.ai，已配置，生图已上线） |
 | `IMAGE_BASE_URL` | 默认 `https://api.aimodelapi.ai/v1` |
 | `VIDEO_API_KEY` | 视频平台密钥（接口确认后配置） |
-| `VIDEO_BASE_URL` | 默认 `https://sg.api.aimodelapi.ai/v1`（亚太节点） |
+| `VIDEO_BASE_URL` | 默认 `https://api.aimodelapi.ai/v1`（和生图共用主节点） |
 
 > Supabase 的 URL + publishable key 直接硬编码在 `config.js`（publishable key 设计上就是公开的），无需在 Vercel 配环境变量。
 

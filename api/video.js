@@ -8,7 +8,7 @@
 //   VIDEO_API_KEY
 // 合规：官方授权 AI 视频生成平台的正向接入，不做违规中转/转售。
 // ============================================================
-const DEFAULT_BASE = 'https://sg.api.aimodelapi.ai/v1';
+const DEFAULT_BASE = 'https://api.aimodelapi.ai/v1';
 const DEFAULT_MODEL = 'WAN-t2v-2.7';
 
 // 从对象里按候选字段名取值（平台返回字段名可能变化，做宽松兼容）

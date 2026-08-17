@@ -94,7 +94,7 @@ const server = http.createServer(async (req, res) => {
       let parsed; try { parsed = JSON.parse(raw || '{}'); } catch { return sendJson(res, 400, { error: 'Invalid JSON' }); }
       const prompt = (parsed.prompt || '').trim();
       if (!prompt) return sendJson(res, 400, { error: 'prompt 不能为空' });
-      const baseUrl = (process.env.VIDEO_BASE_URL || 'https://sg.api.aimodelapi.ai/v1').replace(/\/$/, '');
+      const baseUrl = (process.env.VIDEO_BASE_URL || 'https://api.aimodelapi.ai/v1').replace(/\/$/, '');
       const apiKey = process.env.VIDEO_API_KEY;
       if (!apiKey) return sendJson(res, 200, { pending: true, message: '视频生成功能对接中，敬请期待。', prompt });
       const payload = {
@@ -127,7 +127,7 @@ const server = http.createServer(async (req, res) => {
       let taskId = '';
       try { taskId = new URL(req.url, 'http://localhost').searchParams.get('task_id') || ''; } catch (_) {}
       if (!taskId) return sendJson(res, 400, { error: '缺少 task_id' });
-      const baseUrl = (process.env.VIDEO_BASE_URL || 'https://sg.api.aimodelapi.ai/v1').replace(/\/$/, '');
+      const baseUrl = (process.env.VIDEO_BASE_URL || 'https://api.aimodelapi.ai/v1').replace(/\/$/, '');
       const apiKey = process.env.VIDEO_API_KEY;
       if (!apiKey) return sendJson(res, 200, { pending: true, message: '视频生成功能对接中，敬请期待。' });
       try {
