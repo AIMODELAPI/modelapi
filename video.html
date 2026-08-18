@@ -161,14 +161,49 @@
   function showError(msg) { errorEl.textContent = msg; errorEl.style.display = 'block'; }
   function hideAll() { errorEl.style.display = 'none'; demoEl.style.display = 'none'; resultEl.classList.remove('show'); }
 
-  genBtn.addEventListener('click', function () {
+  genBtn.addEventListener('click', async function () {
     var prompt = promptEl.value.trim();
     if (!prompt) { showError('请先输入你想生成的画面描述'); return; }
     hideAll();
-    genBtn.disabled = true; genBtn.textContent = '提交中…'; loadingEl.style.display = 'block';
-    loadingEl.innerHTML = '<span class="spinner"></span>正在提交任务…';
+    genBtn.disabled = true; genBtn.textContent = '扣积分中…'; loadingEl.style.display = 'block';
+    loadingEl.innerHTML = '<span class="spinner"></span>积分确认中…';
 
-    // 1. 提交生成任务，拿到 task_id
+    // 计算积分：720P=25/秒, 1080P=35/秒
+    var perSec = currentRes === '1080P' ? 35 : 25;
+    var cost = perSec * currentDuration;
+
+    // 1. 积分检查
+    try {
+      if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) throw new Error('会员系统未配置');
+      if (!window.supabase) throw new Error('未引入 Supabase SDK');
+      var sc = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
+      var ss = await sc.auth.getSession();
+      if (!ss || !ss.data || !ss.data.session) {
+        loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
+        showError('请先登录后再生成（消耗积分）');
+        setTimeout(function(){ window.location.href = 'login.html'; }, 1500);
+        return;
+      }
+      var dr = await sc.rpc('deduct_credits', { p_amount: cost, p_reason: 'video_' + currentRes.toLowerCase() + '_' + currentDuration + 's' });
+      if (dr.error) throw dr.error;
+      var dres = (dr.data && dr.data[0]) || {};
+      if (!dres.ok) {
+        loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
+        if (dres.message === 'INSUFFICIENT_BALANCE') {
+          showError('积分不足，当前余额 ' + (dres.new_balance || 0) + ' 积分（视频需 ' + cost + ' 积分），请去「升级套餐」充值');
+        } else {
+          showError('积分系统错误：' + (dres.message || '未知'));
+        }
+        return;
+      }
+      loadingEl.innerHTML = '<span class="spinner"></span>正在提交任务…';
+    } catch (e) {
+      loadingEl.style.display = 'none'; genBtn.disabled = false; genBtn.textContent = '生 成 视 频';
+      showError('积分检查失败：' + (e.message || String(e)));
+      return;
+    }
+
+    // 2. 提交生成任务，拿到 task_id
     fetch('/api/video', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -187,7 +222,7 @@
       showError('网络错误：' + err.message);
     });
 
-    // 2. 轮询查询任务结果（每 5 秒一次，最多 5 分钟）
+    // 3. 轮询查询任务结果（每 5 秒一次，最多 5 分钟）
     function pollTask(taskId, attempts) {
       fetch('/api/video?task_id=' + encodeURIComponent(taskId))
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, data: j }; }); })

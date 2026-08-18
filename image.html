@@ -171,13 +171,51 @@
     } catch (_) { /* 静默失败，不影响生图 */ }
   }
 
-  genBtn.addEventListener('click', function () {
+  genBtn.addEventListener('click', async function () {
     var prompt = promptEl.value.trim();
     if (!prompt) { showError('请先输入你想生成的画面描述'); return; }
     hideAll();
     genBtn.disabled = true;
-    genBtn.textContent = '生成中…';
+    genBtn.textContent = '扣积分中…';
     loadingEl.style.display = 'block';
+
+    // 1. 积分检查：未登录 → 提示并跳转；积分不足 → 提示充值
+    try {
+      if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) throw new Error('会员系统未配置');
+      if (!window.supabase) throw new Error('未引入 Supabase SDK');
+      var sc = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
+      var ss = await sc.auth.getSession();
+      if (!ss || !ss.data || !ss.data.session) {
+        loadingEl.style.display = 'none';
+        genBtn.disabled = false;
+        genBtn.textContent = '生 成 图 片';
+        showError('请先登录后再生成（消耗积分）');
+        setTimeout(function(){ window.location.href = 'login.html'; }, 1500);
+        return;
+      }
+      loadingEl.innerHTML = '<span class="spinner"></span>积分确认中…';
+      var dr = await sc.rpc('deduct_credits', { p_amount: 10, p_reason: 'image_gen' });
+      if (dr.error) throw dr.error;
+      var dres = (dr.data && dr.data[0]) || {};
+      if (!dres.ok) {
+        loadingEl.style.display = 'none';
+        genBtn.disabled = false;
+        genBtn.textContent = '生 成 图 片';
+        if (dres.message === 'INSUFFICIENT_BALANCE') {
+          showError('积分不足，当前余额 ' + (dres.new_balance || 0) + ' 积分（生图需 10 积分），请去「升级套餐」充值');
+        } else {
+          showError('积分系统错误：' + (dres.message || '未知'));
+        }
+        return;
+      }
+      loadingEl.innerHTML = '<span class="spinner"></span>正在生成，请稍候…';
+    } catch (e) {
+      loadingEl.style.display = 'none';
+      genBtn.disabled = false;
+      genBtn.textContent = '生 成 图 片';
+      showError('积分检查失败：' + (e.message || String(e)));
+      return;
+    }
 
     fetch('/api/image', {
       method: 'POST',
@@ -203,8 +241,7 @@
       if (url) {
         resultImg.src = url;
         resultEl.classList.add('show');
-        // 成功后：尝试记录用量（未登录则跳过）
-        logGenUsage(prompt, url).catch(function () {});
+        // 成功后：余额已在 deduct_credits 里扣减，无需额外记录
       } else {
         showError('未获取到图片结果，请稍后重试');
       }
