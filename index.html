@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ModelAPI — AI 生图与视频生成平台</title>
-<meta name="description" content="ModelAPI 专注 AI 图像与视频生成：输入一句文字描述，即可生成高质量图片与视频。由 aimodelapi.ai 提供底层 AI 能力。">
+<meta name="description" content="ModelAPI 专注 AI 图像与视频生成：输入一句文字描述，即可生成高质量图片与视频。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
@@ -17,7 +17,7 @@
   "name":"ModelAPI",
   "applicationCategory":"MultimediaApplication",
   "operatingSystem":"Web",
-  "description":"ModelAPI 是专注 AI 图像与视频生成的专业平台：输入文字描述即可生成高质量图片与视频，由 aimodelapi.ai 提供底层 AI 能力。",
+  "description":"ModelAPI 是专注 AI 图像与视频生成的专业平台：输入文字描述即可生成高质量图片与视频。",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
   "publisher":{"@type":"Organization","name":"ModelAPI"}
 }
@@ -32,8 +32,9 @@
       <a href="index.html">首页</a>
       <a href="image.html">AI 生图</a>
       <a href="video.html">AI 视频</a>
+      <a href="pricing.html">定价</a>
     </nav>
-    <a class="btn btn-primary" href="image.html" id="navCta">免费开始</a>
+    <a class="btn btn-primary" href="login.html?mode=signup" id="navCta">免费开始</a>
     <span id="nav-auth"></span>
   </div>
 </header>
@@ -51,7 +52,7 @@
 
     <h1 class="reveal reveal-delay-2">用一句话，<br>生成<span class="accent">图片和视频</span>。</h1>
 
-    <p class="lead reveal reveal-delay-3">ModelAPI 是专注 <strong style="color:var(--neon)">AI 生图与 AI 视频</strong>的专业平台。把脑海里的画面写下来，通义万相 Wan 2.7 帮你把它变成图片和视频——高质量、稳定、合规。</p>
+    <p class="lead reveal reveal-delay-3">ModelAPI 是专注 <strong style="color:var(--neon)">AI 生图与 AI 视频</strong>的专业平台。把脑海里的画面写下来，AI 帮你把它变成图片和视频——高质量、稳定、合规。</p>
 
     <div class="hero-cta reveal reveal-delay-4">
       <a class="btn btn-primary" href="image.html">开始生图</a>
@@ -78,7 +79,7 @@
       <div class="card reveal reveal-delay-2">
         <div class="ico">🎬</div>
         <h3>AI 视频</h3>
-        <p>输入一句画面描述，生成动态视频。支持 3 / 5 / 10 秒时长、480P / 720P 清晰度，短片素材一键生成。</p>
+        <p>输入一句画面描述，生成动态视频。支持 3 / 5 / 10 秒时长、720P / 1080P 清晰度，短片素材一键生成。</p>
         <a class="btn btn-ghost" href="video.html" style="margin-top:14px">开始做视频 →</a>
       </div>
     </div>
@@ -95,9 +96,43 @@
     </div>
     <div class="grid grid-4">
       <div class="card reveal reveal-delay-1"><div class="ico">💡</div><h3>简单</h3><p>不用学接口、不用配参数。输入一句话，点一下，就出图出片。</p></div>
-      <div class="card reveal reveal-delay-2"><div class="ico">🎨</div><h3>高质量</h3><p>底层使用通义万相 <strong style="color:var(--neon)">Wan 2.7</strong> 模型，画质出众、细节自然。</p></div>
+      <div class="card reveal reveal-delay-2"><div class="ico">🎨</div><h3>高质量</h3><p>专业级生成引擎，画质出众、细节自然。</p></div>
       <div class="card reveal reveal-delay-3"><div class="ico">⚡</div><h3>快速稳定</h3><p>企业级生成服务，出图快、出片稳，关键时刻不掉链子。</p></div>
       <div class="card reveal reveal-delay-4"><div class="ico">🛡️</div><h3>合规安全</h3><p>官方授权 AI 生成平台，数据加密存储，用得安心。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 套餐定价 -->
+<section style="background:var(--bg-2)" id="pricing-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">定价</span>
+      <h2>简单透明的定价</h2>
+      <p>注册即送免费试用额度，用多少付多少，没有任何隐藏费用。</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="card reveal reveal-delay-1">
+        <h3>免费试用</h3>
+        <div style="font-size:2rem;font-weight:800;color:var(--neon);margin:8px 0">$0</div>
+        <p>新账户注册即送 50 积分试用额度，生图、视频都能体验。</p>
+        <a class="btn btn-ghost" href="login.html?mode=signup" style="margin-top:14px">免费注册 →</a>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <h3>AI 生图</h3>
+        <div style="font-size:2rem;font-weight:800;color:var(--neon);margin:8px 0">$0.10<span style="font-size:.9rem;font-weight:500;color:var(--muted)"> / 张</span></div>
+        <p>1:1、16:9、9:16 多种比例，海报、头像、配图一站搞定。</p>
+        <a class="btn btn-ghost" href="image.html" style="margin-top:14px">开始生图 →</a>
+      </div>
+      <div class="card reveal reveal-delay-3">
+        <h3>AI 视频</h3>
+        <div style="font-size:2rem;font-weight:800;color:var(--neon);margin:8px 0">$0.25<span style="font-size:.9rem;font-weight:500;color:var(--muted)"> / 秒 · 720P</span></div>
+        <p>1080P 为 $0.35 / 秒，3 / 5 / 10 秒时长任选，按秒计费。</p>
+        <a class="btn btn-ghost" href="video.html" style="margin-top:14px">开始做视频 →</a>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px" class="reveal">
+      <a class="btn btn-primary" href="pricing.html">查看完整定价说明 →</a>
     </div>
   </div>
 </section>
@@ -107,7 +142,7 @@
   <div class="wrap">
     <div class="cta-band reveal">
       <h2>简单背后的技术底座</h2>
-      <p>ModelAPI 的 AI 能力由 <strong>aimodelapi.ai</strong> 底层平台驱动——你专注创作，技术交给我们。</p>
+      <p>ModelAPI 基于企业级 AI 基础设施构建——你专注创作，技术交给我们。</p>
     </div>
   </div>
 </section>
@@ -118,7 +153,7 @@
     <div class="cta-band reveal">
       <h2>现在就开始创作</h2>
       <p>输入一句话，生成你的第一张图、第一段视频。</p>
-      <a class="btn btn-primary" href="image.html">免费开始</a>
+      <a class="btn btn-primary" href="login.html?mode=signup">免费注册</a>
     </div>
   </div>
 </section>
@@ -135,7 +170,7 @@
       <div><h4>公司</h4><a href="about.html">关于我们</a><a href="contact.html">联系我们</a></div>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 ModelAPI · AI 生图与视频生成平台 · 由 aimodelapi.ai 提供底层 AI 能力</div>
+  <div class="footer-bottom">© 2026 ModelAPI · AI 生图与视频生成平台</div>
 <div class="legal-bar"><a href="privacy.html">隐私政策 Privacy</a> · <a href="terms.html">服务条款 Terms</a> · <a href="refund.html">退款政策 Refund</a> · <a href="pricing.html">定价 Pricing</a> · <a href="about.html">关于我们 About</a> · <a href="contact.html">联系我们 Contact</a></div></footer>
 
 <!-- ═════ 动效引擎 ═════ -->
