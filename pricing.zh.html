@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>定价与支付 — ModelAPI</title>
+<meta name="description" content="ModelAPI 套餐定价：AI 生图与视频生成的积分套餐制度与支付方式。">
+<link rel="stylesheet" href="modelapi-demo.css">
+<link rel="alternate" hreflang="en" href="pricing.html">
+<link rel="alternate" hreflang="zh" href="pricing.zh.html">
+<style>
+.legal-wrap{max-width:1000px;margin:0 auto;padding:70px 0 40px}
+.legal-wrap h1{font-size:2rem;margin-bottom:6px}
+.legal-wrap h2{font-size:1.2rem;margin:34px 0 10px;color:var(--text)}
+.legal-wrap p,.legal-wrap li{color:var(--muted);line-height:1.8;font-size:.96rem}
+.legal-wrap ul{padding-left:20px}
+.legal-wrap li{margin:6px 0}
+.legal-wrap b{color:var(--text)}
+.legal-wrap .lede{font-size:1.04rem;color:var(--muted);line-height:1.7;margin:8px 0 22px}
+</style>
+</head>
+<body>
+<header class="nav" id="navbar"><div class="nav-inner">
+  <a class="brand" href="index.zh.html"><span class="brand-mark">◆</span> ModelAPI</a>
+  <nav class="nav-links">
+    <a href="index.zh.html">首页</a><a href="image.zh.html">AI 生图</a><a href="video.zh.html">AI 视频</a><a href="pricing.zh.html">定价</a>
+  </nav>
+  <div class="lang-switch"><a href="pricing.html">EN</a><span class="lang-sep">/</span><span class="lang-active">中文</span></div></div></header>
+
+<section class="wrap legal-wrap">
+  <span class="eyebrow">定价</span>
+  <h1>定价与支付</h1>
+  <p class="lede">简单透明的积分套餐定价。1 积分 = $0.01。新账户注册即送免费试用积分，先试后买。只有生成成功才扣积分。</p>
+
+  <!-- ═══════ 套餐卡片 ═══════ -->
+  <div class="price-grid">
+    <div class="price-card">
+      <h3>免费试用</h3>
+      <div class="amount">$0</div>
+      <div class="unit">注册即送</div>
+      <div class="credits">50 积分</div>
+      <p class="meta">可生成 <b>5 张图</b> 或 <b>2 秒</b> 720P 视频，全面体验平台功能。</p>
+      <a class="btn btn-ghost" href="login.zh.html?mode=signup">免费注册 →</a>
+    </div>
+
+    <div class="price-card">
+      <h3>Starter</h3>
+      <div class="amount">$9.9</div>
+      <div class="unit">/ 月</div>
+      <div class="credits">1,000 积分</div>
+      <p class="meta">可生成 <b>100 张图</b> 或 <b>40 秒</b> 720P 视频，适合个人用户。</p>
+      <a class="btn btn-primary" href="login.zh.html?mode=signup">选择 Starter →</a>
+    </div>
+
+    <div class="price-card price-card--featured">
+      <span class="price-badge">★ 推荐</span>
+      <h3>Pro</h3>
+      <div class="amount">$29</div>
+      <div class="unit">/ 月</div>
+      <div class="credits">3,500 积分</div>
+      <p class="meta">可生成 <b>350 张图</b> 或 <b>140 秒</b> 720P 视频，创作者与小团队首选。</p>
+      <a class="btn btn-primary" href="login.zh.html?mode=signup">选择 Pro →</a>
+    </div>
+
+    <div class="price-card">
+      <h3>Studio</h3>
+      <div class="amount">$99</div>
+      <div class="unit">/ 月</div>
+      <div class="credits">12,500 积分</div>
+      <p class="meta">可生成 <b>1,250 张图</b> 或 <b>500 秒</b> 720P 视频，工作室与高频用户。</p>
+      <a class="btn btn-primary" href="login.zh.html?mode=signup">选择 Studio →</a>
+    </div>
+  </div>
+
+  <!-- ═══════ 积分规则 ═══════ -->
+  <h2>积分怎么算</h2>
+  <p><b>1 积分 = $0.01</b> · 只有生成成功才会扣积分，失败的生成不扣。</p>
+  <table class="price-table">
+    <thead><tr><th>生成类型</th><th>积分消耗</th><th>折合美元</th></tr></thead>
+    <tbody>
+      <tr><td>AI 生图（1:1 / 16:9 / 9:16）</td><td>10 积分 / 张</td><td>$0.10</td></tr>
+      <tr><td>AI 视频 · 720P</td><td>25 积分 / 秒</td><td>$0.25 / 秒</td></tr>
+      <tr><td>AI 视频 · 1080P</td><td>35 积分 / 秒</td><td>$0.35 / 秒</td></tr>
+    </tbody>
+  </table>
+  <p>举例：5 秒 720P 视频消耗 125 积分（$1.25）；10 秒 1080P 视频消耗 350 积分（$3.50）。</p>
+
+  <!-- ═══════ 支付流程 ═══════ -->
+  <h2>支付流程</h2>
+  <ul>
+    <li><b>第 1 步 · 注册：</b>用邮箱创建账户，自动获得 <b>50 免费试用积分</b>。</li>
+    <li><b>第 2 步 · 选套餐：</b>按需选择月度套餐，每个计费周期账户自动充值该套餐的积分。</li>
+    <li><b>第 3 步 · 生成：</b>创作图片或视频，只有生成成功才扣相应积分。</li>
+    <li><b>第 4 步 · 查用量：</b>随时在「我的用量」页查看余额、流水和积分明细。</li>
+  </ul>
+
+  <!-- ═══════ 支付方式 ═══════ -->
+  <h2>支付方式</h2>
+  <p>我们支持主流国际信用卡 / 借记卡（Visa、Mastercard 等）。支付由持牌支付合作伙伴处理，我们不存储你的银行卡信息。</p>
+
+  <!-- ═══════ 退款 ═══════ -->
+  <h2>退款与失败补偿</h2>
+  <p>关于生成失败、瑕疵作品、未使用积分与拒付处理，请查看 <a href="refund.zh.html">退款与交付政策</a>。</p>
+</section>
+
+<footer class="footer"><div class="footer-inner">
+  <div><div class="brand"><span class="brand-mark">◆</span> ModelAPI</div><div class="legal-entity">Operated by <b>AURA GENAI LABS PTE. LTD.</b> (UEN: 202631742R)<br>60 PAYA LEBAR ROAD, #12-03, PAYA LEBAR SQUARE, SINGAPORE 409051</div></div>
+  <div class="footer-cols"><div><h4>法律</h4><a href="privacy.zh.html">隐私政策</a><a href="terms.zh.html">服务条款</a><a href="refund.zh.html">退款政策</a><a href="pricing.zh.html">定价</a><a href="about.zh.html">关于我们</a><a href="contact.zh.html">联系我们</a></div></div>
+</div>
+<div class="footer-bottom">© 2026 ModelAPI · AI 生图与视频生成平台</div></footer>
+</body></html>

@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Usage — ModelAPI</title>
+<title>我的用量 — ModelAPI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js" defer></script>
-<link rel="alternate" hreflang="zh" href="dashboard.zh.html">
-<link rel="alternate" hreflang="en" href="dashboard.html">
 <style>
   .dash-wrap{max-width:960px;margin:60px auto 80px;padding:0 20px}
   .dash-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px}
@@ -46,52 +44,52 @@
 
 <header class="nav" id="navbar">
   <div class="nav-inner">
-    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
+    <a class="brand" href="index.zh.html"><span class="brand-mark">◆</span> ModelAPI</a>
     <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="image.html">AI Image</a>
-      <a href="video.html">AI Video</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="index.zh.html">首页</a>
+      <a href="image.zh.html">AI 生图</a>
+      <a href="video.zh.html">AI 视频</a>
+      <a href="pricing.zh.html">定价</a>
     </nav>
-    <a class="btn btn-primary" href="image.html">Generate</a>
-    <div class="lang-switch"><span class="lang-active">EN</span><span class="lang-sep">/</span><a href="dashboard.zh.html">中文</a></div>
+    <a class="btn btn-primary" href="image.zh.html">去生图</a>
+    <div class="lang-switch"><a href="dashboard.html">EN</a><span class="lang-sep">/</span><span class="lang-active">中文</span></div>
   </div>
 </header>
 
 <div class="dash-wrap">
   <div class="dash-head">
     <div>
-      <h1>My Usage</h1>
-      <p class="email" id="userEmail">Signing in…</p>
+      <h1>我的用量</h1>
+      <p class="email" id="userEmail">登录中…</p>
     </div>
     <div style="display:flex;gap:10px;align-items:center">
-      <a class="btn-logout" id="upgradeBtn" href="pricing.html" style="background:linear-gradient(135deg,var(--neon),#3aa0e0);color:#fff;text-decoration:none;border:none">Upgrade Plan</a>
-      <button class="btn-logout" id="logoutBtn">Sign Out</button>
+      <a class="btn-logout" id="upgradeBtn" href="pricing.zh.html" style="background:linear-gradient(135deg,var(--neon),#3aa0e0);color:#fff;text-decoration:none;border:none">升级套餐</a>
+      <button class="btn-logout" id="logoutBtn">退出登录</button>
     </div>
   </div>
 
   <div class="stats">
     <div class="stat-card">
-      <div class="label">Credit Balance</div>
+      <div class="label">积分余额</div>
       <div class="value" id="statBalance">—</div>
-      <div class="sub">50 free credits on signup</div>
+      <div class="sub">注册送 50 试用</div>
     </div>
     <div class="stat-card">
-      <div class="label">Total Generations</div>
+      <div class="label">累计生成</div>
       <div class="value" id="statTotal">—</div>
-      <div class="sub">images &amp; videos</div>
+      <div class="sub">次</div>
     </div>
     <div class="stat-card">
-      <div class="label">Last Generation</div>
+      <div class="label">最近一次</div>
       <div class="value" id="statLast">—</div>
       <div class="sub" id="statLastTime">—</div>
     </div>
   </div>
 
   <div class="list">
-    <div class="list-head">Credit History</div>
+    <div class="list-head">积分流水</div>
     <div class="list-body" id="listBody">
-      <div class="loading"><span class="spinner"></span>Loading…</div>
+      <div class="loading"><span class="spinner"></span>加载中…</div>
     </div>
   </div>
 </div>
@@ -100,8 +98,8 @@
   <div style="max-width:var(--maxw);margin:0 auto;padding:0 24px 24px">
     <div class="legal-entity">Operated by <b>AURA GENAI LABS PTE. LTD.</b> (UEN: 202631742R)<br>60 PAYA LEBAR ROAD, #12-03, PAYA LEBAR SQUARE, SINGAPORE 409051</div>
   </div>
-  <div class="footer-bottom">© 2026 ModelAPI · AI Image &amp; Video Generation Platform</div>
-  <div class="legal-bar"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="refund.html">Refund</a> · <a href="pricing.html">Pricing</a> · <a href="about.html">About</a> · <a href="contact.html">Contact</a></div>
+  <div class="footer-bottom">© 2026 ModelAPI · AI 生图与视频生成平台</div>
+  <div class="legal-bar"><a href="privacy.zh.html">隐私政策 Privacy</a> · <a href="terms.zh.html">服务条款 Terms</a> · <a href="refund.zh.html">退款政策 Refund</a> · <a href="pricing.zh.html">定价 Pricing</a> · <a href="about.zh.html">关于我们 About</a> · <a href="contact.zh.html">联系我们 Contact</a></div>
 </footer>
 
 <script>
@@ -112,59 +110,68 @@
   }
   var client = getClient();
   if (!client) {
-    document.getElementById('userEmail').textContent = 'Membership system not configured';
+    document.getElementById('userEmail').textContent = '会员系统未配置';
     return;
   }
 
+  // 1. 检查登录态
   var sess = await client.auth.getSession();
   var session = sess && sess.data && sess.data.session;
   if (!session) {
-    window.location.href = 'login.html';
+    window.location.href = 'login.zh.html';
     return;
   }
 
-  document.getElementById('userEmail').textContent = 'Signed in: ' + (session.user.email || '—');
+  // 2. 显示邮箱
+  document.getElementById('userEmail').textContent = '已登录：' + (session.user.email || '—');
 
+  // 3. 退出登录
   document.getElementById('logoutBtn').addEventListener('click', async function () {
     await client.auth.signOut();
     window.location.href = 'index.html';
   });
 
+  // 4. 拉取余额 + 流水
   var body = document.getElementById('listBody');
   try {
+    // 余额
     var rc = await client.from('user_credits').select('balance').eq('user_id', session.user.id).maybeSingle();
     var balance = (rc && rc.data && rc.data.balance) || 0;
     document.getElementById('statBalance').textContent = balance;
 
+    // 积分流水
     var r = await client.from('credit_transactions').select('amount, reason, balance_after, created_at').order('created_at', { ascending: false }).limit(50);
     if (r.error) throw r.error;
     var rows = r.data || [];
 
+    // 累计"生图"和"视频"次数（reason 以 image_ 或 video_ 开头）
     var genCount = rows.filter(function (r) { return r.reason && r.reason.indexOf('image_') === 0 || r.reason && r.reason.indexOf('video_') === 0; }).length;
     document.getElementById('statTotal').textContent = genCount;
 
     if (rows.length === 0) {
-      body.innerHTML = '<div class="empty"><div class="big">No activity yet</div>You received 50 free credits on signup. Generate an image or video and it will appear here.</div>';
+      body.innerHTML = '<div class="empty"><div class="big">还没有记录</div>注册自动送 50 积分，去「AI 生图」页面生成一张图就会消耗并记录在这里。</div>';
       return;
     }
 
+    // 最近一次生成
     var lastGen = rows.find(function (r) { return r.reason && (r.reason.indexOf('image_') === 0 || r.reason.indexOf('video_') === 0); });
     if (lastGen) {
       document.getElementById('statLast').textContent = (lastGen.reason || '').replace(/_/g, ' ');
       document.getElementById('statLastTime').textContent = formatTime(lastGen.created_at);
     }
 
+    // 流水列表
     var html = '';
     rows.forEach(function (row) {
       var sign = row.amount > 0 ? '+' : '';
       var color = row.amount > 0 ? '#5ed99c' : '#ff8888';
       var reasonLabel = (row.reason || '').replace(/_/g, ' ');
-      var balAfter = (row.balance_after !== null && row.balance_after !== undefined) ? ('balance ' + row.balance_after) : '';
-      html += '<div class="list-item"><div><div class="prompt" style="color:' + color + '">' + sign + row.amount + ' credits · ' + reasonLabel + ' <span style="color:var(--muted-2);font-size:.85em">' + balAfter + '</span></div></div><div class="time">' + formatTime(row.created_at) + '</div></div>';
+      var balAfter = (row.balance_after !== null && row.balance_after !== undefined) ? ('余额 ' + row.balance_after) : '';
+      html += '<div class="list-item"><div><div class="prompt" style="color:' + color + '">' + sign + row.amount + ' 积分 · ' + reasonLabel + ' <span style="color:var(--muted-2);font-size:.85em">' + balAfter + '</span></div></div><div class="time">' + formatTime(row.created_at) + '</div></div>';
     });
     body.innerHTML = html;
   } catch (e) {
-    body.innerHTML = '<div class="empty">Failed to load: ' + (e.message || String(e)) + '</div>';
+    body.innerHTML = '<div class="empty">加载失败：' + (e.message || String(e)) + '</div>';
   }
 
   function formatTime(iso) {

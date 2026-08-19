@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Image Generation — ModelAPI</title>
-<meta name="description" content="Generate high-quality AI images from a single text description. Fully licensed AI image generation platform.">
+<title>AI 生图 — ModelAPI</title>
+<meta name="description" content="ModelAPI AI 生图：输入一句话，生成高质量图片。官方授权 AI 生图平台。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js" defer></script>
-<link rel="alternate" hreflang="zh" href="image.zh.html">
-<link rel="alternate" hreflang="en" href="image.html">
 <style>
   .gen-wrap{max-width:880px;margin:60px auto 80px;padding:0 20px}
   .gen-head{text-align:center;margin-bottom:36px}
@@ -79,48 +77,48 @@
 
 <header class="nav" id="navbar">
   <div class="nav-inner">
-    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
+    <a class="brand" href="index.zh.html"><span class="brand-mark">◆</span> ModelAPI</a>
     <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="image.html">AI Image</a>
-      <a href="video.html">AI Video</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="index.zh.html">首页</a>
+      <a href="image.zh.html">AI 生图</a>
+      <a href="video.zh.html">AI 视频</a>
+      <a href="pricing.zh.html">定价</a>
     </nav>
-    <a class="btn btn-primary" href="login.html">Get Started Free</a>
-    <div class="lang-switch"><span class="lang-active">EN</span><span class="lang-sep">/</span><a href="image.zh.html">中文</a></div>
+    <a class="btn btn-primary" href="login.zh.html">免费开始</a>
+    <div class="lang-switch"><a href="image.html">EN</a><span class="lang-sep">/</span><span class="lang-active">中文</span></div>
   </div>
 </header>
 
 <div class="gen-wrap">
   <div class="gen-head">
-    <h1>One sentence, <span class="accent">one image</span></h1>
-    <p>Describe what you imagine — AI draws it for you. Fully licensed, compliant, and fast.</p>
+    <h1>一句话，<span class="accent">生成一张图</span></h1>
+    <p>输入你的想法，AI 帮你把它画出来。官方授权 AI 生图平台，合规、稳定、出图快。</p>
   </div>
 
   <div class="gen-card">
     <div class="field">
-      <label for="prompt">Describe the image you want</label>
-      <textarea id="prompt" placeholder="e.g. An orange cat sitting on a desk, soft lighting, photorealistic, warm tones"></textarea>
+      <label for="prompt">描述你想生成的画面</label>
+      <textarea id="prompt" placeholder="例如：一只橘猫坐在书桌上，柔和的灯光，写实风格，暖色调"></textarea>
     </div>
 
     <div class="field">
-      <label>Aspect ratio</label>
+      <label>画面尺寸</label>
       <div class="opts" id="sizeOpts">
-        <button type="button" class="opt-btn active" data-size="1024x1024">1:1 Square</button>
-        <button type="button" class="opt-btn" data-size="1280x720">16:9 Wide</button>
-        <button type="button" class="opt-btn" data-size="720x1280">9:16 Vertical</button>
+        <button type="button" class="opt-btn active" data-size="1024x1024">1:1 方形</button>
+        <button type="button" class="opt-btn" data-size="1280x720">16:9 横版</button>
+        <button type="button" class="opt-btn" data-size="720x1280">9:16 竖版</button>
       </div>
     </div>
 
-    <button class="btn-gen" id="genBtn">Generate Image</button>
+    <button class="btn-gen" id="genBtn">生 成 图 片</button>
 
-    <div class="loading" id="loading"><span class="spinner"></span>Generating, please wait…</div>
+    <div class="loading" id="loading"><span class="spinner"></span>正在生成，请稍候…</div>
     <div class="gen-error" id="genError"></div>
     <div class="demo-note" id="demoNote"></div>
 
     <div class="result" id="result">
-      <img class="result-img" id="resultImg" alt="Generated result">
-      <p class="result-hint">AI generated · Image link valid for about 24 hours</p>
+      <img class="result-img" id="resultImg" alt="生成结果">
+      <p class="result-hint">AI 生成 · 图片链接有效期约 24 小时</p>
     </div>
   </div>
 </div>
@@ -129,8 +127,8 @@
   <div style="max-width:var(--maxw);margin:0 auto;padding:0 24px 24px">
     <div class="legal-entity">Operated by <b>AURA GENAI LABS PTE. LTD.</b> (UEN: 202631742R)<br>60 PAYA LEBAR ROAD, #12-03, PAYA LEBAR SQUARE, SINGAPORE 409051</div>
   </div>
-  <div class="footer-bottom">© 2026 ModelAPI · AI Image &amp; Video Generation Platform</div>
-  <div class="legal-bar"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="refund.html">Refund</a> · <a href="pricing.html">Pricing</a> · <a href="about.html">About</a> · <a href="contact.html">Contact</a></div>
+  <div class="footer-bottom">© 2026 ModelAPI · AI 生图与视频生成平台</div>
+  <div class="legal-bar"><a href="privacy.zh.html">隐私政策 Privacy</a> · <a href="terms.zh.html">服务条款 Terms</a> · <a href="refund.zh.html">退款政策 Refund</a> · <a href="pricing.zh.html">定价 Pricing</a> · <a href="about.zh.html">关于我们 About</a> · <a href="contact.zh.html">联系我们 Contact</a></div>
 </footer>
 
 <script>
@@ -144,6 +142,7 @@
   var resultImg = document.getElementById('resultImg');
   var currentSize = '1024x1024';
 
+  // 尺寸选择
   document.getElementById('sizeOpts').addEventListener('click', function (e) {
     var btn = e.target.closest('.opt-btn');
     if (!btn) return;
@@ -162,59 +161,61 @@
     resultEl.classList.remove('show');
   }
 
+  // 记录用量到 Supabase（未登录或失败不影响主流程）
   async function logGenUsage(prompt, url) {
     try {
       if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) return;
       if (!window.supabase) return;
       var c = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
       var s = await c.auth.getSession();
-      if (!s || !s.data || !s.data.session) return;
+      if (!s || !s.data || !s.data.session) return; // 未登录，跳过
       await c.from('gen_logs').insert({ prompt: prompt });
-    } catch (_) { /* silent */ }
+    } catch (_) { /* 静默失败，不影响生图 */ }
   }
 
   genBtn.addEventListener('click', async function () {
     var prompt = promptEl.value.trim();
-    if (!prompt) { showError('Please enter a description first'); return; }
+    if (!prompt) { showError('请先输入你想生成的画面描述'); return; }
     hideAll();
     genBtn.disabled = true;
-    genBtn.textContent = 'Checking credits…';
+    genBtn.textContent = '扣积分中…';
     loadingEl.style.display = 'block';
 
+    // 1. 积分检查：未登录 → 提示并跳转；积分不足 → 提示充值
     try {
-      if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) throw new Error('Membership system not configured');
-      if (!window.supabase) throw new Error('Supabase SDK not loaded');
+      if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) throw new Error('会员系统未配置');
+      if (!window.supabase) throw new Error('未引入 Supabase SDK');
       var sc = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
       var ss = await sc.auth.getSession();
       if (!ss || !ss.data || !ss.data.session) {
         loadingEl.style.display = 'none';
         genBtn.disabled = false;
-        genBtn.textContent = 'Generate Image';
-        showError('Please sign in first (generation uses credits)');
-        setTimeout(function(){ window.location.href = 'login.html'; }, 1500);
+        genBtn.textContent = '生 成 图 片';
+        showError('请先登录后再生成（消耗积分）');
+        setTimeout(function(){ window.location.href = 'login.zh.html'; }, 1500);
         return;
       }
-      loadingEl.innerHTML = '<span class="spinner"></span>Confirming credits…';
+      loadingEl.innerHTML = '<span class="spinner"></span>积分确认中…';
       var dr = await sc.rpc('deduct_credits', { p_amount: 10, p_reason: 'image_gen' });
       if (dr.error) throw dr.error;
       var dres = (dr.data && dr.data[0]) || {};
       if (!dres.ok) {
         loadingEl.style.display = 'none';
         genBtn.disabled = false;
-        genBtn.textContent = 'Generate Image';
+        genBtn.textContent = '生 成 图 片';
         if (dres.message === 'INSUFFICIENT_BALANCE') {
-          showError('Insufficient credits. Current balance: ' + (dres.new_balance || 0) + ' credits (10 credits per image). Please upgrade your plan.');
+          showError('积分不足，当前余额 ' + (dres.new_balance || 0) + ' 积分（生图需 10 积分），请去「升级套餐」充值');
         } else {
-          showError('Credit system error: ' + (dres.message || 'unknown'));
+          showError('积分系统错误：' + (dres.message || '未知'));
         }
         return;
       }
-      loadingEl.innerHTML = '<span class="spinner"></span>Generating, please wait…';
+      loadingEl.innerHTML = '<span class="spinner"></span>正在生成，请稍候…';
     } catch (e) {
       loadingEl.style.display = 'none';
       genBtn.disabled = false;
-      genBtn.textContent = 'Generate Image';
-      showError('Credit check failed: ' + (e.message || String(e)));
+      genBtn.textContent = '生 成 图 片';
+      showError('积分检查失败：' + (e.message || String(e)));
       return;
     }
 
@@ -227,7 +228,7 @@
     .then(function (res) {
       loadingEl.style.display = 'none';
       genBtn.disabled = false;
-      genBtn.textContent = 'Generate Image';
+      genBtn.textContent = '生 成 图 片';
 
       if (res.data && res.data.demo) {
         demoEl.textContent = res.data.message;
@@ -235,22 +236,23 @@
         return;
       }
       if (res.data && res.data.error) {
-        showError('Generation failed: ' + res.data.error + (res.data.detail ? ' (' + res.data.detail + ')' : ''));
+        showError('生成失败：' + res.data.error + (res.data.detail ? '（' + res.data.detail + '）' : ''));
         return;
       }
       var url = res.data && res.data.data && res.data.data[0] && res.data.data[0].url;
       if (url) {
         resultImg.src = url;
         resultEl.classList.add('show');
+        // 成功后：余额已在 deduct_credits 里扣减，无需额外记录
       } else {
-        showError('No image was returned. Please try again later.');
+        showError('未获取到图片结果，请稍后重试');
       }
     })
     .catch(function (err) {
       loadingEl.style.display = 'none';
       genBtn.disabled = false;
-      genBtn.textContent = 'Generate Image';
-      showError('Network error: ' + err.message);
+      genBtn.textContent = '生 成 图 片';
+      showError('网络错误：' + err.message);
     });
   });
 })();

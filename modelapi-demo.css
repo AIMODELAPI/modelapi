@@ -563,6 +563,13 @@ body{animation:page-fade-in .6s var(--ease-out-quart) both}
 .article-foot a{color:var(--neon)}
 @media(max-width:880px){.post-grid{grid-template-columns:1fr}.article-wrap{padding:90px 0 30px}}
 
+/* ═══════════════ 语言切换按钮（EN / 中文） ═══════════════ */
+.lang-switch{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-family:'JetBrains Mono',ui-monospace,monospace;white-space:nowrap;margin-left:6px}
+.lang-switch .lang-active{color:var(--neon);font-weight:700;text-shadow:0 0 10px var(--neon-soft)}
+.lang-switch .lang-sep{color:var(--muted-2)}
+.lang-switch a{color:var(--muted);text-decoration:none;transition:color var(--duration-fast)}
+.lang-switch a:hover{color:var(--neon)}
+
 /* ═══════════════ 套餐定价卡 ═══════════════ */
 .price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:20px 0}
 .price-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:22px 20px;position:relative;transition:all var(--duration-normal);display:flex;flex-direction:column}

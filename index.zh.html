@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ModelAPI — AI 生图与视频生成平台</title>
+<meta name="description" content="ModelAPI 专注 AI 图像与视频生成：输入一句文字描述，即可生成高质量图片与视频。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="modelapi-demo.css">
+<script src="config.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"ModelAPI",
+  "applicationCategory":"MultimediaApplication",
+  "operatingSystem":"Web",
+  "description":"ModelAPI 是专注 AI 图像与视频生成的专业平台：输入文字描述即可生成高质量图片与视频。",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "publisher":{"@type":"Organization","name":"ModelAPI"}
+}
+</script>
+</head>
+<body>
+
+<header class="nav" id="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="index.zh.html"><span class="brand-mark">◆</span> ModelAPI</a>
+    <nav class="nav-links">
+      <a href="index.zh.html">首页</a>
+      <a href="image.zh.html">AI 生图</a>
+      <a href="video.zh.html">AI 视频</a>
+      <a href="pricing.zh.html">定价</a>
+      <a href="pricing.zh.html">定价</a>
+    </nav>
+    <a class="btn btn-primary" href="login.zh.html?mode=signup" id="navCta">免费开始</a>
+    <span id="nav-auth"></span>
+    <div class="lang-switch"><a href="index.html">EN</a><span class="lang-sep">/</span><span class="lang-active">中文</span></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow">
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+    <div class="glow-3"></div>
+  </div>
+
+  <div class="wrap">
+    <span class="badge reveal reveal-delay-1">AI Image &amp; Video Generation</span>
+
+    <h1 class="reveal reveal-delay-2">用一句话，<br>生成<span class="accent">图片和视频</span>。</h1>
+
+    <p class="lead reveal reveal-delay-3">ModelAPI 是专注 <strong style="color:var(--neon)">AI 生图与 AI 视频</strong>的专业平台。把脑海里的画面写下来，AI 帮你把它变成图片和视频——高质量、稳定、合规。</p>
+
+    <div class="hero-cta reveal reveal-delay-4">
+      <a class="btn btn-primary" href="image.zh.html">开始生图</a>
+      <a class="btn btn-ghost" href="video.zh.html">开始做视频</a>
+    </div>
+  </div>
+</section>
+
+<!-- 两大功能 -->
+<section id="features-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">我们能做什么</span>
+      <h2>两个功能，覆盖你的视觉创作</h2>
+      <p>不用学任何技术，输入文字，剩下的交给 AI。</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card reveal reveal-delay-1">
+        <div class="ico">🖼️</div>
+        <h3>AI 生图</h3>
+        <p>输入一句画面描述，生成高质量图片。支持 1:1 方形、16:9 横版、9:16 竖版，海报、头像、配图都能做。</p>
+        <a class="btn btn-primary" href="image.zh.html" style="margin-top:14px">开始生图 →</a>
+      </div>
+      <div class="card reveal reveal-delay-2">
+        <div class="ico">🎬</div>
+        <h3>AI 视频</h3>
+        <p>输入一句画面描述，生成动态视频。支持 3 / 5 / 10 秒时长、720P / 1080P 清晰度，短片素材一键生成。</p>
+        <a class="btn btn-ghost" href="video.zh.html" style="margin-top:14px">开始做视频 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 平台特点 -->
+<section style="background:var(--bg-2)" id="value-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">为什么选 ModelAPI</span>
+      <h2>简单、好看、稳定、安心</h2>
+      <p>这四个词，是我们对每个创作者的承诺。</p>
+    </div>
+    <div class="grid grid-4">
+      <div class="card reveal reveal-delay-1"><div class="ico">💡</div><h3>简单</h3><p>不用学接口、不用配参数。输入一句话，点一下，就出图出片。</p></div>
+      <div class="card reveal reveal-delay-2"><div class="ico">🎨</div><h3>高质量</h3><p>专业级生成引擎，画质出众、细节自然。</p></div>
+      <div class="card reveal reveal-delay-3"><div class="ico">⚡</div><h3>快速稳定</h3><p>企业级生成服务，出图快、出片稳，关键时刻不掉链子。</p></div>
+      <div class="card reveal reveal-delay-4"><div class="ico">🛡️</div><h3>合规安全</h3><p>官方授权 AI 生成平台，数据加密存储，用得安心。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 套餐定价 -->
+<section style="background:var(--bg-2)" id="pricing-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">定价</span>
+      <h2>简单透明的套餐积分制度</h2>
+      <p>1 积分 = $0.01，按月订阅，用完即止，不绑定自动扣费。</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card reveal reveal-delay-1">
+        <h3>免费试用</h3>
+        <div class="amount">$0</div>
+        <div class="unit">注册即送</div>
+        <div class="credits">50 积分</div>
+        <p class="meta">体验 <b>5 张图</b> 或 <b>2 秒</b> 720P 视频，了解平台全部能力。</p>
+        <a class="btn btn-ghost" href="login.zh.html?mode=signup">免费注册 →</a>
+      </div>
+      <div class="price-card reveal reveal-delay-2">
+        <h3>Starter</h3>
+        <div class="amount">$9.9</div>
+        <div class="unit">/ 月</div>
+        <div class="credits">1,000 积分</div>
+        <p class="meta">生成 <b>100 张图</b> 或 <b>40 秒</b> 720P 视频，适合个人创作。</p>
+        <a class="btn btn-primary" href="login.zh.html?mode=signup">选择 Starter →</a>
+      </div>
+      <div class="price-card price-card--featured reveal reveal-delay-3">
+        <span class="price-badge">★ 推荐</span>
+        <h3>Pro</h3>
+        <div class="amount">$29</div>
+        <div class="unit">/ 月</div>
+        <div class="credits">3,500 积分</div>
+        <p class="meta">生成 <b>350 张图</b> 或 <b>140 秒</b> 720P 视频，创作者首选。</p>
+        <a class="btn btn-primary" href="login.zh.html?mode=signup">选择 Pro →</a>
+      </div>
+      <div class="price-card reveal reveal-delay-4">
+        <h3>Studio</h3>
+        <div class="amount">$99</div>
+        <div class="unit">/ 月</div>
+        <div class="credits">12,500 积分</div>
+        <p class="meta">生成 <b>1,250 张图</b> 或 <b>500 秒</b> 720P 视频，工作室和高频用户。</p>
+        <a class="btn btn-primary" href="login.zh.html?mode=signup">选择 Studio →</a>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px" class="reveal">
+      <a class="btn btn-primary" href="pricing.zh.html">查看完整定价说明 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 技术底座 -->
+<section id="backend-section">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>简单背后的技术底座</h2>
+      <p>ModelAPI 基于企业级 AI 基础设施构建——你专注创作，技术交给我们。</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta-section">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>现在就开始创作</h2>
+      <p>输入一句话，生成你的第一张图、第一段视频。</p>
+      <a class="btn btn-primary" href="login.zh.html?mode=signup">免费注册</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="brand"><span class="brand-mark">◆</span> ModelAPI</div>
+      <p class="footer-tag">让想法，变成画面 · From Words to Visuals</p>
+      <div class="legal-entity">Operated by <b>AURA GENAI LABS PTE. LTD.</b> (UEN: 202631742R)<br>60 PAYA LEBAR ROAD, #12-03, PAYA LEBAR SQUARE, SINGAPORE 409051</div>
+    </div>
+    <div class="footer-cols">
+      <div><h4>功能</h4><a href="image.zh.html">AI 生图</a><a href="video.zh.html">AI 视频</a>
+      <a href="pricing.zh.html">定价</a><a href="login.zh.html">登录 / 注册</a></div>
+      <div><h4>公司</h4><a href="about.zh.html">关于我们</a><a href="contact.zh.html">联系我们</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 ModelAPI · AI 生图与视频生成平台</div>
+<div class="legal-bar"><a href="privacy.zh.html">隐私政策 Privacy</a> · <a href="terms.zh.html">服务条款 Terms</a> · <a href="refund.zh.html">退款政策 Refund</a> · <a href="pricing.zh.html">定价 Pricing</a> · <a href="about.zh.html">关于我们 About</a> · <a href="contact.zh.html">联系我们 Contact</a></div></footer>
+
+<!-- ═════ 动效引擎 ═════ -->
+<script>
+(function(){
+  'use strict';
+
+  /* ── 1. 导航栏滚动加深 ── */
+  var nav = document.getElementById('navbar');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive:true});
+
+  /* ── 2. Hero 入场：立即显示 hero 内元素 ── */
+  (function showHeroReveals(){
+    var heroItems = document.querySelectorAll('.hero .reveal');
+    setTimeout(function(){
+      for(var i = 0; i < heroItems.length; i++){
+        heroItems[i].classList.add('visible');
+      }
+    }, 120);
+  })();
+
+  /* ── 3. 滚动触发 reveal（IntersectionObserver） ── */
+  (function initScrollReveal(){
+    var reveals = document.querySelectorAll('.reveal:not(.hero .reveal)');
+    if(!reveals.length) return;
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+    for(var i = 0; i < reveals.length; i++){
+      observer.observe(reveals[i]);
+    }
+  })();
+
+  /* ── 4. 平滑滚动到锚点 ── */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var tgt = document.querySelector(this.getAttribute('href'));
+      if(tgt){ e.preventDefault(); tgt.scrollIntoView({behavior:'smooth',block:'start'}); }
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>

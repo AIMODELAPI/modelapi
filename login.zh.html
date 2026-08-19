@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In — ModelAPI</title>
+<title>登录 — ModelAPI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js" defer></script>
-<link rel="alternate" hreflang="zh" href="login.zh.html">
-<link rel="alternate" hreflang="en" href="login.html">
 <style>
   .login-wrap{max-width:440px;margin:100px auto 80px;padding:0 20px}
   .login-card{
@@ -26,10 +24,12 @@
   .login-card h1{font-size:1.75rem;font-weight:800;margin-bottom:4px;color:var(--text)}
   .login-sub{color:var(--muted);margin-bottom:24px;font-size:.95rem;line-height:1.6}
 
+  /* 登录/注册 切换 */
   .auth-tabs{display:flex;gap:0;background:#0d0d18;border-radius:var(--radius-md);padding:4px;margin-bottom:24px}
   .auth-tab{flex:1;padding:10px;text-align:center;border-radius:8px;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--muted);transition:all .2s}
   .auth-tab.active{background:linear-gradient(135deg,var(--neon),#3aa0e0);color:#fff}
 
+  /* 表单 */
   .form-group{margin-bottom:20px}
   .form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase}
   .form-group input{
@@ -72,44 +72,44 @@
 
 <header class="nav" id="navbar">
   <div class="nav-inner">
-    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
+    <a class="brand" href="index.zh.html"><span class="brand-mark">◆</span> ModelAPI</a>
     <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="image.html">AI Image</a>
-      <a href="video.html">AI Video</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="index.zh.html">首页</a>
+      <a href="image.zh.html">AI 生图</a>
+      <a href="video.zh.html">AI 视频</a>
+      <a href="pricing.zh.html">定价</a>
     </nav>
-    <a class="btn btn-primary" href="index.html">Back to Home</a>
-    <div class="lang-switch"><span class="lang-active">EN</span><span class="lang-sep">/</span><a href="login.zh.html">中文</a></div>
+    <a class="btn btn-primary" href="index.zh.html">返回首页</a>
+    <div class="lang-switch"><a href="login.html">EN</a><span class="lang-sep">/</span><span class="lang-active">中文</span></div>
   </div>
 </header>
 
 <div class="login-wrap">
   <div class="login-card">
-    <h1 id="authTitle">Sign in to ModelAPI</h1>
-    <p class="login-sub">Manage your AI image &amp; video generation usage.</p>
+    <h1 id="authTitle">登录 ModelAPI</h1>
+    <p class="login-sub">登录后管理你的 AI 生图与视频用量。</p>
 
     <div class="login-error" id="loginError"></div>
     <div class="login-success" id="loginSuccess"></div>
 
     <div class="auth-tabs">
-      <div class="auth-tab active" data-mode="signin">Sign In</div>
-      <div class="auth-tab" data-mode="signup">Sign Up</div>
+      <div class="auth-tab active" data-mode="signin">登录</div>
+      <div class="auth-tab" data-mode="signup">注册</div>
     </div>
 
     <form id="authForm" autocomplete="off">
       <div class="form-group">
-        <label for="email">Email address</label>
+        <label for="email">邮箱地址</label>
         <input type="email" id="email" placeholder="your@email.com" required autofocus>
       </div>
       <div class="form-group">
-        <label for="password">Password (min. 6 characters)</label>
+        <label for="password">密码（至少 6 位）</label>
         <input type="password" id="password" placeholder="••••••••" required minlength="6">
       </div>
-      <button type="submit" class="btn-login" id="submitBtn">Sign In</button>
+      <button type="submit" class="btn-login" id="submitBtn">登 录</button>
     </form>
 
-    <p class="login-foot">Secure account system · Encrypted data storage</p>
+    <p class="login-foot">用 Supabase 真实账号体系 · 数据安全加密</p>
   </div>
 </div>
 
@@ -117,8 +117,8 @@
   <div style="max-width:var(--maxw);margin:0 auto;padding:0 24px 24px">
     <div class="legal-entity">Operated by <b>AURA GENAI LABS PTE. LTD.</b> (UEN: 202631742R)<br>60 PAYA LEBAR ROAD, #12-03, PAYA LEBAR SQUARE, SINGAPORE 409051</div>
   </div>
-  <div class="footer-bottom">© 2026 ModelAPI · AI Image &amp; Video Generation Platform</div>
-  <div class="legal-bar"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="refund.html">Refund</a> · <a href="pricing.html">Pricing</a> · <a href="about.html">About</a> · <a href="contact.html">Contact</a></div>
+  <div class="footer-bottom">© 2026 ModelAPI · AI 生图与视频生成平台</div>
+  <div class="legal-bar"><a href="privacy.zh.html">隐私政策 Privacy</a> · <a href="terms.zh.html">服务条款 Terms</a> · <a href="refund.zh.html">退款政策 Refund</a> · <a href="pricing.zh.html">定价 Pricing</a> · <a href="about.zh.html">关于我们 About</a> · <a href="contact.zh.html">联系我们 Contact</a></div>
 </footer>
 
 <script>
@@ -148,17 +148,19 @@
     return sb;
   }
 
+  // 切换登录/注册
   document.querySelectorAll('.auth-tab').forEach(function (t) {
     t.addEventListener('click', function () {
       document.querySelectorAll('.auth-tab').forEach(function (x) { x.classList.remove('active'); });
       t.classList.add('active');
       mode = t.getAttribute('data-mode');
-      document.getElementById('submitBtn').textContent = mode === 'signup' ? 'Sign Up' : 'Sign In';
-      document.getElementById('authTitle').textContent = mode === 'signup' ? 'Create your ModelAPI account' : 'Sign in to ModelAPI';
+      document.getElementById('submitBtn').textContent = mode === 'signup' ? '注 册' : '登 录';
+      document.getElementById('authTitle').textContent = mode === 'signup' ? '注册 ModelAPI 账号' : '登录 ModelAPI';
       clearMsg();
     });
   });
 
+  // 支持 URL 参数直达注册页：login.zh.html?mode=signup（或 #register）
   (function autoTab() {
     if (/[?&#](mode=signup|tab=signup|register)/i.test(location.href)) {
       var t = document.querySelector('.auth-tab[data-mode="signup"]');
@@ -166,53 +168,55 @@
     }
   })();
 
+  // 提交
   document.getElementById('authForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     clearMsg();
     var email_v = document.getElementById('email').value.trim();
     var password = document.getElementById('password').value;
-    if (!email_v || password.length < 6) { showErr('Please enter your email and a password of at least 6 characters'); return; }
+    if (!email_v || password.length < 6) { showErr('请输入邮箱和至少 6 位密码'); return; }
 
     var client = getClient();
-    if (!client) { showErr('Membership system not configured. Please refresh and try again.'); return; }
+    if (!client) { showErr('会员系统未配置，请刷新页面或稍后再试'); return; }
 
     var btn = document.getElementById('submitBtn');
-    btn.disabled = true; btn.textContent = 'Processing…'; btn.classList.add('logging-in');
+    btn.disabled = true; btn.textContent = '处理中…'; btn.classList.add('logging-in');
 
     try {
       if (mode === 'signup') {
         var r = await client.auth.signUp({ email: email_v, password: password });
         if (r.error) throw r.error;
         if (r.data.session) {
-          showOk('Account created! Redirecting…');
-          setTimeout(function () { window.location.href = 'dashboard.html'; }, 500);
+          showOk('注册成功，正在进入...');
+          setTimeout(function () { window.location.href = 'dashboard.zh.html'; }, 500);
         } else {
-          showOk('Account created! Please check your email to confirm, then sign in.');
-          btn.textContent = 'Sign Up'; btn.disabled = false; btn.classList.remove('logging-in');
+          showOk('注册成功！请去邮箱点击确认链接后再登录（开发模式可能不需要确认）');
+          btn.textContent = '注 册'; btn.disabled = false; btn.classList.remove('logging-in');
         }
       } else {
         var r2 = await client.auth.signInWithPassword({ email: email_v, password: password });
         if (r2.error) throw r2.error;
-        showOk('Signed in! Redirecting…');
-        setTimeout(function () { window.location.href = 'dashboard.html'; }, 500);
+        showOk('登录成功，正在进入...');
+        setTimeout(function () { window.location.href = 'dashboard.zh.html'; }, 500);
       }
     } catch (err) {
-      btn.disabled = false; btn.textContent = mode === 'signup' ? 'Sign Up' : 'Sign In'; btn.classList.remove('logging-in');
+      btn.disabled = false; btn.textContent = mode === 'signup' ? '注 册' : '登 录'; btn.classList.remove('logging-in');
       var msg = (err && err.message) || String(err);
-      if (/already registered|already been registered/i.test(msg)) msg = 'This email is already registered. Please sign in instead.';
-      else if (/invalid login|invalid credentials/i.test(msg)) msg = 'Incorrect email or password';
-      else if (/password/i.test(msg) && /short|6/i.test(msg)) msg = 'Password must be at least 6 characters';
-      else if (/email/i.test(msg) && /invalid/i.test(msg)) msg = 'Invalid email format';
+      if (/already registered|already been registered/i.test(msg)) msg = '这个邮箱已注册，请直接登录';
+      else if (/invalid login|invalid credentials/i.test(msg)) msg = '邮箱或密码不对';
+      else if (/password/i.test(msg) && /short|6/i.test(msg)) msg = '密码至少 6 位';
+      else if (/email/i.test(msg) && /invalid/i.test(msg)) msg = '邮箱格式不对';
       showErr(msg);
     }
   });
 
+  // 已登录则跳转 dashboard
   (async function () {
     var client = getClient();
     if (!client) return;
     var s = await client.auth.getSession();
     if (s && s.data && s.data.session) {
-      window.location.href = 'dashboard.html';
+      window.location.href = 'dashboard.zh.html';
     }
   })();
 })();
