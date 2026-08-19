@@ -7,19 +7,14 @@
 <meta name="description" content="ModelAPI pricing for AI image and video generation, and how payment works.">
 <link rel="stylesheet" href="modelapi-demo.css">
 <style>
-.legal-wrap{max-width:880px;margin:0 auto;padding:70px 0 40px}
+.legal-wrap{max-width:1000px;margin:0 auto;padding:70px 0 40px}
 .legal-wrap h1{font-size:2rem;margin-bottom:6px}
-.legal-wrap h2{font-size:1.2rem;margin:30px 0 10px;color:var(--text)}
+.legal-wrap h2{font-size:1.2rem;margin:34px 0 10px;color:var(--text)}
 .legal-wrap p,.legal-wrap li{color:var(--muted);line-height:1.8;font-size:.96rem}
 .legal-wrap ul{padding-left:20px}
 .legal-wrap li{margin:6px 0}
 .legal-wrap b{color:var(--text)}
-.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin:20px 0}
-.price-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:22px 20px}
-.price-card h3{font-size:1.1rem;margin-bottom:8px;color:var(--text)}
-.price-card .amount{font-size:1.8rem;font-weight:800;color:var(--neon);margin-bottom:6px}
-.price-card .unit{color:var(--muted-2);font-size:.85rem}
-.price-card p{color:var(--muted);font-size:.9rem;margin-top:8px;line-height:1.6}
+.legal-wrap .lede{font-size:1.04rem;color:var(--muted);line-height:1.7;margin:8px 0 22px}
 </style>
 </head>
 <body>
@@ -33,38 +28,76 @@
 <section class="wrap legal-wrap">
   <span class="eyebrow">Pricing</span>
   <h1>Pricing &amp; Payment</h1>
-  <p>Simple, transparent, pay-as-you-go pricing. New accounts receive a free trial quota so you can try before you buy.</p>
+  <p class="lede">Simple, transparent credit-based pricing. One credit equals $0.01. New accounts receive free trial credits so you can try before you buy. Credits are deducted only when a generation succeeds.</p>
 
+  <!-- ═══════ 套餐卡片 ═══════ -->
   <div class="price-grid">
     <div class="price-card">
-      <h3>AI Image Generation</h3>
-      <div class="amount">$0.10</div>
-      <div class="unit">per image</div>
-      <p>High-quality images in 1:1, 16:9 or 9:16.</p>
+      <h3>Free Trial</h3>
+      <div class="amount">$0</div>
+      <div class="unit">forever, included on signup</div>
+      <div class="credits">50 credits</div>
+      <p class="meta">Generate up to <b>5 images</b> or <b>2 seconds</b> of 720P video. Perfect for testing the platform.</p>
+      <a class="btn btn-ghost" href="login.html?mode=signup">Sign up free →</a>
     </div>
+
     <div class="price-card">
-      <h3>AI Video Generation</h3>
-      <div class="amount">$0.25</div>
-      <div class="unit">per second (720P)</div>
-      <p>$0.35 / second for 1080P. Choose 3, 5 or 10 seconds per clip.</p>
+      <h3>Starter</h3>
+      <div class="amount">$9.9</div>
+      <div class="unit">per month</div>
+      <div class="credits">1,000 credits</div>
+      <p class="meta">Generate up to <b>100 images</b> or <b>40 seconds</b> of 720P video. Ideal for individuals.</p>
+      <a class="btn btn-primary" href="login.html?mode=signup">Get Starter →</a>
+    </div>
+
+    <div class="price-card price-card--featured">
+      <span class="price-badge">★ Recommended</span>
+      <h3>Pro</h3>
+      <div class="amount">$29</div>
+      <div class="unit">per month</div>
+      <div class="credits">3,500 credits</div>
+      <p class="meta">Generate up to <b>350 images</b> or <b>140 seconds</b> of 720P video. For creators and small teams.</p>
+      <a class="btn btn-primary" href="login.html?mode=signup">Get Pro →</a>
+    </div>
+
+    <div class="price-card">
+      <h3>Studio</h3>
+      <div class="amount">$99</div>
+      <div class="unit">per month</div>
+      <div class="credits">12,500 credits</div>
+      <p class="meta">Generate up to <b>1,250 images</b> or <b>500 seconds</b> of 720P video. For studios and heavy users.</p>
+      <a class="btn btn-primary" href="login.html?mode=signup">Get Studio →</a>
     </div>
   </div>
 
-  <h2>Free trial</h2>
-  <p>Every new account receives a free trial quota to generate your first images and videos at no cost. A valid email is required to activate the trial.</p>
+  <!-- ═══════ How credits work ═══════ -->
+  <h2>How credits work</h2>
+  <p><b>1 credit = $0.01</b> · Credits are deducted only when a generation is successfully delivered. Failed generations do not consume credits.</p>
+  <table class="price-table">
+    <thead><tr><th>Generation type</th><th>Credits</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td>AI image (1:1 / 16:9 / 9:16)</td><td>10 credits / image</td><td>$0.10</td></tr>
+      <tr><td>AI video · 720P</td><td>25 credits / second</td><td>$0.25 / sec</td></tr>
+      <tr><td>AI video · 1080P</td><td>35 credits / second</td><td>$0.35 / sec</td></tr>
+    </tbody>
+  </table>
+  <p>Example: a 5-second 720P video costs 125 credits ($1.25); a 10-second 1080P video costs 350 credits ($3.50).</p>
 
+  <!-- ═══════ How payment works ═══════ -->
   <h2>How payment works</h2>
   <ul>
-    <li><b>Step 1 — Register:</b> create an account with your email address.</li>
-    <li><b>Step 2 — Top up credits:</b> add credits to your balance using a supported payment method.</li>
-    <li><b>Step 3 — Generate:</b> create images or videos; the corresponding credit is deducted only when a result is successfully delivered.</li>
-    <li><b>Step 4 — Track usage:</b> view your balance and generation history in your dashboard at any time.</li>
+    <li><b>Step 1 — Register:</b> create an account with your email address and receive <b>50 free trial credits</b>.</li>
+    <li><b>Step 2 — Choose a package:</b> pick the monthly plan that fits your needs. Your account is topped up with that package's credits each billing cycle.</li>
+    <li><b>Step 3 — Generate:</b> create images or videos. The corresponding credits are deducted only when a result is successfully delivered.</li>
+    <li><b>Step 4 — Track usage:</b> view your balance, transaction history, and remaining credits in your dashboard at any time.</li>
   </ul>
 
+  <!-- ═══════ Payment methods ═══════ -->
   <h2>Payment methods</h2>
   <p>We accept major international credit and debit cards (Visa, Mastercard, and others). Payments are processed by our licensed payment partners; we do not store your card details.</p>
 
-  <h2>Refunds</h2>
+  <!-- ═══════ Refunds ═══════ -->
+  <h2>Refunds &amp; failed generations</h2>
   <p>For failed or defective generations, unused credits, and chargeback handling, please see our <a href="refund.html">Refund &amp; Delivery Policy</a>.</p>
 </section>
 

@@ -562,3 +562,23 @@ body{animation:page-fade-in .6s var(--ease-out-quart) both}
 .article-foot{border-top:1px solid var(--border);margin-top:44px;padding-top:24px;color:var(--muted-2);font-size:.88rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .article-foot a{color:var(--neon)}
 @media(max-width:880px){.post-grid{grid-template-columns:1fr}.article-wrap{padding:90px 0 30px}}
+
+/* ═══════════════ 套餐定价卡 ═══════════════ */
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:20px 0}
+.price-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:22px 20px;position:relative;transition:all var(--duration-normal);display:flex;flex-direction:column}
+.price-card:hover{border-color:var(--neon-soft);box-shadow:0 0 20px rgba(76,201,255,.1);transform:translateY(-3px)}
+.price-card h3{font-size:1.1rem;margin-bottom:8px;color:var(--text)}
+.price-card .amount{font-size:1.9rem;font-weight:800;color:var(--neon);margin-bottom:4px;line-height:1.1}
+.price-card .unit{color:var(--muted-2);font-size:.85rem;margin-bottom:12px}
+.price-card .credits{font-size:1rem;font-weight:700;color:var(--text);margin:8px 0 4px}
+.price-card .meta{color:var(--muted);font-size:.9rem;line-height:1.6;margin:0 0 14px;flex:1}
+.price-card .btn{margin-top:auto;justify-content:center}
+.price-card--featured{border-color:var(--neon);box-shadow:0 0 24px rgba(76,201,255,.2)}
+.price-card--featured:hover{box-shadow:0 0 32px rgba(76,201,255,.35)}
+.price-badge{position:absolute;top:-11px;right:14px;background:linear-gradient(135deg,var(--neon),var(--purple-2));color:#fff;font-size:.7rem;font-weight:700;padding:5px 11px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 0 14px var(--neon-soft)}
+.price-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.95rem}
+.price-table th,.price-table td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+.price-table th{color:var(--muted-2);font-weight:600;font-size:.82rem;text-transform:uppercase;letter-spacing:1px}
+.price-table td{color:var(--text)}
+.price-table td:last-child{color:var(--neon);font-weight:600;font-family:"JetBrains Mono",ui-monospace,monospace}
+@media(max-width:640px){.price-grid{grid-template-columns:1fr}}
