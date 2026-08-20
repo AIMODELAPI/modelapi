@@ -589,3 +589,111 @@ body{animation:page-fade-in .6s var(--ease-out-quart) both}
 .price-table td{color:var(--text)}
 .price-table td:last-child{color:var(--neon);font-weight:600;font-family:"JetBrains Mono",ui-monospace,monospace}
 @media(max-width:640px){.price-grid{grid-template-columns:1fr}}
+
+/* ══════════════════════════════════════════════════════════════
+   主题精炼层 · 高级暗色风（2026-08-20）
+   目标：去「AI 建站感」——去掉网格点阵/扫描线/辉光动画/HUD 角标/
+   彩虹渐变，换成克制的专业暗色（参考 Linear / Vercel 质感）。
+   注意：本层覆盖上面的旧规则（同级特异性，后定义生效）。
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. 调色板：干净中性的深色，不再偏紫 ── */
+:root{
+  --bg:#0a0b0f; --bg-2:#0e1016; --surface:#13151c; --surface-2:#191c25;
+  --border:#21242e; --border-2:#2c303c;
+  --text:#eceef2; --muted:#9aa1af; --muted-2:#626a79;
+  --neon:#5b9bff; --neon-soft:rgba(91,155,255,.35);
+  --purple:#5b9bff; --purple-2:#3d7aed;
+  --green:#34c98e;
+}
+
+/* ── 2. 杀掉网格点阵背景 + 扫描线 + 顶部辉光 ── */
+body::before, body::after{display:none !important}
+.hero::after{display:none !important}
+.hero-glow{display:none !important}
+
+/* ── 3. 导航：去发光，变干净 ── */
+.brand-mark{text-shadow:none}
+.brand:hover .brand-mark{box-shadow:none;transform:none}
+.nav-links a{font-family:Inter,"Noto Sans SC",sans-serif;letter-spacing:.2px}
+.nav-links a::after{box-shadow:none;background:var(--neon)}
+
+/* ── 4. 按钮：实心单色，去彩虹渐变和辉光 ── */
+.btn{font-family:Inter,"Noto Sans SC",sans-serif;letter-spacing:.2px;border-radius:var(--radius-md)}
+.btn::before{display:none}
+.btn-primary{
+  background:var(--neon);
+  color:#0a0e1a;
+  box-shadow:none;
+}
+.btn-primary:hover{
+  transform:none;
+  background:#7ab0ff;
+  box-shadow:0 4px 16px rgba(91,155,255,.25);
+}
+.btn-ghost{background:transparent;border-color:var(--border-2)}
+.btn-ghost:hover{box-shadow:none;background:rgba(91,155,255,.08)}
+
+/* ── 5. 卡片：去 HUD 角标，保留细微 hover ── */
+.card::before,.card::after,
+.tier::before,.tier::after,
+.harness-flow::before,.harness-flow::after,
+.compare .col::before,.compare .col::after,
+.faq-item::before,.faq-item::after,
+.trust::before,.trust::after{display:none !important}
+
+/* ── 6. 标题：去渐变文字，用纯色 ── */
+.sec-head h2{
+  background:none;
+  -webkit-background-clip:initial;background-clip:initial;
+  -webkit-text-fill-color:var(--text);
+  color:var(--text);
+}
+.hero h1 .accent{
+  background:none;
+  -webkit-background-clip:initial;background-clip:initial;
+  -webkit-text-fill-color:var(--neon);
+  color:var(--neon);
+  text-shadow:none;
+}
+.hero h1 .accent::after{display:none}
+
+/* ── 7. Badge / Eyebrow：去脉冲和发光 ── */
+.badge{box-shadow:none;backdrop-filter:none}
+.badge::before{animation:none;box-shadow:none;background:var(--green)}
+.sec-head .eyebrow{border-color:var(--border-2);background:transparent}
+.sec-head .eyebrow::before{content:""}
+
+/* ── 8. 其余发光细节清理 ── */
+.lang-switch .lang-active{text-shadow:none}
+.footer-tag{text-shadow:none}
+.hero-code{box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.hero-code .cursor{box-shadow:none}
+.price-card:hover{box-shadow:none}
+.price-card--featured{box-shadow:none;border-width:2px}
+.price-card--featured:hover{box-shadow:0 8px 24px rgba(91,155,255,.15)}
+.price-badge{box-shadow:none;background:var(--neon);color:#0a0e1a}
+.gen-card::before{background:var(--neon) !important;height:2px !important}
+
+/* ── 9. Hero 高度收敛（不再占满整屏，更紧凑专业）── */
+.hero{min-height:auto;padding:90px 0 70px}
+
+/* ═══════════════ 示例作品墙 ═══════════════ */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g-item{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);transition:border-color .25s,transform .25s}
+.g-item:hover{border-color:var(--neon);transform:translateY(-3px)}
+.g-item img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.g-item figcaption{padding:10px 14px;font-size:.82rem;color:var(--muted);line-height:1.5}
+.g-item figcaption b{color:var(--text);font-weight:600;display:block;margin-bottom:2px;font-size:.85rem}
+@media(max-width:880px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.gallery-grid{grid-template-columns:1fr}}
+
+/* ═══════════════ FAQ 折叠列表 ═══════════════ */
+.faq-list{max-width:760px;margin:0 auto}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface);margin-bottom:12px;overflow:hidden}
+.faq-item summary{padding:16px 20px;cursor:pointer;font-weight:600;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;transition:color .2s}
+.faq-item summary:hover{color:var(--neon)}
+.faq-item summary::after{content:"+";color:var(--neon);font-size:1.25rem;font-weight:400;transition:transform .2s;flex-shrink:0;margin-left:12px}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item .faq-a{padding:0 20px 16px;color:var(--muted);font-size:.95rem;line-height:1.75}

@@ -197,7 +197,7 @@
       var c = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
       var s = await c.auth.getSession();
       if (!s || !s.data || !s.data.session) return; // 未登录，跳过
-      await c.from('gen_logs').insert({ prompt: prompt });
+      await c.from('gen_logs').insert({ prompt: prompt, result_url: url, gen_type: 'image' });
     } catch (_) { /* 静默失败，不影响生图 */ }
   }
 
@@ -271,6 +271,7 @@
       if (url) {
         resultImg.src = url;
         resultEl.classList.add('show');
+        logGenUsage(prompt, url).catch(function () {});
         loadCredits(); // 生成成功后刷新余额显示
         // 成功后：余额已在 deduct_credits 里扣减，无需额外记录
       } else {

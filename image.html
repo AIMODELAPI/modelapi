@@ -197,7 +197,7 @@
       var c = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
       var s = await c.auth.getSession();
       if (!s || !s.data || !s.data.session) return;
-      await c.from('gen_logs').insert({ prompt: prompt });
+      await c.from('gen_logs').insert({ prompt: prompt, result_url: url, gen_type: 'image' });
     } catch (_) { /* silent */ }
   }
 
@@ -270,6 +270,7 @@
       if (url) {
         resultImg.src = url;
         resultEl.classList.add('show');
+        logGenUsage(prompt, url).catch(function () {});
         loadCredits(); // 生成成功后刷新余额显示
       } else {
         showError('No image was returned. Please try again later.');

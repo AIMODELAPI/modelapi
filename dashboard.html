@@ -8,37 +8,67 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script src="config.js" defer></script>
 <link rel="alternate" hreflang="zh" href="dashboard.zh.html">
 <link rel="alternate" hreflang="en" href="dashboard.html">
 <style>
   .dash-wrap{max-width:960px;margin:60px auto 80px;padding:0 20px}
-  .dash-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+  .dash-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;flex-wrap:wrap;gap:16px}
   .dash-head h1{font-size:1.8rem;font-weight:800;color:var(--text)}
   .dash-head .email{color:var(--muted);font-size:.92rem;margin-top:6px}
   .btn-logout{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 18px;border-radius:var(--radius-md);font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;font-size:.88rem;transition:all .2s}
   .btn-logout:hover{border-color:#ff8888;color:#ff8888}
 
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:32px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:22px}
   .stat-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:22px 20px}
   .stat-card .label{color:var(--muted);font-size:.82rem;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
   .stat-card .value{font-size:1.9rem;font-weight:800;color:var(--text)}
   .stat-card .sub{color:var(--muted-2);font-size:.8rem;margin-top:4px}
 
-  .list{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);overflow:hidden}
+  /* 套餐卡 */
+  .plan-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:22px 24px;margin-bottom:22px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+  .plan-card .label{color:var(--muted);font-size:.8rem;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+  .plan-card .plan-name{font-size:1.4rem;font-weight:800;color:var(--neon)}
+  .plan-card .plan-desc{color:var(--muted-2);font-size:.85rem;margin-top:4px}
+  .plan-usage{flex:1;min-width:240px}
+  .usage-text{color:var(--muted);font-size:.85rem;margin-bottom:8px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace}
+  .progress{height:8px;background:#0d0f16;border-radius:99px;overflow:hidden;border:1px solid var(--border)}
+  .progress-fill{height:100%;background:var(--neon);border-radius:99px;transition:width .6s ease}
+
+  /* 图表卡 */
+  .chart-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);margin-bottom:22px;overflow:hidden}
+  .chart-wrap{padding:18px 20px;height:220px}
+
+  /* 作品墙 */
+  .gen-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;padding:18px 20px}
+  .gen-tile{border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;background:#0d0f16;transition:border-color .2s}
+  .gen-tile:hover{border-color:var(--neon)}
+  .gen-tile .thumb{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#0d0f16}
+  .gen-tile .thumb-placeholder{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--muted-2)}
+  .gen-tile .cap{padding:8px 10px;font-size:.75rem;color:var(--muted);line-height:1.4}
+  .gen-tile .cap .t{color:var(--muted-2);font-size:.68rem;margin-top:2px;font-family:'JetBrains Mono',monospace}
+
+  .list{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:22px}
   .list-head{padding:16px 20px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text);font-size:1.02rem}
-  .list-body{max-height:520px;overflow:auto}
-  .list-item{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border)}
+  .list-body{max-height:420px;overflow:auto}
+  .list-item{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:14px 20px;border-bottom:1px solid var(--border)}
   .list-item:last-child{border-bottom:none}
-  .list-item .prompt{color:var(--text);font-size:.95rem;line-height:1.55;flex:1;word-break:break-word}
-  .list-item .meta{color:var(--muted-2);font-size:.78rem;margin-top:4px;font-family:'JetBrains Mono',monospace}
-  .list-item .time{color:var(--muted);font-size:.82rem;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+  .list-item .prompt{color:var(--text);font-size:.92rem;line-height:1.55;flex:1;word-break:break-word}
+  .list-item .time{color:var(--muted);font-size:.8rem;white-space:nowrap;font-family:'JetBrains Mono',monospace}
 
-  .empty{padding:48px 20px;text-align:center;color:var(--muted-2)}
-  .empty .big{font-size:1.1rem;margin-bottom:8px;color:var(--muted)}
+  .settings-body{padding:20px}
+  .settings-body .form-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .settings-body input{flex:1;min-width:200px;padding:11px 14px;border-radius:var(--radius-md);background:#0d0f16;border:1px solid var(--border);color:var(--text);font-size:.95rem;outline:none;font-family:'Inter',sans-serif}
+  .settings-body input:focus{border-color:var(--neon)}
+  .settings-msg{font-size:.88rem;margin-top:10px;display:none}
+  .settings-msg.ok{color:#5ed99c;display:block}
+  .settings-msg.err{color:#ff8888;display:block}
 
-  .loading{text-align:center;color:var(--muted);padding:40px;font-size:.95rem}
-  .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(76,201,255,.25);border-top-color:var(--neon);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-3px;margin-right:8px}
+  .empty{padding:40px 20px;text-align:center;color:var(--muted-2)}
+  .empty .big{font-size:1.05rem;margin-bottom:8px;color:var(--muted)}
+  .loading{text-align:center;color:var(--muted);padding:36px;font-size:.95rem}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(91,155,255,.25);border-top-color:var(--neon);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-3px;margin-right:8px}
   @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
@@ -65,16 +95,17 @@
       <p class="email" id="userEmail">Signing in…</p>
     </div>
     <div style="display:flex;gap:10px;align-items:center">
-      <a class="btn-logout" id="upgradeBtn" href="pricing.html" style="background:linear-gradient(135deg,var(--neon),#3aa0e0);color:#fff;text-decoration:none;border:none">Upgrade Plan</a>
+      <a class="btn-logout" id="upgradeBtn" href="pricing.html" style="background:var(--neon);color:#0a0e1a;text-decoration:none;border:none">Upgrade Plan</a>
       <button class="btn-logout" id="logoutBtn">Sign Out</button>
     </div>
   </div>
 
+  <!-- 概览数字 -->
   <div class="stats">
     <div class="stat-card">
       <div class="label">Credit Balance</div>
       <div class="value" id="statBalance">—</div>
-      <div class="sub">50 free credits on signup</div>
+      <div class="sub">1 credit = $0.01</div>
     </div>
     <div class="stat-card">
       <div class="label">Total Generations</div>
@@ -82,16 +113,59 @@
       <div class="sub">images &amp; videos</div>
     </div>
     <div class="stat-card">
-      <div class="label">Last Generation</div>
-      <div class="value" id="statLast">—</div>
-      <div class="sub" id="statLastTime">—</div>
+      <div class="label">Generations · 30 days</div>
+      <div class="value" id="statMonth">—</div>
+      <div class="sub">this month</div>
     </div>
   </div>
 
+  <!-- 当前套餐 -->
+  <div class="plan-card">
+    <div>
+      <div class="label">Current Plan</div>
+      <div class="plan-name" id="planName">—</div>
+      <div class="plan-desc" id="planDesc">—</div>
+    </div>
+    <div class="plan-usage">
+      <div class="usage-text"><span>Credits remaining</span><span id="usageText">—</span></div>
+      <div class="progress"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- 用量趋势图 -->
+  <div class="chart-card">
+    <div class="list-head">Usage Trend · Last 30 Days</div>
+    <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+  </div>
+
+  <!-- 生成历史 -->
+  <div class="list">
+    <div class="list-head">Generation History</div>
+    <div class="gen-wall" id="genWall">
+      <div class="loading"><span class="spinner"></span>Loading…</div>
+    </div>
+  </div>
+
+  <!-- 积分流水 -->
   <div class="list">
     <div class="list-head">Credit History</div>
     <div class="list-body" id="listBody">
       <div class="loading"><span class="spinner"></span>Loading…</div>
+    </div>
+  </div>
+
+  <!-- 账户设置 -->
+  <div class="list">
+    <div class="list-head">Account Settings</div>
+    <div class="settings-body">
+      <form id="pwdForm">
+        <div class="form-row">
+          <input type="password" id="newPwd" placeholder="New password (min. 6 characters)" minlength="6" required>
+          <input type="password" id="newPwd2" placeholder="Confirm new password" minlength="6" required>
+        </div>
+        <button type="submit" class="btn btn-primary" id="pwdBtn">Change Password</button>
+        <div class="settings-msg" id="pwdMsg"></div>
+      </form>
     </div>
   </div>
 </div>
@@ -106,6 +180,13 @@
 
 <script>
 (async function () {
+  var PLAN_META = {
+    free:    { name: 'Free Trial', quota: 50,    desc: '50 trial credits included on signup' },
+    starter: { name: 'Starter',    quota: 1000,  desc: '1,000 credits per month · $9.9/mo' },
+    pro:     { name: 'Pro',        quota: 3500,  desc: '3,500 credits per month · $29/mo' },
+    studio:  { name: 'Studio',     quota: 12500, desc: '12,500 credits per month · $99/mo' }
+  };
+
   function getClient() {
     if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) return null;
     return window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
@@ -118,10 +199,8 @@
 
   var sess = await client.auth.getSession();
   var session = sess && sess.data && sess.data.session;
-  if (!session) {
-    window.location.href = 'login.html';
-    return;
-  }
+  if (!session) { window.location.href = 'login.html'; return; }
+  var uid = session.user.id;
 
   document.getElementById('userEmail').textContent = 'Signed in: ' + (session.user.email || '—');
 
@@ -130,48 +209,156 @@
     window.location.href = 'index.html';
   });
 
-  var body = document.getElementById('listBody');
-  try {
-    var rc = await client.from('user_credits').select('balance').eq('user_id', session.user.id).maybeSingle();
-    var balance = (rc && rc.data && rc.data.balance) || 0;
-    document.getElementById('statBalance').textContent = balance;
-
-    var r = await client.from('credit_transactions').select('amount, reason, balance_after, created_at').order('created_at', { ascending: false }).limit(50);
-    if (r.error) throw r.error;
-    var rows = r.data || [];
-
-    var genCount = rows.filter(function (r) { return r.reason && r.reason.indexOf('image_') === 0 || r.reason && r.reason.indexOf('video_') === 0; }).length;
-    document.getElementById('statTotal').textContent = genCount;
-
-    if (rows.length === 0) {
-      body.innerHTML = '<div class="empty"><div class="big">No activity yet</div>You received 50 free credits on signup. Generate an image or video and it will appear here.</div>';
-      return;
-    }
-
-    var lastGen = rows.find(function (r) { return r.reason && (r.reason.indexOf('image_') === 0 || r.reason.indexOf('video_') === 0); });
-    if (lastGen) {
-      document.getElementById('statLast').textContent = (lastGen.reason || '').replace(/_/g, ' ');
-      document.getElementById('statLastTime').textContent = formatTime(lastGen.created_at);
-    }
-
-    var html = '';
-    rows.forEach(function (row) {
-      var sign = row.amount > 0 ? '+' : '';
-      var color = row.amount > 0 ? '#5ed99c' : '#ff8888';
-      var reasonLabel = (row.reason || '').replace(/_/g, ' ');
-      var balAfter = (row.balance_after !== null && row.balance_after !== undefined) ? ('balance ' + row.balance_after) : '';
-      html += '<div class="list-item"><div><div class="prompt" style="color:' + color + '">' + sign + row.amount + ' credits · ' + reasonLabel + ' <span style="color:var(--muted-2);font-size:.85em">' + balAfter + '</span></div></div><div class="time">' + formatTime(row.created_at) + '</div></div>';
-    });
-    body.innerHTML = html;
-  } catch (e) {
-    body.innerHTML = '<div class="empty">Failed to load: ' + (e.message || String(e)) + '</div>';
-  }
-
   function formatTime(iso) {
     if (!iso) return '—';
     var d = new Date(iso);
     var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
     return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+
+  // ── 1. 余额 + 套餐 ──
+  try {
+    var rc = await client.from('user_credits').select('balance, plan').eq('user_id', uid).maybeSingle();
+    var balance = (rc && rc.data && rc.data.balance) || 0;
+    var planKey = (rc && rc.data && rc.data.plan) || 'free';
+    var plan = PLAN_META[planKey] || PLAN_META.free;
+    document.getElementById('statBalance').textContent = balance;
+    document.getElementById('planName').textContent = plan.name;
+    document.getElementById('planDesc').textContent = plan.desc;
+    document.getElementById('usageText').textContent = balance + ' / ' + plan.quota;
+    var pct = Math.min(100, Math.round(balance / plan.quota * 100));
+    document.getElementById('progressFill').style.width = pct + '%';
+  } catch (e) { /* silent */ }
+
+  // ── 2. 积分流水（也用于统计和图表） ──
+  var rows = [];
+  try {
+    var r = await client.from('credit_transactions').select('amount, reason, balance_after, created_at').order('created_at', { ascending: false }).limit(300);
+    if (r.error) throw r.error;
+    rows = r.data || [];
+
+    var genRows = rows.filter(function (x) { return x.reason && (x.reason.indexOf('image_') === 0 || x.reason.indexOf('video_') === 0); });
+    document.getElementById('statTotal').textContent = genRows.length;
+
+    var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 30);
+    var monthCount = genRows.filter(function (x) { return new Date(x.created_at) >= cutoff; }).length;
+    document.getElementById('statMonth').textContent = monthCount;
+
+    var body = document.getElementById('listBody');
+    if (rows.length === 0) {
+      body.innerHTML = '<div class="empty"><div class="big">No activity yet</div>You received 50 free credits on signup. Generate an image or video and it will appear here.</div>';
+    } else {
+      var html = '';
+      rows.slice(0, 50).forEach(function (row) {
+        var sign = row.amount > 0 ? '+' : '';
+        var color = row.amount > 0 ? '#5ed99c' : '#ff8888';
+        var reasonLabel = (row.reason || '').replace(/_/g, ' ');
+        var balAfter = (row.balance_after !== null && row.balance_after !== undefined) ? ('balance ' + row.balance_after) : '';
+        html += '<div class="list-item"><div><div class="prompt" style="color:' + color + '">' + sign + row.amount + ' credits · ' + reasonLabel + ' <span style="color:var(--muted-2);font-size:.85em">' + balAfter + '</span></div></div><div class="time">' + formatTime(row.created_at) + '</div></div>';
+      });
+      body.innerHTML = html;
+    }
+
+    // ── 3. 趋势图 ──
+    renderChart(genRows);
+  } catch (e) {
+    document.getElementById('listBody').innerHTML = '<div class="empty">Failed to load: ' + (e.message || String(e)) + '</div>';
+  }
+
+  // ── 4. 生成历史墙 ──
+  try {
+    var g = await client.from('gen_logs').select('prompt, result_url, gen_type, created_at').order('created_at', { ascending: false }).limit(12);
+    var wall = document.getElementById('genWall');
+    var gRows = (g && g.data) || [];
+    if (gRows.length === 0) {
+      wall.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="big">Nothing generated yet</div>Your generated images and videos will show up here.</div>';
+    } else {
+      var html = '';
+      gRows.forEach(function (row) {
+        var cap = (row.prompt || '').slice(0, 42) + ((row.prompt || '').length > 42 ? '…' : '');
+        var safeCap = cap.replace(/[<>&]/g, function (ch) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;' }[ch]; });
+        var thumb = (row.gen_type === 'image' && row.result_url)
+          ? '<img class="thumb" src="' + row.result_url + '" alt="" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=thumb-placeholder>🖼️</div>\'">'
+          : '<div class="thumb-placeholder">' + (row.gen_type === 'video' ? '🎬' : '🖼️') + '</div>';
+        html += '<div class="gen-tile">' + thumb + '<div class="cap">' + safeCap + '<div class="t">' + formatTime(row.created_at) + '</div></div></div>';
+      });
+      wall.innerHTML = html;
+    }
+  } catch (e) {
+    document.getElementById('genWall').innerHTML = '<div class="empty" style="grid-column:1/-1">Failed to load history</div>';
+  }
+
+  // ── 5. 修改密码 ──
+  document.getElementById('pwdForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var p1 = document.getElementById('newPwd').value;
+    var p2 = document.getElementById('newPwd2').value;
+    var msg = document.getElementById('pwdMsg');
+    var btn = document.getElementById('pwdBtn');
+    msg.className = 'settings-msg';
+    if (p1.length < 6) { msg.textContent = 'Password must be at least 6 characters'; msg.className = 'settings-msg err'; return; }
+    if (p1 !== p2) { msg.textContent = 'The two passwords do not match'; msg.className = 'settings-msg err'; return; }
+    btn.disabled = true; btn.textContent = 'Updating…';
+    try {
+      var ur = await client.auth.updateUser({ password: p1 });
+      if (ur.error) throw ur.error;
+      msg.textContent = 'Password updated successfully';
+      msg.className = 'settings-msg ok';
+      document.getElementById('newPwd').value = '';
+      document.getElementById('newPwd2').value = '';
+    } catch (err) {
+      msg.textContent = 'Failed: ' + (err.message || String(err));
+      msg.className = 'settings-msg err';
+    }
+    btn.disabled = false; btn.textContent = 'Change Password';
+  });
+
+  // ── 图表渲染 ──
+  function renderChart(genRows) {
+    if (!window.Chart) return;
+    var days = [];
+    var labels = [];
+    var imgData = [];
+    var vidData = [];
+    for (var i = 29; i >= 0; i--) {
+      var d = new Date(); d.setDate(d.getDate() - i);
+      var key = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+      days.push(key);
+      labels.push((d.getMonth() + 1) + '/' + d.getDate());
+      imgData.push(0);
+      vidData.push(0);
+    }
+    genRows.forEach(function (row) {
+      var d = new Date(row.created_at);
+      var key = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+      var idx = days.indexOf(key);
+      if (idx < 0) return;
+      if (row.reason.indexOf('image_') === 0) imgData[idx]++;
+      else if (row.reason.indexOf('video_') === 0) vidData[idx]++;
+    });
+    var ctx = document.getElementById('trendChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          { label: 'Images', data: imgData, backgroundColor: 'rgba(91,155,255,.75)', borderRadius: 3, stack: 'gen' },
+          { label: 'Videos', data: vidData, backgroundColor: 'rgba(52,201,142,.75)', borderRadius: 3, stack: 'gen' }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#9aa1af', font: { size: 11 } } },
+          tooltip: { backgroundColor: '#191c25', titleColor: '#eceef2', bodyColor: '#9aa1af', borderColor: '#2c303c', borderWidth: 1 }
+        },
+        scales: {
+          x: { ticks: { color: '#626a79', maxTicksLimit: 10, font: { size: 10 } }, grid: { display: false }, stacked: true },
+          y: { ticks: { color: '#626a79', stepSize: 1, font: { size: 10 } }, grid: { color: 'rgba(44,48,60,.5)' }, stacked: true, beginAtZero: true }
+        }
+      }
+    });
   }
 })();
 </script>
