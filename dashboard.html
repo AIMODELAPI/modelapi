@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Usage — ModelAPI</title>
+<title>Console — ModelAPI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="modelapi-demo.css">
@@ -13,34 +13,56 @@
 <link rel="alternate" hreflang="zh" href="dashboard.zh.html">
 <link rel="alternate" hreflang="en" href="dashboard.html">
 <style>
-  .dash-wrap{max-width:960px;margin:60px auto 80px;padding:0 20px}
-  .dash-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;flex-wrap:wrap;gap:16px}
-  .dash-head h1{font-size:1.8rem;font-weight:800;color:var(--text)}
-  .dash-head .email{color:var(--muted);font-size:.92rem;margin-top:6px}
-  .btn-logout{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 18px;border-radius:var(--radius-md);font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;font-size:.88rem;transition:all .2s}
-  .btn-logout:hover{border-color:#ff8888;color:#ff8888}
+  body{background:var(--bg)}
+  .dash-layout{display:flex;min-height:100vh}
 
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:22px}
-  .stat-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:22px 20px}
-  .stat-card .label{color:var(--muted);font-size:.82rem;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
-  .stat-card .value{font-size:1.9rem;font-weight:800;color:var(--text)}
-  .stat-card .sub{color:var(--muted-2);font-size:.8rem;margin-top:4px}
+  /* ── 左侧导航 ── */
+  .sidebar{width:230px;flex-shrink:0;background:var(--bg-2);border-right:1px solid var(--border);
+    display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+  .side-brand{padding:18px 20px;font-weight:800;font-size:1.05rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+  .side-brand a{color:var(--text)}
+  .side-nav{padding:14px 12px;flex:1}
+  .side-nav .nav-group{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted-2);padding:14px 12px 6px;font-weight:600}
+  .side-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius-md);
+    color:var(--muted);font-size:.92rem;font-weight:500;cursor:pointer;transition:all .15s;margin-bottom:2px}
+  .side-nav a:hover{color:var(--text);background:rgba(91,155,255,.06)}
+  .side-nav a.active{color:var(--neon);background:rgba(91,155,255,.1);font-weight:600}
+  .side-nav a .ic{width:18px;text-align:center;font-size:.95rem}
+  .side-foot{border-top:1px solid var(--border);padding:14px}
+  .side-user{font-size:.8rem;color:var(--muted);padding:0 8px 10px;word-break:break-all}
+  .side-foot button{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);
+    padding:8px;border-radius:var(--radius-md);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
+  .side-foot button:hover{border-color:#ff8888;color:#ff8888}
 
-  /* 套餐卡 */
-  .plan-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:22px 24px;margin-bottom:22px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
-  .plan-card .label{color:var(--muted);font-size:.8rem;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
-  .plan-card .plan-name{font-size:1.4rem;font-weight:800;color:var(--neon)}
-  .plan-card .plan-desc{color:var(--muted-2);font-size:.85rem;margin-top:4px}
+  /* ── 右侧内容区 ── */
+  .dash-main{flex:1;padding:32px 36px;max-width:1100px;min-width:0}
+  .tab-pane{display:none}
+  .tab-pane.active{display:block;animation:fadeIn .25s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .pane-title{font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:4px}
+  .pane-sub{color:var(--muted);font-size:.9rem;margin-bottom:24px}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px}
+  .stat-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);padding:20px}
+  .stat-card .label{color:var(--muted);font-size:.78rem;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+  .stat-card .value{font-size:1.75rem;font-weight:800;color:var(--text)}
+  .stat-card .sub{color:var(--muted-2);font-size:.78rem;margin-top:4px}
+
+  .panel{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px}
+  .panel-head{padding:15px 20px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text);font-size:1rem;display:flex;justify-content:space-between;align-items:center}
+  .panel-head .more{font-size:.8rem;color:var(--neon);font-weight:500;cursor:pointer}
+  .panel-body{padding:20px}
+
+  .plan-row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+  .plan-name{font-size:1.35rem;font-weight:800;color:var(--neon)}
+  .plan-desc{color:var(--muted-2);font-size:.85rem;margin-top:4px}
   .plan-usage{flex:1;min-width:240px}
-  .usage-text{color:var(--muted);font-size:.85rem;margin-bottom:8px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace}
+  .usage-text{color:var(--muted);font-size:.82rem;margin-bottom:8px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace}
   .progress{height:8px;background:#0d0f16;border-radius:99px;overflow:hidden;border:1px solid var(--border)}
   .progress-fill{height:100%;background:var(--neon);border-radius:99px;transition:width .6s ease}
 
-  /* 图表卡 */
-  .chart-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);margin-bottom:22px;overflow:hidden}
-  .chart-wrap{padding:18px 20px;height:220px}
+  .chart-wrap{padding:16px 20px;height:220px}
 
-  /* 作品墙 */
   .gen-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;padding:18px 20px}
   .gen-tile{border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;background:#0d0f16;transition:border-color .2s}
   .gen-tile:hover{border-color:var(--neon)}
@@ -49,134 +71,264 @@
   .gen-tile .cap{padding:8px 10px;font-size:.75rem;color:var(--muted);line-height:1.4}
   .gen-tile .cap .t{color:var(--muted-2);font-size:.68rem;margin-top:2px;font-family:'JetBrains Mono',monospace}
 
-  .list{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:22px}
-  .list-head{padding:16px 20px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text);font-size:1.02rem}
-  .list-body{max-height:420px;overflow:auto}
-  .list-item{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:14px 20px;border-bottom:1px solid var(--border)}
-  .list-item:last-child{border-bottom:none}
-  .list-item .prompt{color:var(--text);font-size:.92rem;line-height:1.55;flex:1;word-break:break-word}
-  .list-item .time{color:var(--muted);font-size:.8rem;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+  .tx-body{max-height:420px;overflow:auto}
+  .tx-item{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:13px 20px;border-bottom:1px solid var(--border)}
+  .tx-item:last-child{border-bottom:none}
+  .tx-item .prompt{color:var(--text);font-size:.9rem;line-height:1.55;flex:1;word-break:break-word}
+  .tx-item .time{color:var(--muted);font-size:.78rem;white-space:nowrap;font-family:'JetBrains Mono',monospace}
 
-  .settings-body{padding:20px}
-  .settings-body .form-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  /* 账单页 */
+  .bill-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+  .bill-row:last-child{border-bottom:none}
+  .bill-row .k{color:var(--muted);font-size:.9rem}
+  .bill-row .v{color:var(--text);font-weight:600;font-size:.92rem}
+  .pill{display:inline-block;padding:3px 12px;border-radius:99px;font-size:.75rem;font-weight:600}
+  .pill-green{background:rgba(52,201,142,.12);color:#5ed99c}
+  .pill-gray{background:rgba(154,161,175,.12);color:var(--muted)}
+  .plan-mini-table{width:100%;border-collapse:collapse;font-size:.9rem}
+  .plan-mini-table th,.plan-mini-table td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+  .plan-mini-table th{color:var(--muted-2);font-size:.78rem;text-transform:uppercase;letter-spacing:.8px}
+  .plan-mini-table td{color:var(--text)}
+  .plan-mini-table .cur{color:var(--neon);font-weight:700}
+
+  /* API 页 */
+  .api-endpoint{border:1px solid var(--border);border-radius:var(--radius-md);margin-bottom:16px;overflow:hidden}
+  .api-endpoint .ep-head{padding:12px 16px;display:flex;align-items:center;gap:12px;background:rgba(91,155,255,.04)}
+  .method{padding:3px 10px;border-radius:6px;font-size:.75rem;font-weight:800;font-family:'JetBrains Mono',monospace}
+  .method-post{background:rgba(52,201,142,.15);color:#5ed99c}
+  .method-get{background:rgba(91,155,255,.15);color:var(--neon)}
+  .ep-path{font-family:'JetBrains Mono',monospace;font-size:.88rem;color:var(--text)}
+  .ep-desc{padding:10px 16px;color:var(--muted);font-size:.85rem;border-bottom:1px solid var(--border)}
+  .ep-code{position:relative;background:#0a0c12;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#c9d4e8;overflow-x:auto;white-space:pre;line-height:1.65}
+  .copy-btn{position:absolute;top:10px;right:10px;background:var(--surface-2);border:1px solid var(--border-2);color:var(--muted);
+    font-size:.72rem;padding:4px 10px;border-radius:6px;cursor:pointer;transition:all .15s}
+  .copy-btn:hover{color:var(--neon);border-color:var(--neon)}
+  .api-note{color:var(--muted-2);font-size:.82rem;line-height:1.7;padding:4px 2px 0}
+
+  /* 设置页 */
+  .kv-row{display:flex;justify-content:space-between;gap:16px;padding:13px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+  .kv-row:last-child{border-bottom:none}
+  .kv-row .k{color:var(--muted);font-size:.9rem}
+  .kv-row .v{color:var(--text);font-size:.9rem;font-family:'JetBrains Mono',monospace;word-break:break-all}
+  .form-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
   .settings-body input{flex:1;min-width:200px;padding:11px 14px;border-radius:var(--radius-md);background:#0d0f16;border:1px solid var(--border);color:var(--text);font-size:.95rem;outline:none;font-family:'Inter',sans-serif}
   .settings-body input:focus{border-color:var(--neon)}
   .settings-msg{font-size:.88rem;margin-top:10px;display:none}
   .settings-msg.ok{color:#5ed99c;display:block}
   .settings-msg.err{color:#ff8888;display:block}
 
-  .empty{padding:40px 20px;text-align:center;color:var(--muted-2)}
-  .empty .big{font-size:1.05rem;margin-bottom:8px;color:var(--muted)}
-  .loading{text-align:center;color:var(--muted);padding:36px;font-size:.95rem}
+  .empty{padding:36px 20px;text-align:center;color:var(--muted-2)}
+  .empty .big{font-size:1rem;margin-bottom:6px;color:var(--muted)}
+  .loading{text-align:center;color:var(--muted);padding:32px;font-size:.92rem}
   .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(91,155,255,.25);border-top-color:var(--neon);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-3px;margin-right:8px}
   @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* 移动端：侧栏变顶部横条 */
+  @media(max-width:820px){
+    .dash-layout{flex-direction:column}
+    .sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--border)}
+    .side-nav{display:flex;overflow-x:auto;padding:10px;gap:4px}
+    .side-nav .nav-group{display:none}
+    .side-nav a{white-space:nowrap}
+    .side-foot{display:none}
+    .dash-main{padding:20px 16px}
+  }
 </style>
 </head>
 <body>
 
-<header class="nav" id="navbar">
-  <div class="nav-inner">
-    <a class="brand" href="index.html"><span class="brand-mark">◆</span> ModelAPI</a>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="image.html">AI Image</a>
-      <a href="video.html">AI Video</a>
-      <a href="pricing.html">Pricing</a>
+<div class="dash-layout">
+  <!-- ═══ 左侧导航 ═══ -->
+  <aside class="sidebar">
+    <div class="side-brand"><a href="index.html"><span class="brand-mark" style="color:var(--neon)">◆</span> ModelAPI</a></div>
+    <nav class="side-nav" id="sideNav">
+      <div class="nav-group">Workspace</div>
+      <a data-tab="overview" class="active"><span class="ic">📊</span>Overview</a>
+      <a data-tab="history"><span class="ic">🖼️</span>History</a>
+      <div class="nav-group">Account</div>
+      <a data-tab="billing"><span class="ic">💳</span>Billing</a>
+      <a data-tab="api"><span class="ic">🔌</span>API Access</a>
+      <a data-tab="settings"><span class="ic">⚙️</span>Settings</a>
     </nav>
-    <a class="btn btn-primary" href="image.html">Generate</a>
-    <div class="lang-switch"><span class="lang-active">EN</span><span class="lang-sep">/</span><a href="dashboard.zh.html">中文</a></div>
-  </div>
-</header>
+    <div class="side-foot">
+      <div class="side-user" id="sideUser">—</div>
+      <button id="logoutBtn">Sign Out</button>
+    </div>
+  </aside>
 
-<div class="dash-wrap">
-  <div class="dash-head">
-    <div>
-      <h1>My Usage</h1>
-      <p class="email" id="userEmail">Signing in…</p>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center">
-      <a class="btn-logout" id="upgradeBtn" href="pricing.html" style="background:var(--neon);color:#0a0e1a;text-decoration:none;border:none">Upgrade Plan</a>
-      <button class="btn-logout" id="logoutBtn">Sign Out</button>
-    </div>
-  </div>
+  <!-- ═══ 右侧内容 ═══ -->
+  <main class="dash-main">
 
-  <!-- 概览数字 -->
-  <div class="stats">
-    <div class="stat-card">
-      <div class="label">Credit Balance</div>
-      <div class="value" id="statBalance">—</div>
-      <div class="sub">1 credit = $0.01</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Total Generations</div>
-      <div class="value" id="statTotal">—</div>
-      <div class="sub">images &amp; videos</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Generations · 30 days</div>
-      <div class="value" id="statMonth">—</div>
-      <div class="sub">this month</div>
-    </div>
-  </div>
+    <!-- ─── 概览 ─── -->
+    <section class="tab-pane active" id="tab-overview">
+      <div class="pane-title">Overview</div>
+      <div class="pane-sub" id="userEmail">Signing in…</div>
 
-  <!-- 当前套餐 -->
-  <div class="plan-card">
-    <div>
-      <div class="label">Current Plan</div>
-      <div class="plan-name" id="planName">—</div>
-      <div class="plan-desc" id="planDesc">—</div>
-    </div>
-    <div class="plan-usage">
-      <div class="usage-text"><span>Credits remaining</span><span id="usageText">—</span></div>
-      <div class="progress"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-    </div>
-  </div>
-
-  <!-- 用量趋势图 -->
-  <div class="chart-card">
-    <div class="list-head">Usage Trend · Last 30 Days</div>
-    <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
-  </div>
-
-  <!-- 生成历史 -->
-  <div class="list">
-    <div class="list-head">Generation History</div>
-    <div class="gen-wall" id="genWall">
-      <div class="loading"><span class="spinner"></span>Loading…</div>
-    </div>
-  </div>
-
-  <!-- 积分流水 -->
-  <div class="list">
-    <div class="list-head">Credit History</div>
-    <div class="list-body" id="listBody">
-      <div class="loading"><span class="spinner"></span>Loading…</div>
-    </div>
-  </div>
-
-  <!-- 账户设置 -->
-  <div class="list">
-    <div class="list-head">Account Settings</div>
-    <div class="settings-body">
-      <form id="pwdForm">
-        <div class="form-row">
-          <input type="password" id="newPwd" placeholder="New password (min. 6 characters)" minlength="6" required>
-          <input type="password" id="newPwd2" placeholder="Confirm new password" minlength="6" required>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="label">Credit Balance</div>
+          <div class="value" id="statBalance">—</div>
+          <div class="sub">1 credit = $0.01</div>
         </div>
-        <button type="submit" class="btn btn-primary" id="pwdBtn">Change Password</button>
-        <div class="settings-msg" id="pwdMsg"></div>
-      </form>
-    </div>
-  </div>
-</div>
+        <div class="stat-card">
+          <div class="label">Total Generations</div>
+          <div class="value" id="statTotal">—</div>
+          <div class="sub">images &amp; videos</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Generations · 30 days</div>
+          <div class="value" id="statMonth">—</div>
+          <div class="sub">rolling month</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Member Since</div>
+          <div class="value" id="statSince" style="font-size:1.15rem;padding-top:8px">—</div>
+          <div class="sub">registration date</div>
+        </div>
+      </div>
 
-<footer class="footer">
-  <div style="max-width:var(--maxw);margin:0 auto;padding:0 24px 24px">
-    <div class="legal-entity">Operated by <b>AURA GENAI LABS PTE. LTD.</b> (UEN: 202631742R)<br>60 PAYA LEBAR ROAD, #12-03, PAYA LEBAR SQUARE, SINGAPORE 409051</div>
-  </div>
-  <div class="footer-bottom">© 2026 ModelAPI · AI Image &amp; Video Generation Platform</div>
-  <div class="legal-bar"><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="refund.html">Refund</a> · <a href="pricing.html">Pricing</a> · <a href="about.html">About</a> · <a href="contact.html">Contact</a></div>
-</footer>
+      <div class="panel">
+        <div class="panel-head">Current Plan <a class="more" href="pricing.html">Upgrade →</a></div>
+        <div class="panel-body plan-row">
+          <div>
+            <div class="plan-name" id="planName">—</div>
+            <div class="plan-desc" id="planDesc">—</div>
+          </div>
+          <div class="plan-usage">
+            <div class="usage-text"><span>Credits remaining</span><span id="usageText">—</span></div>
+            <div class="progress"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">Usage Trend · Last 30 Days</div>
+        <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ─── 生成历史 ─── -->
+    <section class="tab-pane" id="tab-history">
+      <div class="pane-title">Generation History</div>
+      <div class="pane-sub">Everything you have created with your account.</div>
+
+      <div class="panel">
+        <div class="panel-head">Recent Creations</div>
+        <div class="gen-wall" id="genWall"><div class="loading"><span class="spinner"></span>Loading…</div></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">Credit Transactions</div>
+        <div class="tx-body" id="listBody"><div class="loading"><span class="spinner"></span>Loading…</div></div>
+      </div>
+    </section>
+
+    <!-- ─── 账单 ─── -->
+    <section class="tab-pane" id="tab-billing">
+      <div class="pane-title">Billing</div>
+      <div class="pane-sub">Your subscription, payment method, and invoices.</div>
+
+      <div class="panel">
+        <div class="panel-head">Subscription</div>
+        <div class="bill-row"><span class="k">Current plan</span><span class="v" id="billPlan">—</span></div>
+        <div class="bill-row"><span class="k">Status</span><span class="pill pill-green">Active</span></div>
+        <div class="bill-row"><span class="k">Credit balance</span><span class="v" id="billBalance">—</span></div>
+        <div class="bill-row"><span class="k">Billing cycle</span><span class="v">Monthly · credits reset each cycle</span></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">Available Plans <a class="more" href="pricing.html">Full pricing →</a></div>
+        <div class="panel-body" style="padding:8px 6px">
+          <table class="plan-mini-table">
+            <thead><tr><th>Plan</th><th>Price</th><th>Credits / month</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>Free Trial</td><td>$0</td><td>50 (one-time)</td><td id="curFree"></td></tr>
+              <tr><td>Starter</td><td>$9.9 / mo</td><td>1,000</td><td id="curStarter"></td></tr>
+              <tr><td>Pro</td><td>$29 / mo</td><td>3,500</td><td id="curPro"></td></tr>
+              <tr><td>Studio</td><td>$99 / mo</td><td>12,500</td><td id="curStudio"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">Payment Method</div>
+        <div class="bill-row"><span class="k">Card on file</span><span class="pill pill-gray">Not linked</span></div>
+        <div class="bill-row"><span class="k">Note</span><span class="v" style="font-weight:400;color:var(--muted);font-size:.85rem">Card payments via licensed partners will be enabled at checkout launch.</span></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">Invoices</div>
+        <div class="empty"><div class="big">No invoices yet</div>Your receipts will appear here after your first purchase.</div>
+      </div>
+    </section>
+
+    <!-- ─── API 接入 ─── -->
+    <section class="tab-pane" id="tab-api">
+      <div class="pane-title">API Access <span class="pill pill-gray" style="vertical-align:3px">Beta</span></div>
+      <div class="pane-sub">Programmatic access to ModelAPI generation endpoints.</div>
+
+      <div class="panel">
+        <div class="panel-head">Endpoints</div>
+        <div class="panel-body">
+          <div class="api-endpoint">
+            <div class="ep-head"><span class="method method-post">POST</span><span class="ep-path">/api/image</span></div>
+            <div class="ep-desc">Generate an image from a text prompt. Sizes: 1024x1024 / 1280x720 / 720x1280. Cost: 10 credits per image.</div>
+            <div class="ep-code" id="code1">curl -X POST https://www.aimodelapi.top/api/image \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"a lighthouse at dusk, cinematic","size":"1024x1024","n":1}'<button class="copy-btn" data-copy="code1">Copy</button></div>
+          </div>
+          <div class="api-endpoint">
+            <div class="ep-head"><span class="method method-post">POST</span><span class="ep-path">/api/video</span></div>
+            <div class="ep-desc">Submit a video generation task (async). Duration: 3 / 5 / 10 s. Resolution: 720P (25 credits/s) or 1080P (35 credits/s).</div>
+            <div class="ep-code" id="code2">curl -X POST https://www.aimodelapi.top/api/video \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"waves crashing on a rocky shore","duration":5,"resolution":"720P"}'<button class="copy-btn" data-copy="code2">Copy</button></div>
+          </div>
+          <div class="api-endpoint">
+            <div class="ep-head"><span class="method method-get">GET</span><span class="ep-path">/api/video?task_id={id}</span></div>
+            <div class="ep-desc">Poll a video task until status becomes "succeeded" and a video_url is returned.</div>
+            <div class="ep-code" id="code3">curl "https://www.aimodelapi.top/api/video?task_id=TASK_ID"<button class="copy-btn" data-copy="code3">Copy</button></div>
+          </div>
+          <p class="api-note">⚠️ API access currently shares your web account's credit pool. Authenticated per-account API keys are on the roadmap — contact aimodelapi@163.com if you need early access.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 设置 ─── -->
+    <section class="tab-pane" id="tab-settings">
+      <div class="pane-title">Settings</div>
+      <div class="pane-sub">Account information and security.</div>
+
+      <div class="panel">
+        <div class="panel-head">Account</div>
+        <div class="kv-row"><span class="k">Email</span><span class="v" id="setEmail">—</span></div>
+        <div class="kv-row"><span class="k">User ID</span><span class="v" id="setUid">—</span></div>
+        <div class="kv-row"><span class="k">Member since</span><span class="v" id="setSince">—</span></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">Change Password</div>
+        <div class="panel-body settings-body">
+          <form id="pwdForm">
+            <div class="form-row">
+              <input type="password" id="newPwd" placeholder="New password (min. 6 characters)" minlength="6" required>
+              <input type="password" id="newPwd2" placeholder="Confirm new password" minlength="6" required>
+            </div>
+            <button type="submit" class="btn btn-primary" id="pwdBtn">Change Password</button>
+            <div class="settings-msg" id="pwdMsg"></div>
+          </form>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">Language</div>
+        <div class="kv-row"><span class="k">Interface language</span><span class="v"><a href="dashboard.zh.html" style="color:var(--neon)">切换到中文 →</a></span></div>
+      </div>
+    </section>
+
+  </main>
+</div>
 
 <script>
 (async function () {
@@ -187,22 +339,47 @@
     studio:  { name: 'Studio',     quota: 12500, desc: '12,500 credits per month · $99/mo' }
   };
 
+  // ── Tab 切换 ──
+  document.querySelectorAll('#sideNav a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      document.querySelectorAll('#sideNav a').forEach(function (x) { x.classList.remove('active'); });
+      a.classList.add('active');
+      document.querySelectorAll('.tab-pane').forEach(function (p) { p.classList.remove('active'); });
+      document.getElementById('tab-' + a.getAttribute('data-tab')).classList.add('active');
+    });
+  });
+
+  // ── 复制按钮 ──
+  document.querySelectorAll('.copy-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var el = document.getElementById(b.getAttribute('data-copy'));
+      var text = el.textContent.replace('Copy', '').trim();
+      if (navigator.clipboard) navigator.clipboard.writeText(text);
+      b.textContent = 'Copied ✓';
+      setTimeout(function () { b.textContent = 'Copy'; }, 1500);
+    });
+  });
+
   function getClient() {
     if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL) return null;
     return window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
   }
   var client = getClient();
-  if (!client) {
-    document.getElementById('userEmail').textContent = 'Membership system not configured';
-    return;
-  }
+  if (!client) { document.getElementById('userEmail').textContent = 'Membership system not configured'; return; }
 
   var sess = await client.auth.getSession();
   var session = sess && sess.data && sess.data.session;
   if (!session) { window.location.href = 'login.html'; return; }
   var uid = session.user.id;
+  var email = session.user.email || '—';
+  var since = session.user.created_at ? formatTime(session.user.created_at).split(' ')[0] : '—';
 
-  document.getElementById('userEmail').textContent = 'Signed in: ' + (session.user.email || '—');
+  document.getElementById('userEmail').textContent = email;
+  document.getElementById('sideUser').textContent = email;
+  document.getElementById('statSince').textContent = since;
+  document.getElementById('setEmail').textContent = email;
+  document.getElementById('setUid').textContent = uid;
+  document.getElementById('setSince').textContent = since;
 
   document.getElementById('logoutBtn').addEventListener('click', async function () {
     await client.auth.signOut();
@@ -216,7 +393,7 @@
     return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
   }
 
-  // ── 1. 余额 + 套餐 ──
+  // ── 余额 + 套餐 + 账单页 ──
   try {
     var rc = await client.from('user_credits').select('balance, plan').eq('user_id', uid).maybeSingle();
     var balance = (rc && rc.data && rc.data.balance) || 0;
@@ -226,27 +403,28 @@
     document.getElementById('planName').textContent = plan.name;
     document.getElementById('planDesc').textContent = plan.desc;
     document.getElementById('usageText').textContent = balance + ' / ' + plan.quota;
-    var pct = Math.min(100, Math.round(balance / plan.quota * 100));
-    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressFill').style.width = Math.min(100, Math.round(balance / plan.quota * 100)) + '%';
+    document.getElementById('billPlan').textContent = plan.name;
+    document.getElementById('billBalance').textContent = balance + ' credits';
+    var curMap = { free: 'curFree', starter: 'curStarter', pro: 'curPro', studio: 'curStudio' };
+    var curEl = document.getElementById(curMap[planKey] || 'curFree');
+    if (curEl) curEl.innerHTML = '<span class="cur">● Current</span>';
   } catch (e) { /* silent */ }
 
-  // ── 2. 积分流水（也用于统计和图表） ──
-  var rows = [];
+  // ── 流水（统计 + 图表 + 历史页列表） ──
   try {
     var r = await client.from('credit_transactions').select('amount, reason, balance_after, created_at').order('created_at', { ascending: false }).limit(300);
     if (r.error) throw r.error;
-    rows = r.data || [];
+    var rows = r.data || [];
 
     var genRows = rows.filter(function (x) { return x.reason && (x.reason.indexOf('image_') === 0 || x.reason.indexOf('video_') === 0); });
     document.getElementById('statTotal').textContent = genRows.length;
-
     var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 30);
-    var monthCount = genRows.filter(function (x) { return new Date(x.created_at) >= cutoff; }).length;
-    document.getElementById('statMonth').textContent = monthCount;
+    document.getElementById('statMonth').textContent = genRows.filter(function (x) { return new Date(x.created_at) >= cutoff; }).length;
 
     var body = document.getElementById('listBody');
     if (rows.length === 0) {
-      body.innerHTML = '<div class="empty"><div class="big">No activity yet</div>You received 50 free credits on signup. Generate an image or video and it will appear here.</div>';
+      body.innerHTML = '<div class="empty"><div class="big">No activity yet</div>Generate an image or video and it will appear here.</div>';
     } else {
       var html = '';
       rows.slice(0, 50).forEach(function (row) {
@@ -254,18 +432,16 @@
         var color = row.amount > 0 ? '#5ed99c' : '#ff8888';
         var reasonLabel = (row.reason || '').replace(/_/g, ' ');
         var balAfter = (row.balance_after !== null && row.balance_after !== undefined) ? ('balance ' + row.balance_after) : '';
-        html += '<div class="list-item"><div><div class="prompt" style="color:' + color + '">' + sign + row.amount + ' credits · ' + reasonLabel + ' <span style="color:var(--muted-2);font-size:.85em">' + balAfter + '</span></div></div><div class="time">' + formatTime(row.created_at) + '</div></div>';
+        html += '<div class="tx-item"><div><div class="prompt" style="color:' + color + '">' + sign + row.amount + ' credits · ' + reasonLabel + ' <span style="color:var(--muted-2);font-size:.85em">' + balAfter + '</span></div></div><div class="time">' + formatTime(row.created_at) + '</div></div>';
       });
       body.innerHTML = html;
     }
-
-    // ── 3. 趋势图 ──
     renderChart(genRows);
   } catch (e) {
     document.getElementById('listBody').innerHTML = '<div class="empty">Failed to load: ' + (e.message || String(e)) + '</div>';
   }
 
-  // ── 4. 生成历史墙 ──
+  // ── 生成历史墙 ──
   try {
     var g = await client.from('gen_logs').select('prompt, result_url, gen_type, created_at').order('created_at', { ascending: false }).limit(12);
     var wall = document.getElementById('genWall');
@@ -288,7 +464,7 @@
     document.getElementById('genWall').innerHTML = '<div class="empty" style="grid-column:1/-1">Failed to load history</div>';
   }
 
-  // ── 5. 修改密码 ──
+  // ── 修改密码 ──
   document.getElementById('pwdForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     var p1 = document.getElementById('newPwd').value;
@@ -313,42 +489,31 @@
     btn.disabled = false; btn.textContent = 'Change Password';
   });
 
-  // ── 图表渲染 ──
+  // ── 图表 ──
   function renderChart(genRows) {
     if (!window.Chart) return;
-    var days = [];
-    var labels = [];
-    var imgData = [];
-    var vidData = [];
+    var days = [], labels = [], imgData = [], vidData = [];
     for (var i = 29; i >= 0; i--) {
       var d = new Date(); d.setDate(d.getDate() - i);
-      var key = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-      days.push(key);
+      days.push(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
       labels.push((d.getMonth() + 1) + '/' + d.getDate());
-      imgData.push(0);
-      vidData.push(0);
+      imgData.push(0); vidData.push(0);
     }
     genRows.forEach(function (row) {
       var d = new Date(row.created_at);
-      var key = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-      var idx = days.indexOf(key);
+      var idx = days.indexOf(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
       if (idx < 0) return;
       if (row.reason.indexOf('image_') === 0) imgData[idx]++;
       else if (row.reason.indexOf('video_') === 0) vidData[idx]++;
     });
-    var ctx = document.getElementById('trendChart').getContext('2d');
-    new Chart(ctx, {
+    new Chart(document.getElementById('trendChart').getContext('2d'), {
       type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [
-          { label: 'Images', data: imgData, backgroundColor: 'rgba(91,155,255,.75)', borderRadius: 3, stack: 'gen' },
-          { label: 'Videos', data: vidData, backgroundColor: 'rgba(52,201,142,.75)', borderRadius: 3, stack: 'gen' }
-        ]
-      },
+      data: { labels: labels, datasets: [
+        { label: 'Images', data: imgData, backgroundColor: 'rgba(91,155,255,.75)', borderRadius: 3, stack: 'gen' },
+        { label: 'Videos', data: vidData, backgroundColor: 'rgba(52,201,142,.75)', borderRadius: 3, stack: 'gen' }
+      ]},
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
+        responsive: true, maintainAspectRatio: false,
         plugins: {
           legend: { labels: { color: '#9aa1af', font: { size: 11 } } },
           tooltip: { backgroundColor: '#191c25', titleColor: '#eceef2', bodyColor: '#9aa1af', borderColor: '#2c303c', borderWidth: 1 }
