@@ -71,6 +71,14 @@
   .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(76,201,255,.25);
     border-top-color:var(--neon);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-3px;margin-right:8px}
   @keyframes spin{to{transform:rotate(360deg)}}
+
+  .credit-bar{display:none;align-items:center;gap:10px;justify-content:space-between;
+    background:rgba(76,201,255,.06);border:1px solid rgba(76,201,255,.18);
+    border-radius:var(--radius-md);padding:10px 16px;margin-bottom:20px;font-size:.9rem;color:var(--muted)}
+  .credit-bar.show{display:flex}
+  .credit-bar b{color:var(--neon);font-size:1.05rem;font-family:"JetBrains Mono",ui-monospace,monospace}
+  .credit-bar a{color:var(--neon);font-size:.85rem;text-decoration:none;white-space:nowrap}
+  .credit-bar a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -96,6 +104,11 @@
   </div>
 
   <div class="gen-card">
+    <div class="credit-bar" id="creditBar">
+      <span>💡 可用积分：<b id="creditBalance">—</b></span>
+      <a href="pricing.zh.html">升级套餐 →</a>
+    </div>
+
     <div class="field">
       <label for="prompt">描述你想生成的画面</label>
       <textarea id="prompt" placeholder="例如：一只橘猫坐在书桌上，柔和的灯光，写实风格，暖色调"></textarea>
@@ -150,6 +163,21 @@
     btn.classList.add('active');
     currentSize = btn.getAttribute('data-size');
   });
+
+    // ── 加载积分余额显示 ──
+  async function loadCredits() {
+    try {
+      if (!window.APP_CONFIG || !window.APP_CONFIG.SUPABASE_URL || !window.supabase) return;
+      var cc = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_ANON_KEY);
+      var cs = await cc.auth.getSession();
+      if (!cs || !cs.data || !cs.data.session) return;
+      var cr = await cc.from('user_credits').select('balance').eq('user_id', cs.data.session.user.id).maybeSingle();
+      var bal = (cr && cr.data && cr.data.balance) || 0;
+      document.getElementById('creditBalance').textContent = bal;
+      document.getElementById('creditBar').classList.add('show');
+    } catch (_) { /* silent */ }
+  }
+  loadCredits();
 
   function showError(msg) {
     errorEl.textContent = msg;
@@ -243,6 +271,7 @@
       if (url) {
         resultImg.src = url;
         resultEl.classList.add('show');
+        loadCredits(); // 生成成功后刷新余额显示
         // 成功后：余额已在 deduct_credits 里扣减，无需额外记录
       } else {
         showError('未获取到图片结果，请稍后重试');
