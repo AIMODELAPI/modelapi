@@ -697,3 +697,11 @@ body::before, body::after{display:none !important}
 .faq-item[open] summary::after{transform:rotate(45deg)}
 .faq-item summary::-webkit-details-marker{display:none}
 .faq-item .faq-a{padding:0 20px 16px;color:var(--muted);font-size:.95rem;line-height:1.75}
+
+
+/* ═══════════════ Hero 视频背景 ═══════════════ */
+.hero-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.55}
+.hero-bg-overlay{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(100deg,rgba(10,11,15,.82) 0%,rgba(10,11,15,.55) 45%,rgba(10,11,15,.35) 100%)}
+.hero > .wrap{position:relative;z-index:2}
+@media(max-width:640px){.hero-bg-overlay{background:linear-gradient(180deg,rgba(10,11,15,.75),rgba(10,11,15,.6))}}
